@@ -7,3 +7,9 @@
 
 abis situ baru jalanin servernya, ketik
 - php artisan server
+
+kalo ada database 
+- buat database baru dengan nama infinitemart
+- lalu php artisan migrate
+
+> Note: databasenya belum ada
