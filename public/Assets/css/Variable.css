@@ -1,0 +1,40 @@
+/* * Letakan Semua Variable css disini */
+
+:root {
+  --bgSeller-Welcome: url("../img/Background/SellerWelcome/Bg.jpg");
+  --bgSeller-WelcomeTab: url("../img/Background/SellerWelcome/bgTab.jpg");
+  --bgSeller-WelcomePhone: url("../img/Background/SellerWelcome/bgPhone.jpg");
+  --bgSeller-WelcomeDesktop: url("../img/Background/SellerWelcome/bgDesk.jpg");
+  --bgLogin-Register: url("../img/Background/LoginRegister/bgDesk.jpg");
+  --bgLogin-RegisterTab: url("../img/Background/LoginRegister/bgTab.jpg");
+  --bgLogin-RegisterPhone: url("../img/Background/LoginRegister/bgPhone.jpg");
+  --boxShadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --btnRegister: rgba(0, 0, 0, 0.25);
+  --backdropFilter: blur(4px);
+  --webkitBackdropFilter: blur(4px);
+  --borderRadiusLogin: 10px;
+  --fontFamily: "Poppins", sans-serif;
+  --button-gradient: linear-gradient(95.62deg, #3c74ff -4.86%, #6fdee7 141.65%);
+  --bgRegister: linear-gradient(
+    -87.98deg,
+    #9b43ca 0.31%,
+    #3c74ff 47.99%,
+    #61c0ee 79.47%,
+    #6fdee7 91.86%
+  );
+  --bgCard-Register: linear-gradient(
+    110.98deg,
+    #9b43ca 0.31%,
+    #3c74ff 47.99%,
+    #61c0ee 79.47%,
+    #6fdee7 91.86%
+  );
+  --bgWelcome: linear-gradient(
+    131.38deg,
+    #9b43ca -4.2%,
+    #3c74ff 42.96%,
+    #6fdee7 103.63%
+  );
+  --btnSignUp: linear-gradient(95.62deg, #3c74ff -4.86%, #6fdee7 141.65%);
+  --bgGift: #004970;
+}

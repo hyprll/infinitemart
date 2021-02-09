@@ -1,0 +1,199 @@
+@import url("Variable.css");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+  background: #eafafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.card-login {
+  min-height: 450px;
+  border-radius: 15px;
+  background-color: #fff;
+  color: #282828;
+  -webkit-box-shadow: 2px 2px 6px 2px rgba(51, 51, 51, 0.2);
+  box-shadow: 2px 2px 6px 2px rgba(51, 51, 51, 0.2);
+}
+
+.rightCard {
+  background: var(--bgLogin-RegisterTab);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: auto;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  min-height: 450px;
+}
+
+.regist-account {
+  font-weight: 500;
+  font-family: var(--fontFamily);
+  font-size: 20px;
+  color: #fff;
+}
+
+.btn-blueGradient {
+  color: white;
+  background: var(--btnRegister);
+  width: 95px;
+  border-radius: 5px;
+}
+
+.sellerHeader {
+  margin-top: 50px;
+  font-family: var(--fontFamily);
+  font-size: 24px;
+}
+
+.anima2 {
+  user-select: none;
+  position: absolute;
+  margin-top: -9rem;
+  margin-left: -7.5rem;
+  width: 250px;
+  height: 208px;
+}
+
+.img-left img {
+  width: 50px;
+  height: 45px;
+  margin: 20px 15px 0 0;
+}
+
+.text-right h1 {
+  font-size: 17px;
+  color: #61c0ee;
+  margin: 35px 0 0 0;
+}
+
+.btn-Gradient {
+  background: var(--button-gradient);
+  border-radius: 5px;
+  color: #fff;
+  font-family: var(--fontFamily);
+}
+
+.toRegist {
+  text-decoration: none;
+  font-size: 15px;
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+}
+
+/* * Phone */
+@media (min-width: 0px) and (max-width: 765px) {
+  .card-login {
+    margin: 3vh auto;
+    padding-bottom: 5%;
+  }
+
+  .right {
+    display: none;
+  }
+
+  .btn-Gradient {
+    width: 100%;
+  }
+
+  .toRegist {
+    display: block;
+  }
+}
+
+/* * Desktop */
+@media (min-width: 1260px) {
+  .card-login {
+    margin-top: 15vh;
+  }
+}
+
+/* * Tab1 */
+@media (min-width: 768px) and (min-height: 1024px) {
+  .card-login {
+    margin-top: 0vh;
+    width: 100%;
+    min-height: 0;
+    padding-bottom: 5%;
+  }
+
+  .right {
+    display: none;
+  }
+
+  .btn-Gradient {
+    width: 100%;
+    font-size: 25px;
+  }
+
+  .left {
+    width: 100%;
+  }
+
+  .toRegist {
+    display: block;
+    font-size: 20px;
+  }
+
+  .img-left img {
+    width: 70px;
+    height: 65px;
+  }
+
+  .text-right h1 {
+    font-size: 28px;
+    margin: 40px 0 0 0;
+  }
+
+  .inputValue label {
+    font-size: 25px;
+  }
+
+  .inputValue input {
+    font-size: 25px;
+  }
+}
+
+/* * Tab 2 */
+@media (min-width: 1024px) and (min-height: 1300px) {
+  .card-login {
+    margin-top: 0vh;
+    width: 100%;
+    min-height: 0;
+    padding-bottom: 5%;
+  }
+
+  .btn-Gradient {
+    font-size: 35px;
+  }
+
+  .left {
+    width: 100%;
+  }
+
+  .toRegist {
+    font-size: 25px;
+  }
+
+  .img-left img {
+    width: 90px;
+    height: 85px;
+  }
+
+  .text-right h1 {
+    font-size: 38px;
+    margin: 40px 0 0 0;
+  }
+
+  .inputValue label {
+    font-size: 35px;
+  }
+
+  .inputValue input {
+    font-size: 35px;
+  }
+}

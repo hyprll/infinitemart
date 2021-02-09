@@ -1,0 +1,69 @@
+@extends('Tamplate/Auth')
+
+@section("title", "Login")
+
+@section('content')
+<div class="loginContainer">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="card-login">
+                    <div class="row">
+
+                        <div class="col-md-6 left">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="d-flex">
+                                        <div class="img-left">
+                                            <img src="{{asset('Assets')}}/img/logo_bg-putih.png" alt="">
+                                        </div>
+                                        <div class="text-right">
+                                            <h1 class="fw-bold">Sign In</h1>
+                                        </div>
+                                    </div>
+                                    <div class="signIn-google mt-2">
+                                        <h1>Sign In for better experience</h1>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <form action="#" method="POST">
+                                        <div class="inputValue">
+                                            <label for="username">Username</label>
+                                            <input type="text" name="username" id="username" class="mt-2 form-control"
+                                                autofocus autocomplete="off">
+                                        </div>
+                                        <div class="inputValue mt-3">
+                                            <label for="password">Password</label>
+                                            <input type="password" name="password" id="password"
+                                                class="mt-2 form-control" autocomplete="off">
+                                        </div>
+                                        <div class="buttonValue mt-3">
+                                            <button type="submit" class="btn btn-Gradient" name="submit">Sign
+                                                In</button>
+                                        </div>
+                                    </form>
+                                    <a href="#" class="toRegist">Dont have account? Sign up</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 right">
+                            <div class="rightCard">
+                                <div class="container">
+                                    <div class="row">
+                                        <span class="regist-account mt-5">
+                                            Dont Have account?<br> Create one now
+                                        </span>
+                                        <a href="Register.html" class="btn btn-blueGradient m-3">Sign Up</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <img class="anima2 user-select-none" src="{{asset('Assets')}}/img/Character/anima3.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
