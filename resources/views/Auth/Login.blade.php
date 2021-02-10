@@ -1,4 +1,4 @@
-@extends('Tamplate/Auth')
+@extends('auth/template/Auth')
 
 @section("title", "Login")
 
@@ -15,7 +15,7 @@
                                 <div class="row">
                                     <div class="d-flex">
                                         <div class="img-left">
-                                            <img src="{{asset('Assets')}}/img/logo_bg-putih.png" alt="">
+                                            <img src="{{asset('img/logo_bg-putih.png')}}" alt="">
                                         </div>
                                         <div class="text-right">
                                             <h1 class="fw-bold">Sign In</h1>
@@ -54,11 +54,11 @@
                                         <span class="regist-account mt-5">
                                             Dont Have account?<br> Create one now
                                         </span>
-                                        <a href="Register.html" class="btn btn-blueGradient m-3">Sign Up</a>
+                                        <a href="{{route("register")}}" class="btn btn-blueGradient m-3">Sign Up</a>
                                     </div>
                                 </div>
                             </div>
-                            <img class="anima2 user-select-none" src="{{asset('Assets')}}/img/Character/anima3.png">
+                            <img class="anima2 user-select-none" src="{{asset('/img/Character/anima3.png')}}">
                         </div>
                     </div>
                 </div>

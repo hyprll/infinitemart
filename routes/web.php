@@ -1,9 +1,7 @@
 <?php
 
+use App\Http\Controllers\auth\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\SellerController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -19,6 +17,6 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, "index"]);
 
-Route::get("/login", [LoginController::class, "index"]);
-Route::get("/register", [RegisterController::class, "index"]);
-Route::get("/seller", [SellerController::class, "index"]);
+Route::get("/login", [AuthController::class, "login"])->name("login");
+Route::get("/register", [AuthController::class, "register"])->name("register");
+Route::get("/seller", [AuthController::class, "seller"])->name("seller");

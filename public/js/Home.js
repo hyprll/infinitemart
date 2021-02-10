@@ -1,14 +1,16 @@
+const BASE_URL = `http://127.0.0.1:8000`;
+
 const dataHeader = [
   {
-    img: "../Assets/img/header/car1.jpg",
+    img: `${BASE_URL}/img/header/car1.jpg`,
     title: "Car 1",
   },
   {
-    img: "../Assets/img/header/car2.jpg",
+    img: `${BASE_URL}/img/header/car2.jpg`,
     title: "Car 2",
   },
   {
-    img: "../Assets/img/header/car3.jpg",
+    img: `${BASE_URL}/img/header/car3.jpg`,
     title: "Car 3",
   },
 ];

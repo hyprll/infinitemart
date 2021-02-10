@@ -1,4 +1,4 @@
-@extends('Tamplate/Auth')
+@extends('auth/template/Auth')
 
 @section("title", "Register")
 
@@ -17,11 +17,11 @@
                                         <span class="regist-account mt-5">
                                             Have account?
                                         </span>
-                                        <a href="Register.html" class="btn btn-blueGradient m-3">Sign Up</a>
+                                        <a href="{{route("login")}}" class="btn btn-blueGradient m-3">Sign Up</a>
                                     </div>
                                 </div>
                             </div>
-                            <img class="anima2 user-select-none" src="{{asset('Assets')}}/img/Character/anima1.png">
+                            <img class="anima2 user-select-none" src="{{asset('/img/Character/anima1.png')}}">
                         </div>
 
                         <div class="col-md-6 left">
@@ -29,7 +29,7 @@
                                 <div class="row">
                                     <div class="d-flex">
                                         <div class="img-left">
-                                            <img src="{{asset('Assets')}}/img/logo_bg-putih.png" alt="">
+                                            <img src="{{asset('/img/logo_bg-putih.png')}}" alt="">
                                         </div>
                                         <div class="text-right">
                                             <h1 class="fw-bold">Sign Up</h1>
@@ -73,7 +73,7 @@
                                                 Up</button>
                                         </div>
                                     </form>
-                                    <a href="#" class="toRegist">Dont have account? Sign up</a>
+                                    <a href="{{route("login")}}" class="toRegist">Dont have account? Sign up</a>
                                 </div>
                             </div>
                         </div>

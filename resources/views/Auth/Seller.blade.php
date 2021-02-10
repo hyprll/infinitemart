@@ -1,4 +1,4 @@
-@extends('Tamplate/Auth')
+@extends('auth/template/Auth')
 
 @section("title", "Seller")
 
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <img src="{{asset('Assets')}}/img/Character/anima4.2.png" alt="anima4" class="anima1" loading="lazy">
+        <img src="{{asset('/img/Character/anima4.2.png')}}" alt="anima4" class="anima1" loading="lazy">
     </div>
 </div>
 @endsection
