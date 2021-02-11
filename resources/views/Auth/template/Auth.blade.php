@@ -16,7 +16,12 @@
 
 <script src='{{asset("/Js/popper.min.js")}}'></script>
 <script src="{{asset("/Js/bootstrap.min.js")}}"></script>
+<script src="{{asset("/Js/Jquery.min.js")}}"></script>
+<script src="{{asset("/js/auth.js")}}"></script>
+
 <script>
+    const height = document.querySelector(".card-login").offsetHeight;
+    document.querySelector(".rightCard").style.height = `${height}px`;
 </script>
 
 </html>

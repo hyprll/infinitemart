@@ -19,4 +19,5 @@ Route::get('/', [HomeController::class, "index"]);
 
 Route::get("/login", [AuthController::class, "login"])->name("login");
 Route::get("/register", [AuthController::class, "register"])->name("register");
+Route::post("/register", [AuthController::class, "regist_proses"])->name("regist_proses");
 Route::get("/seller", [AuthController::class, "seller"])->name("seller");

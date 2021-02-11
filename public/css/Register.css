@@ -3,14 +3,12 @@
 
 body {
   background: #eafafc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  
 }
 
 .card-login {
-  min-height: 450px;
+  min-height: 680px;
+  margin: 5rem 0;
   border-radius: 15px;
   background-color: #fff;
   color: #282828;
@@ -26,7 +24,7 @@ body {
   height: auto;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
-  min-height: 450px;
+  min-height: 680px;
 }
 
 .regist-account {
@@ -52,10 +50,10 @@ body {
 .anima2 {
   user-select: none;
   position: absolute;
-  margin-top: -9rem;
-  margin-left: -7.5rem;
-  width: 250px;
-  height: 208px;
+  margin-top: -12rem;
+  margin-left: -5.5rem;
+  width: 350px;
+  height: 308px;
 }
 
 .img-left img {
