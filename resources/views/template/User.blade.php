@@ -12,11 +12,11 @@
 
 <body>
 
-    @include('template/navbar')
+    @include('template.navbar')
 
     @yield('content')
 
-    @include('template/footer')
+    @include('template.footer')
 
 </body>
 <script src="{{asset("Js/popper.min.js")}}" async defer></script>

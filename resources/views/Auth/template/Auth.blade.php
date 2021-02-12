@@ -23,5 +23,37 @@
     const height = document.querySelector(".card-login").offsetHeight;
     document.querySelector(".rightCard").style.height = `${height}px`;
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 5000,
+    });
+</script>
+
+@if (Session::get('sukses_register'))
+<script>
+    Toast.fire({
+      icon: "success",
+      title: "Register sukses, Silahkan Login",
+    });
+</script>
+@elseif(Session::get('error_register'))
+<script>
+    Toast.fire({
+      icon: "error",
+      title: "Register Error, Silahkan coba lagi",
+    });
+</script>
+@elseif(Session::get('error_login'))
+<script>
+    Toast.fire({
+      icon: "error",
+      title: "Login Error, Silahkan coba lagi",
+    });
+</script>
+@endif
 
 </html>

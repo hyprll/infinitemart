@@ -1,6 +1,6 @@
 // alert("ok");
 $(function () {
-  if ($("#registerAccount")) {
+  if ($("#registerAccount").length > 0) {
     $("#registerAccount").on("submit", function (e) {
       if (!validateRegister()) {
         e.preventDefault();
@@ -8,8 +8,37 @@ $(function () {
         document.querySelector(".rightCard").style.height = `${height}px`;
       }
     });
+  } else if ($("#form-login").length > 0) {
+    $("#form-login").on("submit", function (e) {
+      if(!validateLogin()){
+        e.preventDefault();        
+      }
+    });
   }
 });
+
+function validateLogin() {
+  const validates = Array.from(document.querySelectorAll(".validate"));
+  let turn = true;
+  validates.map((validate, i) => {
+    const parent = validate.parentNode;
+    const input = parent.childNodes[1].childNodes[3];
+
+    const cek = justRequired(input);
+    if (cek[0]) {
+      input.classList.add("is-valid");
+      input.classList.remove("is-invalid");
+      validate.innerHTML = "";
+    } else {
+      turn = false;
+      input.classList.remove("is-valid");
+      input.classList.add("is-invalid");
+      validate.innerHTML = cek[1];
+    }
+  });
+
+  return turn;
+}
 
 function validateRegister() {
   const validates = Array.from(document.querySelectorAll(".validate"));

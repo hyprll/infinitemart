@@ -25,18 +25,38 @@
                                         <h1>Sign In for better experience</h1>
                                     </div>
                                 </div>
+                                @if (Session()->get("error_pass"))
+                                <div class="row">
+                                    <span class="text-danger">
+                                        {{Session()->get("error_pass")}}
+                                    </span>
+                                </div>
+                                @endif
                                 <div class="row mt-3">
-                                    <form action="#" method="POST">
-                                        <div class="inputValue">
-                                            <label for="username">Username</label>
-                                            <input type="text" name="username" id="username" class="mt-2 form-control"
-                                                autofocus autocomplete="off">
+                                    <form action="{{route("login_proses")}}" method="POST" id="form-login">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="inputValue">
+                                                <label for="email">Email</label>
+                                                <input type="text" name="email" id="email" class="mt-2 form-control"
+                                                    autofocus autocomplete="off">
+                                            </div>
+                                            <small class="validate text-danger">
+                                                {{Session::get('email_error_status')}}
+                                            </small>
                                         </div>
-                                        <div class="inputValue mt-3">
-                                            <label for="password">Password</label>
-                                            <input type="password" name="password" id="password"
-                                                class="mt-2 form-control" autocomplete="off">
+                                        <div class="row mt-3">
+                                            <div class="inputValue">
+                                                <label for="password">Password</label>
+                                                <input type="password" name="password" id="password"
+                                                    class="mt-2 form-control" autocomplete="off">
+                                            </div>
+                                            <small class="validate text-danger">
+                                                {{Session::get('password_error_status')}}
+                                            </small>
                                         </div>
+
+
                                         <div class="buttonValue mt-3">
                                             <button type="submit" class="btn btn-Gradient" name="submit">Sign
                                                 In</button>

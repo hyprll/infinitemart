@@ -5,14 +5,12 @@
         <div class="row d-flex align-items-center ">
             <div class="col-3 d-flex align-items-center collapse-nav-home">
                 <a class="px-3" href="#">
-                    <img src="{{asset("img/logo_transparent.png")}}" alt="InfiniteMart" class="user-select-none brand">
+                    <img src="{{asset("img/logo_banner_bg-putih.png")}}" alt="InfiniteMart" class="user-select-none brand">
                 </a>
-                <img src="{{asset("img/icon/kategori-btn.png")}}" alt="" class="user-select-none wrap-navbar-login">
-                <span class="mx-3 category">Kategori</span>
             </div>
             <div class="col-md-6 wrap-navbar-login">
                 <div class="row justify-content-center">
-                    <div class="col-11">
+                    <div class="col-12">
                         <div class="searchBarWrap p-3">
                             <input type="text" class="searchBar form-control img-fluid"
                                 placeholder="Laper Pengen Seblak">
@@ -21,17 +19,18 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-1 d-flex align-items-center">
-                        <img src="{{asset("img/icon/ikon-kẻanjang-btn.png")}}" alt=""
-                            style="transform: translateX(100%);" class="user-select-none">
-                    </div>
                 </div>
             </div>
 
             <div class="col-3 wrap-navbar-login">
                 <div class="row justify-content-end d-flex">
-                    <button class="btn btn-login">Login</button>&nbsp;&nbsp;
-                    <button class="btn btn-signup">Sign up</button>
+                    @if ($token == null)
+                    <a href="{{route("login")}}" class="btn btn-login">Login</a>&nbsp;&nbsp;
+                    <a href="{{route("register")}}" class="btn btn-signup">Sign up</a>
+                    @else
+                    <a href="#" class="btn btn-signup">Profile</a>
+                    @endif
+
                 </div>
             </div>
 
@@ -74,10 +73,16 @@
                 </div>
             </div>
             <div class="row">
+                @if ($token == null)
                 <div class="col-12 mt-3">
-                    <button class="btn btn-login">Login</button>&nbsp;&nbsp;
-                    <button class="btn btn-signup">Sign up</button>
+                    <a href="#" class="btn btn-login">Login</a>&nbsp;&nbsp;
+                    <a href="#" class="btn btn-signup">Sign up</a>
                 </div>
+                @else
+                <div class="col-12 mt-3">
+                    <a href="#" class="btn btn-signup">Toko</a>
+                </div>
+                @endif
             </div>
         </div>
 
