@@ -20,8 +20,11 @@
 <script src="{{asset("/js/auth.js")}}"></script>
 
 <script>
-    const height = document.querySelector(".card-login").offsetHeight;
-    document.querySelector(".rightCard").style.height = `${height}px`;
+    const height = document.querySelector(".card-login");
+    
+    if (height != null) {
+        document.querySelector(".rightCard").style.height = `${heigh.offsetHeight}px`;
+    }
 </script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
@@ -52,6 +55,13 @@
     Toast.fire({
       icon: "error",
       title: "Login Error, Silahkan coba lagi",
+    });
+</script>
+@elseif(Session::get('error_seller'))
+<script>
+    Toast.fire({
+      icon: "error",
+      title: "Pembuatan Toko Error, Silahkan coba lagi",
     });
 </script>
 @endif

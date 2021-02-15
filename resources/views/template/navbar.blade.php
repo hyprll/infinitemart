@@ -4,8 +4,9 @@
     <div class="container">
         <div class="row d-flex align-items-center ">
             <div class="col-3 d-flex align-items-center collapse-nav-home">
-                <a class="px-3" href="#">
-                    <img src="{{asset("img/logo_banner_bg-putih.png")}}" alt="InfiniteMart" class="user-select-none brand">
+                <a class="px-3" href="{{route("home")}}">
+                    <img src="{{asset("img/logo_banner_bg-putih.png")}}" alt="InfiniteMart"
+                        class="user-select-none brand">
                 </a>
             </div>
             <div class="col-md-6 wrap-navbar-login">
@@ -28,7 +29,12 @@
                     <a href="{{route("login")}}" class="btn btn-login">Login</a>&nbsp;&nbsp;
                     <a href="{{route("register")}}" class="btn btn-signup">Sign up</a>
                     @else
-                    <a href="#" class="btn btn-signup">Profile</a>
+                    <a href="#" class="btn btn-signup" onclick="
+                    event.preventDefault();
+                    document.querySelector('#logoutForm').submit()">Profile</a>
+                    <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
+                        @csrf
+                    </form>
                     @endif
 
                 </div>
@@ -80,7 +86,7 @@
                 </div>
                 @else
                 <div class="col-12 mt-3">
-                    <a href="#" class="btn btn-signup">Toko</a>
+                    <a href="#" class="btn btn-signup">Profile</a>
                 </div>
                 @endif
             </div>

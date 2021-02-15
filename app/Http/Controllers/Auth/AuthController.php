@@ -58,9 +58,15 @@ class AuthController extends Controller
             "token" => $result["token"],
             "data" => $result["data"]
         ];
-        
+
         session(["auth_session" => $authSession]);
         return redirect("/");
+    }
+
+    public function logout()
+    {
+        session()->forget("auth_session");
+        return redirect("/login");
     }
 
     public function register()
@@ -132,5 +138,76 @@ class AuthController extends Controller
             "style" => "/css/Seller.css"
         ];
         return view("Auth/Seller", $data);
+    }
+
+    public function seller_proses(Request $request)
+    {
+        $session = session()->get("auth_session");
+        $post_field = [];
+
+        $tmpLogo = $_FILES["logo"]['tmp_name'];
+        $filenameLogo = basename($_FILES["logo"]['name']);
+        $post_field['logo'] =  curl_file_create($tmpLogo, $_FILES["logo"]['type'], $filenameLogo);
+
+        $tmpBg = $_FILES["background"]['tmp_name'];
+        $filenameBg = basename($_FILES["background"]['name']);
+
+        $post_field['background'] =  curl_file_create($tmpBg, $_FILES["background"]['type'], $filenameBg);
+
+        $namaToko = $request->nama_toko;
+        $deskripsi = $request->deskripsi;
+        $id_user = $session['data']["id_user"];
+
+        $post_field["nama_toko"] = $namaToko;
+        $post_field["deskripsi"] = $deskripsi;
+        $post_field["id_user"] = $id_user;
+
+        $authorization = "Authorization: Bearer " . $session["token"];
+        $headers = [
+            "Content-Type" => "multipart/form-data",
+            $authorization
+        ];
+
+        $ch = curl_init();
+
+        // set url 
+        curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/toko/add");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt(
+            $ch,
+            CURLOPT_POSTFIELDS,
+            $post_field
+        );
+
+        //return the transfer as a string 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        // $output contains the output string 
+        $output = curl_exec($ch);
+
+        // tutup curl 
+        curl_close($ch);
+
+        // menampilkan hasil curl
+        $result = json_decode($output, true);
+
+        if ($result == null) {
+            $request->session()->flash("error_seller", "error");
+            return redirect("/seller");
+        }
+
+        if (isset($result['success'])) {
+            $request->session()->flash("sukses_seller", "sukses");
+            return redirect("/");
+        } else {
+            $array_keys = array_keys($result);
+            $i = 0;
+            foreach ($result as $key) {
+                $request->session()->flash("$array_keys[$i]_error_status", $key[0]);
+                $i++;
+            }
+            return redirect("/seller");
+        }
     }
 }

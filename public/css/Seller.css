@@ -10,7 +10,8 @@ body {
 
 .cardSeller {
   margin-top: 10vh;
-  height: 450px;
+  min-height: 450px;
+  padding-bottom: 2rem;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.25);
   border-left: 1px solid #fff;
@@ -19,7 +20,7 @@ body {
 }
 
 .sellerHeader {
-  margin-top: 50px;
+  margin-top: 20px;
   font-family: var(--fontFamily);
   font-size: 24px;
 }
@@ -72,7 +73,7 @@ body {
   }
 
   .sellerHeader {
-    margin-top: 90px;
+    margin-top: 50px;
     font-family: var(--fontFamily);
     font-size: 24px;
   }
@@ -93,7 +94,7 @@ body {
 
   .cardSeller {
     margin-top: 15vh;
-    height: 450px;
+    min-height: 450px;
   }
 
   .anima1 {

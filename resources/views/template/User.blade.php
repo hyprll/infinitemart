@@ -24,4 +24,22 @@
 <script src="https://code.iconify.design/1/1.0.6/iconify.min.js" async defer></script>
 <script src="{{asset("Js/Home.js")}}" async defer></script>
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 5000,
+    });
+</script>
+@if (Session::get('sukses_seller'))
+<script>
+    Toast.fire({
+      icon: "success",
+      title: "Buat Toko Sukses",
+    });
+</script>
+@endif
+
 </html>
