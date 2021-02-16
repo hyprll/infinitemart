@@ -29,12 +29,7 @@
                     <a href="{{route("login")}}" class="btn btn-login">Login</a>&nbsp;&nbsp;
                     <a href="{{route("register")}}" class="btn btn-signup">Sign up</a>
                     @else
-                    <a href="#" class="btn btn-signup" onclick="
-                    event.preventDefault();
-                    document.querySelector('#logoutForm').submit()">Profile</a>
-                    <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
-                        @csrf
-                    </form>
+                    <a href="{{route("profile")}}" class="btn btn-signup">Profile</a>
                     @endif
 
                 </div>

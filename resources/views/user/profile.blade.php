@@ -16,7 +16,9 @@
                         <i class="fa fa-pen icon-pencil" type="button"></i>
                     </div>
                     <div class="card-body">
-                        <label for="user-profil" class="user-profil">hyprll</label>
+                        <label for="user-profil" class="user-profil">
+                            {{$session["username"]}}
+                        </label>
                     </div>
                     <div class="card-body">
                         <i class="fas fa-user user-left"></i>
@@ -24,7 +26,14 @@
                         <i class="fas fa-store-alt store-left"></i>
                         <label for="label-left" class="store-card-left" type="button">Buat Toko</label>
                         <i class="fas fa-sign-in-alt logout-left"></i>
-                        <label for="label-left" class="logout-card-left" type="button">Logout</label>
+                        <label for="label-left" class="logout-card-left" type="button" onclick="
+                        event.preventDefault();
+                        document.querySelector('#logoutForm').submit()">
+                            Logout
+                        </label>
+                        <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
+                            @csrf
+                        </form>
                     </div>
                     <div class="card-body">
                         <img src="{{asset("img/character/anima5.png")}}" class="anima5">
@@ -45,17 +54,15 @@
                         <div class="row">
                             <div class="col-4">
                                 <h6>Username</h6>
-                                <label name="username" class="username">hyprll</label>
-                                <h3>Nama</h3>
-                                <input type="text" class="field-text form-control form-control-sm">
-                                <h3>Nama Email</h3>
-                                <input type="text" class="field-text form-control form-control-sm">
-                                <h3>Nama Toko</h3>
-                                <input type="text" class="field-text form-control form-control-sm">
+                                <label name="username" class="username">{{$session["username"]}}</label>
+                                <h3>Nama Depan</h3>
+                                <input type="text" class="field-text form-control form-control-sm" value="{{$session["first_name"]}}">
+                                <h3>Nama Belakang</h3>
+                                <input type="text" class="field-text form-control form-control-sm" value="{{$session["last_name"]}}">
+                                <h3>alamat Email</h3>
+                                <input type="text" class="field-text form-control form-control-sm" value="{{$session["email"]}}">
                                 <h3>No.Telepon</h3>
-                                <input type="text" class="field-text2 form-control form-control-sm">
-                                <h3>Password</h3>
-                                <input type="text" class="field-text2 form-control form-control-sm">
+                                <input type="text" class="field-text2 form-control form-control-sm" value="{{$session["phone"]}}">
                                 <form action="#" method="POST">
                                     <button type="submit" class="btn-save">Simpan</button>
                                 </form>
@@ -64,7 +71,8 @@
                                 <div class="card right-area">
                                     <div class="card-body">
                                         <div class="card-img-top text-center">
-                                            <img src="{{asset("img/DetailProduk/user.png")}}" class="imgUser" type="button">
+                                            <img src="{{asset("img/DetailProduk/user.png")}}" class="imgUser"
+                                                type="button">
                                         </div>
                                         <div class="card-img-top text-center">
                                             <i class="fa fa-pen icon-pencil" type="button"></i>
