@@ -22,207 +22,34 @@
 
     <div class="row">
 
-        <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/gelasPink.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
-
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Gelas Pink</h5>
-                        <span style="color: gold;">Rp. 45.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 55.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
-                        </div>
-                        <div class="lineSucces-Flash"></div>
-                        <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                    </div>
-                    <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                        <img src="{{asset("img/Home/ikon-bintang.png")}}" )}}" alt="">
-                        <img class="mt-2" src="{{asset("img/Home/ikon-tambah.png")}}" )}}" style="cursor: pointer;">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/jamItem.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
-
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Jam Tangan</h5>
-                        <span style="color: gold;">Rp. 172.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 210.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
-                        </div>
-                        <div class="lineSucces-Flash"></div>
-                        <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                    </div>
-                    <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                        <img src="{{asset("img/Home/ikon-bintang.png")}}" )}}" alt="">
-                        <img class="mt-2" src="{{asset("img/Home/ikon-tambah.png")}}" )}}" style="cursor: pointer;">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/gelasPink.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
-
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Gelas Pink</h5>
-                        <span style="color: gold;">Rp. 55.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 55.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
-                        </div>
-                        <div class="lineSucces-Flash"></div>
-                        <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                    </div>
-                    <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                        <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
-                        <img class="mt-2" src="{{asset("img/Home/ikon-tambah.png")}}" style="cursor: pointer;">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/kursi.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
-
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Kursi</h5>
-                        <span style="color: gold;">Rp. 63.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 77.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
-                        </div>
-                        <div class="lineSucces-Flash"></div>
-                        <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                    </div>
-                    <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                        <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
-                        <img class="mt-2" src="{{asset("img/Home/ikon-tambah.png")}}" style="cursor: pointer;">
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        @if (count($produk) > 0)
+        @foreach ($produk as $item)
 
         <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/gelasPink.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
+            <a href="{{url("/detail/" . $item['id_produk'])}}" style="text-decoration: none;color:inherit;">
+                <div class="sellerCard-Barang mb-4">
+                    <div class="topImg-seller d-flex justify-content-center">
+                        <img src="http://localhost:8080/{{$item["gambar"]}}" alt="">
+                    </div>
+                    <div class="container d-flex justify-content-between">
 
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Gelas Pink</h5>
-                        <span style="color: gold;">Rp. 45.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 55.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
+                        <div class="contentCard-Barang d-flex flex-column mt-2">
+                            <h5 class="fw-bold">{{$item["nama_produk"]}}</h5>
+                            <span style="color: gold;">Rp. {{$item["harga"]}}</span>
+                            <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
                         </div>
-                        <div class="lineSucces-Flash"></div>
-                        <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                    </div>
-                    <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                        <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
-                        <img class="mt-2" src="{{asset("img/Home/ikon-tambah.png")}}" style="cursor: pointer;">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/jamItem.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
-
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Jam Tangan</h5>
-                        <span style="color: gold;">Rp. 172.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 210.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
+                        <div class="contentCard-Barang d-flex flex-column justify-content-center">
+                            <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
                         </div>
-                        <div class="lineSucces-Flash"></div>
-                        <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                    </div>
-                    <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                        <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
-                        <img class="mt-2" src="{{asset("img/Home/ikon-tambah.png")}}" style="cursor: pointer;">
-                    </div>
 
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
-        <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/gelasPink.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
 
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Gelas Pink</h5>
-                        <span style="color: gold;">Rp. 55.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 55.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
-                        </div>
-                        <div class="lineSucces-Flash"></div>
-                        <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                    </div>
-                    <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                        <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
-                        <img class="mt-2" src="{{asset("img/Home/ikon-tambah.png")}}" style="cursor: pointer;">
-                    </div>
+        @endforeach
+        @endif
 
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/kursi.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
-
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Kursi</h5>
-                        <span style="color: gold;">Rp. 63.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 77.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
-                        </div>
-                        <div class="lineSucces-Flash"></div>
-                        <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                    </div>
-                    <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                        <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
-                        <img class="mt-2" src="{{asset("img/Home/ikon-tambah.png")}}" style="cursor: pointer;">
-                    </div>
-
-                </div>
-            </div>
-        </div>
     </div>
     <div class="btnSelengkapnya d-flex justify-content-center mt-5 ">
         <button type="submit" class="btn btn-Selengkapnya text-white mb-3">Selengkapnya <img

@@ -10,7 +10,7 @@
             <div class="card left-area">
                 <div class="card-body">
                     <div class="card-img-top text-center">
-                        <img src="{{asset("img/DetailProduk/user.png")}}" type="button">
+                        <img src="{{asset("img/DetailProduk/user.png")}}" type="button" class="user-select-none">
                     </div>
                     <div class="card-img-top text-center">
                         <i class="fa fa-pen icon-pencil" type="button"></i>
@@ -22,9 +22,9 @@
                     </div>
                     <div class="card-body">
                         <i class="fas fa-user user-left"></i>
-                        <label for="label-left" class="profile-card-left" type="button">My Profile</label>
+                        <a href="{{route("profile")}}" class="profile-card-left" type="button">My Profile</a>
                         <i class="fas fa-store-alt store-left"></i>
-                        <label for="label-left" class="store-card-left" type="button">Buat Toko</label>
+                        <a href="{{route("seller")}}" class="store-card-left" type="button">Buat Toko</a>
                         <i class="fas fa-sign-in-alt logout-left"></i>
                         <label for="label-left" class="logout-card-left" type="button" onclick="
                         event.preventDefault();
@@ -36,7 +36,7 @@
                         </form>
                     </div>
                     <div class="card-body">
-                        <img src="{{asset("img/character/anima5.png")}}" class="anima5">
+                        <img src="{{asset("img/character/anima5.png")}}" class="anima5 user-select-none">
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                                 <div class="card right-area">
                                     <div class="card-body">
                                         <div class="card-img-top text-center">
-                                            <img src="{{asset("img/DetailProduk/user.png")}}" class="imgUser"
+                                            <img src="{{asset("img/DetailProduk/user.png")}}" class="imgUser user-select-none"
                                                 type="button">
                                         </div>
                                         <div class="card-img-top text-center">

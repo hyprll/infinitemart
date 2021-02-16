@@ -249,6 +249,8 @@ h6 {
 .profile-card-left {
   position: absolute;
   margin-top: 4px;
+  text-decoration: none;
+  color: inherit;
   margin-left: 45px;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
@@ -258,6 +260,8 @@ h6 {
   position: absolute;
   margin-top: 40px;
   margin-left: 45px;
+  text-decoration: none;
+  color: inherit;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 600;
