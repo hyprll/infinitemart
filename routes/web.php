@@ -3,6 +3,7 @@
 use App\Http\Controllers\auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::post("/register", [AuthController::class, "regist_proses"])->name("regist
 
 Route::group(["middleware" => ["auth.q"]], function () {
     Route::get("/seller", [AuthController::class, "seller"])->name("seller");
+    Route::get("/profile", [ProfileController::class, "index"])->name("profile");
     Route::post("/seller", [AuthController::class, "seller_proses"])->name("seller_proses");
     Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 });

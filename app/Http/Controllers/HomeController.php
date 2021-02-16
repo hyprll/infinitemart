@@ -13,12 +13,14 @@ class HomeController extends Controller
         if ($session != null) {
             $data = [
                 "token" => $session["token"],
-                "session" => $session["data"]
+                "session" => $session["data"],
+                "css" => "home.css"
             ];
         } else {
             $data = [
                 "token" => null,
-                "session" => null
+                "session" => null,
+                "css" => "home.css"
             ];
         }
 

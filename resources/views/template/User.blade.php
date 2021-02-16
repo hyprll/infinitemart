@@ -7,7 +7,7 @@
     <title>@yield('title')</title>
     <link rel='stylesheet' href='{{asset("css/bootstrap.min.css")}}'>
     <link rel="icon" href="{{asset("img/logo_transparent.png")}}">
-    <link rel="stylesheet" href="{{asset("css/home.css")}}">
+    <link rel="stylesheet" href="{{asset("css/".$css)}}">
 </head>
 
 <body>
@@ -23,6 +23,7 @@
 <script src="{{asset("Js/bootstrap.min.js")}}" async defer></script>
 <script src="https://code.iconify.design/1/1.0.6/iconify.min.js" async defer></script>
 <script src="{{asset("Js/Home.js")}}" async defer></script>
+<script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous" async defer></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
