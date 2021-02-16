@@ -3,6 +3,7 @@
 use App\Http\Controllers\auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -17,6 +18,7 @@ use App\Http\Controllers\ProfileController;
 */
 
 Route::get('/', [HomeController::class, "index"])->name("home");
+Route::get('/detail/{id}', [ProdukController::class, "detail"]);
 
 Route::get("/login", [AuthController::class, "login"])->name("login");
 Route::post("/login", [AuthController::class, "login_proses"])->name("login_proses");
