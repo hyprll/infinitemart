@@ -7,8 +7,10 @@
 <!-- * Header -->
 
 <div class="container d-flex flex-column mt-5">
-    <div class="headerCarousel">
-
+    <div class="headerCarousel owl-carousel">
+        <img src="{{asset("/img/header/car1.jpg")}}" alt="" class="carausel-img">
+        <img src="{{asset("/img/header/car2.jpg")}}" alt="" class="carausel-img">
+        <img src="{{asset("/img/header/car3.jpg")}}" alt="" class="carausel-img">
     </div>
     <div class="slideIconCarousel mb-2 mt-3 d-flex"></div>
 </div>
@@ -19,6 +21,11 @@
 <!-- * Produk -->
 
 <div class="container mt-5">
+
+    <div class="row">
+        <h3>Rekomendasi Untuk Kamu</h3>
+        <hr>
+    </div>
 
     <div class="row">
 

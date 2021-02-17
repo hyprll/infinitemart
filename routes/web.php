@@ -19,6 +19,8 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, "index"])->name("home");
 Route::get('/detail/{id}', [ProdukController::class, "detail"]);
+Route::get('/toko/add', [ProdukController::class, "tambahProduk"]);
+Route::get('/toko/{id}', [HomeController::class, "toko"]);
 
 Route::get("/login", [AuthController::class, "login"])->name("login");
 Route::post("/login", [AuthController::class, "login_proses"])->name("login_proses");

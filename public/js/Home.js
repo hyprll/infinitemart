@@ -1,43 +1,12 @@
-const BASE_URL = `http://127.0.0.1:8000`;
-
-const dataHeader = [
-  {
-    img: `${BASE_URL}/img/header/car1.jpg`,
-    title: "Car 1",
-  },
-  {
-    img: `${BASE_URL}/img/header/car2.jpg`,
-    title: "Car 2",
-  },
-  {
-    img: `${BASE_URL}/img/header/car3.jpg`,
-    title: "Car 3",
-  },
-];
-
-const carWrap = document.querySelector(".headerCarousel");
-const dotWrap = document.querySelector(".slideIconCarousel");
-let caraosel = "";
-let dot = "";
-dataHeader.map((data, i) => {
-  if (i == 0) {
-    caraosel += `<img src="${data.img}" alt="${data.title}" class="carausel-img">`;
-    dot += `<div class="slider active"></div>`;
-  } else {
-    caraosel += `<img src="${data.img}" alt="${data.title}" class="carausel-img" style="margin-left:100%">`;
-    dot += `<div class="slider"></div>`;
-  }
+$(".headerCarousel").owlCarousel({
+  center: true,
+  margin: 100,
+  loop: true,
+  autoWidth: true,
+  items: 4,
+  autoplay: true,
+  autoplayTimeout: 5000,
 });
-
-if (carWrap !== null && dotWrap !== null) {
-  carWrap.innerHTML = caraosel;
-  dotWrap.innerHTML = dot;
-}
-
-let cek = 0;
-setInterval(() => {
-  startCaraosel();
-}, 5000);
 
 function startCaraosel() {
   const cards = Array.from(document.querySelectorAll(".carausel-img"));

@@ -44,4 +44,25 @@ class HomeController extends Controller
 
         return view("user/home", $data);
     }
+
+    public function toko()
+    {
+        $session = session()->get("auth_session");
+
+        if ($session != null) {
+            $data = [
+                "token" => $session["token"],
+                "session" => $session["data"],
+                "css" => "dashboard.css"
+            ];
+        } else {
+            $data = [
+                "token" => null,
+                "session" => null,
+                "css" => "dashboard.css"
+            ];
+        }
+
+        return view("user/toko", $data);
+    }
 }

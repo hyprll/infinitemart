@@ -83,4 +83,25 @@ class ProdukController extends Controller
 
         return view("user.detail", $data);
     }
+
+    public function tambahProduk()
+    {
+        $session = session()->get("auth_session");
+
+        if ($session != null) {
+            $data = [
+                "token" => $session["token"],
+                "session" => $session["data"],
+                "css" => "tambahProduk.css"
+            ];
+        } else {
+            $data = [
+                "token" => null,
+                "session" => null,
+                "css" => "tambahProduk.css"
+            ];
+        }
+
+        return view("user/tambahProduk", $data);
+    }
 }
