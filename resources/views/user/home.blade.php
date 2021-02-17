@@ -35,7 +35,8 @@
 
                         <div class="contentCard-Barang d-flex flex-column mt-2">
                             <h5 class="fw-bold">{{$item["nama_produk"]}}</h5>
-                            <span style="color: gold;">Rp. {{$item["harga"]}}</span>
+                            <span style="color: gold;" class="stuff-fare" data-fare="{{$item["harga"]}}">Rp.
+                                {{$item["harga"]}}</span>
                             <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
                         </div>
                         <div class="contentCard-Barang d-flex flex-column justify-content-center">

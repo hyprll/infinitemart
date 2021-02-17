@@ -29,8 +29,10 @@ dataHeader.map((data, i) => {
   }
 });
 
-carWrap.innerHTML = caraosel;
-dotWrap.innerHTML = dot;
+if (carWrap !== null && dotWrap !== null) {
+  carWrap.innerHTML = caraosel;
+  dotWrap.innerHTML = dot;
+}
 
 let cek = 0;
 setInterval(() => {
@@ -60,4 +62,13 @@ function startCaraosel() {
     cardNow.style.position = "absolute";
     cardNow.style.marginLeft = "100%";
   }, 500);
+}
+
+const harga = Array.from(document.querySelectorAll(".stuff-fare"));
+const formatter = new FormatMoney();
+
+if (harga.length > 0) {
+  harga.map((h) => {
+    h.innerHTML = formatter.toRupiah(h.dataset.fare);
+  });
 }

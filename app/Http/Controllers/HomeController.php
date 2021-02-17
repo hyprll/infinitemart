@@ -22,8 +22,9 @@ class HomeController extends Controller
 
         $result = json_decode($output, true);
 
-        ($result['success']) ? $produk = $result["data"] : $produk = [];
-        // dd($produk);
+        if ($result != null) {
+            ($result['success']) ? $produk = $result["data"] : $produk = [];
+        }
 
         if ($session != null) {
             $data = [
