@@ -36,18 +36,15 @@
             <a href="{{url("/detail/" . $item['id_produk'])}}" style="text-decoration: none;color:inherit;">
                 <div class="sellerCard-Barang mb-4">
                     <div class="topImg-seller d-flex justify-content-center">
-                        <img src="http://localhost:8080/{{$item["gambar"]}}" alt="">
+                        <img src="http://localhost:8080/uploads/produk/{{$item["gambar"]}}" alt="" height="250px">
                     </div>
                     <div class="container d-flex justify-content-between">
 
-                        <div class="contentCard-Barang d-flex flex-column mt-2">
+                        <div class="contentCard-Barang d-flex flex-column mt-3">
                             <h5 class="fw-bold">{{$item["nama_produk"]}}</h5>
                             <span style="color: gold;" class="stuff-fare" data-fare="{{$item["harga"]}}">Rp.
                                 {{$item["harga"]}}</span>
                             <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                        </div>
-                        <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                            <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
                         </div>
 
                     </div>

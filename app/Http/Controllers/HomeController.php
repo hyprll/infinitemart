@@ -45,21 +45,40 @@ class HomeController extends Controller
         return view("user/home", $data);
     }
 
-    public function toko()
+    public function toko($id)
     {
         $session = session()->get("auth_session");
+        $toko = [];
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/toko/" . $id);
+        //return the transfer as a string 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        // $output contains the output string 
+        $output = curl_exec($ch);
+        $result = json_decode($output, true);
+        if ($result !== null) {
+            $result['success'] ? $toko = $result['data'][0] : $toko = [];
+        }
+
+        if (!$result["success"]) {
+            return redirect(url("/"));
+        }
 
         if ($session != null) {
             $data = [
                 "token" => $session["token"],
                 "session" => $session["data"],
-                "css" => "dashboard.css"
+                "css" => "dashboard.css",
+                "toko" => $toko
             ];
         } else {
             $data = [
                 "token" => null,
                 "session" => null,
-                "css" => "dashboard.css"
+                "css" => "dashboard.css",
+                "toko" => $toko
             ];
         }
 

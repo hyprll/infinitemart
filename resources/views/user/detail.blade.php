@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="DetailImg-Barang d-flex justify-content-center">
-                            <img src="http://localhost:8080/{{$produk[0]["gambar"]}}" class="img-fluid">
+                            <img src="http://localhost:8080/uploads/produk/{{$produk[0]["gambar"]}}" class="img-fluid">
                         </div>
                     </div>
                     <div class="col-md-7">
@@ -76,7 +76,7 @@
                 <div class="cardToko ">
                     <div class="container d-flex flex-column">
                         <div class="imgTopToko d-flex justify-content-center">
-                            <img class="img-fluid" src="http://localhost:8080/uploads/toko/{{$toko[0]["logo"]}}" alt="">
+                            <img class="img-fluid rounded-circle mb-3" src="http://localhost:8080/uploads/toko/{{$toko[0]["logo"]}}" alt="">
                         </div>
                         <div class="contentToko d-flex justify-content-center">
                             <span class="text-center">{{$toko[0]["nama_toko"]}}</span>
@@ -113,18 +113,15 @@
             <a href="{{url("/detail/" . $item['id_produk'])}}" style="text-decoration: none;color:inherit;">
                 <div class="sellerCard-Barang mb-4">
                     <div class="topImg-seller d-flex justify-content-center">
-                        <img src="http://localhost:8080/{{$item["gambar"]}}" alt="">
+                        <img src="http://localhost:8080/uploads/produk/{{$item["gambar"]}}" alt="" height="250px">
                     </div>
                     <div class="container d-flex justify-content-between">
 
-                        <div class="contentCard-Barang d-flex flex-column mt-2">
+                        <div class="contentCard-Barang d-flex flex-column mt-3">
                             <h5 class="fw-bold">{{$item["nama_produk"]}}</h5>
                             <span style="color: gold;" class="stuff-fare" data-fare="{{$item["harga"]}}">Rp.
                                 {{$item["harga"]}}</span>
                             <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
-                        </div>
-                        <div class="contentCard-Barang d-flex flex-column justify-content-center">
-                            <img src="{{asset("img/Home/ikon-bintang.png")}}" alt="">
                         </div>
 
                     </div>

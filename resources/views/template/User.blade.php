@@ -49,6 +49,20 @@
       title: "Buat Toko Sukses",
     });
 </script>
+@elseif(Session::get('sukses_produk'))
+<script>
+    Toast.fire({
+      icon: "success",
+      title: "Tambah Produk Sukses",
+    });
+</script>
+@elseif(Session::get('error_produk'))
+<script>
+    Toast.fire({
+      icon: "error",
+      title: "Tambah Produk Gagal",
+    });
+</script>
 @endif
 
 </html>

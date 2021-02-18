@@ -7,7 +7,7 @@
 <!-- * Header -->
 
 <div class="headerCarousel2">
-    <img src="{{asset("img/Home/bg-Produk.png")}}">
+    <img src="http://localhost:8080/uploads/toko/{{$toko['background']}}" class="w-100 img-fluid">
 </div>
 
 <!-- /Header -->
@@ -16,13 +16,16 @@
     <div class="col-md-12">
         <div class="infoHeader">
             <div class="ProfileImgToko d-flex justify-content-center align-items-center">
-                <img src="{{asset("img/DetailProduk/User.png")}}" alt="">
+                <img src="http://localhost:8080/uploads/toko/{{$toko['logo']}}" alt="" class="rounded-circle">
             </div>
             <div class="row mt-5 px-3">
-                <h4>Nama Toko</h4>
-                <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam sequi veniam voluptas nemo
-                    atque cumque enim distinctio, quisquam tenetur ratione totam non, officiis, laborum magnam excepturi
-                    minus quis perferendis deserunt.</span>
+                <h4>{{$toko['nama_toko']}}</h4>
+                <span>{{$toko['deskripsi']}}</span>
+            </div>
+            <div class="row mt-3 px-3">
+                <div class="col">
+                    <a href="{{route("tambahProduk")}}" class="btn btn-success">Tambah produk</a>
+                </div>
             </div>
         </div>
     </div>
