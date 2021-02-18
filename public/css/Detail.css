@@ -137,7 +137,9 @@ body {
   height: 75px;
 }
 
-.contentToko span {
+.contentToko a {
+  text-decoration: none;
+  color: inherit;
   background: var(--bgWelcome);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -215,7 +217,6 @@ body {
   font-size: 13px;
   color: #c4c4c4;
 }
-
 
 /* * Phone */
 @media (min-width: 0px) and (max-width: 765px) {

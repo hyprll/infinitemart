@@ -28,7 +28,12 @@ class ProdukController extends Controller
         if ($result != null) {
             ($result['success']) ? $produk = $result["data"] : $produk = [];
         }
-        // dd($produk);
+
+        if (!$result["success"]) {
+            return redirect("/");
+        }
+        
+        
         if (count($produk) > 0) {
             $ch2 = curl_init();
 

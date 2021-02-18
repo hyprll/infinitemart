@@ -6,7 +6,7 @@
 
 <!-- * Header -->
 
-<div class="headerCarousel2">
+<div class="headerCarousel3">
     <img src="http://localhost:8080/uploads/toko/{{$toko['background']}}" class="w-100 img-fluid">
 </div>
 
@@ -22,11 +22,15 @@
                 <h4>{{$toko['nama_toko']}}</h4>
                 <span>{{$toko['deskripsi']}}</span>
             </div>
+            @if ($session !== null)
+            @if ($session["id_user"] == $toko["id_user"])
             <div class="row mt-3 px-3">
                 <div class="col">
                     <a href="{{route("tambahProduk")}}" class="btn btn-success">Tambah produk</a>
                 </div>
             </div>
+            @endif
+            @endif
         </div>
     </div>
 </div>

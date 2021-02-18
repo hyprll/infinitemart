@@ -76,10 +76,12 @@
                 <div class="cardToko ">
                     <div class="container d-flex flex-column">
                         <div class="imgTopToko d-flex justify-content-center">
-                            <img class="img-fluid rounded-circle mb-3" src="http://localhost:8080/uploads/toko/{{$toko[0]["logo"]}}" alt="">
+                            <img class="img-fluid rounded-circle mb-3"
+                                src="http://localhost:8080/uploads/toko/{{$toko[0]["logo"]}}" alt="">
                         </div>
                         <div class="contentToko d-flex justify-content-center">
-                            <span class="text-center">{{$toko[0]["nama_toko"]}}</span>
+                            <a href="{{url("toko/".$toko[0]['id_toko'])}}"
+                                class="text-center">{{$toko[0]["nama_toko"]}}</a>
                         </div>
                         <div class="locationToko d-flex flex-column mt-3">
                             <span class="text-center">
