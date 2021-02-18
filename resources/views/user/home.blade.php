@@ -6,13 +6,17 @@
 
 <!-- * Header -->
 
-<div class="container d-flex flex-column mt-5">
-    <div class="headerCarousel owl-carousel">
-        <img src="{{asset("/img/header/car1.jpg")}}" alt="" class="carausel-img">
-        <img src="{{asset("/img/header/car2.jpg")}}" alt="" class="carausel-img">
-        <img src="{{asset("/img/header/car3.jpg")}}" alt="" class="carausel-img">
+<div class="container mt-5">
+    <div class="row headerCarousel2 owl-carousel">
+        <img src="{{asset("/img/header/banner1.jpg")}}" alt="" class="carausel-img">
+        <img src="{{asset("/img/header/banner2.png")}}" alt="" class="carausel-img">
+        <img src="{{asset("/img/header/banner3.png")}}" alt="" class="carausel-img">
     </div>
-    <div class="slideIconCarousel mb-2 mt-3 d-flex"></div>
+    {{-- <div class="headerCarousel owl-carousel">
+        <div class="carausel-img">
+            Lorem ipsum dolor sit
+        </div>
+    </div> --}}
 </div>
 
 <!-- /Header -->

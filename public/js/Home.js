@@ -1,10 +1,10 @@
-if ($(".headerCarousel")) {
-  $(".headerCarousel").owlCarousel({
-    center: true,
-    margin: 100,
+if ($(".headerCarousel2")) {
+  $(".headerCarousel2").owlCarousel({
+    center: false,
+    margin: 0,
     loop: true,
     autoWidth: true,
-    items: 4,
+    items: 3,
     autoplay: true,
     autoplayTimeout: 5000,
   });
