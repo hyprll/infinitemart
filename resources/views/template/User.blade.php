@@ -57,6 +57,13 @@
       title: "Tambah Produk Sukses",
     });
 </script>
+@elseif(Session::get('sukses_update_produk'))
+<script>
+    Toast.fire({
+      icon: "success",
+      title: "Update Produk Sukses",
+    });
+</script>
 @elseif(Session::get('sukses_delete_produk'))
 <script>
     Toast.fire({
@@ -69,6 +76,13 @@
     Toast.fire({
       icon: "error",
       title: "Tambah Produk Gagal",
+    });
+</script>
+@elseif(Session::get('error_update_produk'))
+<script>
+    Toast.fire({
+      icon: "error",
+      title: "Update Produk Gagal",
     });
 </script>
 @endif

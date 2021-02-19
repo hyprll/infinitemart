@@ -24,7 +24,9 @@ Route::group(["middleware" => ["auth.q"]], function () {
 
 Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], function () {
     Route::get('/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
+    Route::get('/edit/{id_produk}', [ProdukController::class, "edit"]);
     Route::post('/add', [ProdukController::class, "tambahProdukProses"])->name("tambahProdukProses");
+    Route::post('/edit', [ProdukController::class, "editProdukProses"])->name("editProdukProses");
     Route::post('/delete', [ProdukController::class, "delete_produk"]);
 });
 

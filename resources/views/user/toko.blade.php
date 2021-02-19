@@ -90,6 +90,8 @@
             </div>
         </div>
         @endforeach
+        @else 
+        <h3 class="text-center my-5">Tidak Ada Produk Yang Tersedia</h3>
         @endif
 
     </div>

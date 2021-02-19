@@ -81,10 +81,6 @@ class HomeController extends Controller
             $result['success'] ? $produk = $result['data'] : $produk = [];
         }
 
-        if (!$result["success"]) {
-            return redirect(url("/"));
-        }
-
         if ($session != null) {
             $data = [
                 "token" => $session["token"],
