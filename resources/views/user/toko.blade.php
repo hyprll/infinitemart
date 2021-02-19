@@ -64,6 +64,8 @@
                     </div>
                 </a>
 
+                @if ($session !== null)
+                @if ($session["id_user"] == $toko["id_user"])
                 <div class="container mb-3">
                     <div class="row g-1">
                         <div class="col-9">
@@ -71,12 +73,19 @@
                                 Barang</a>
                         </div>
                         <div class="col-3">
-                            <a href="{{url("toko/delete/".$key["id_produk"])}}" class="btn btn-danger w-100">
+                            <a href="" class="btn btn-danger w-100 btn-delete">
                                 <i class="fa fa-trash-alt"></i>
                             </a>
+                            <form action="{{url("toko/delete")}}" method="post">
+                                @csrf
+                                <input type="hidden" name="id_toko" value="{{$toko['id_toko']}}">
+                                <input type="hidden" name="id_produk" value="{{$key["id_produk"]}}">
+                            </form>
                         </div>
                     </div>
                 </div>
+                @endif
+                @endif
 
             </div>
         </div>

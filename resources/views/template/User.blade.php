@@ -57,6 +57,13 @@
       title: "Tambah Produk Sukses",
     });
 </script>
+@elseif(Session::get('sukses_delete_produk'))
+<script>
+    Toast.fire({
+      icon: "success",
+      title: "Hapus Produk Sukses",
+    });
+</script>
 @elseif(Session::get('error_produk'))
 <script>
     Toast.fire({

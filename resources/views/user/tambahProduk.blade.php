@@ -26,7 +26,7 @@
                                 <input type="file" name="main_img" class="d-none" id="main_img"
                                     accept="image/jpg,image/png,image/jpeg"><br>
                                 <small class="validation text-danger">
-
+                                    {{Session::get('gambar_error_status')}}
                                 </small>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                                 <input type="file" name="other_img" class="d-none" id="other_img"
                                     accept="image/jpg,image/png,image/jpeg"><br>
                                 <small class="validation text-danger">
-
+                                    {{Session::get('gambar_lain_error_status')}}
                                 </small>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                     <label for="" class="mb-2">Nama Produk</label>
                                     <input type="text" class="form-control" name="NamaProduk" placeholder="Nama Produk">
                                     <small class="validation text-danger">
-
+                                        {{Session::get('nama_produk_error_status')}}
                                     </small>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                             onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                                     </div>
                                     <small class="validation text-danger">
-
+                                        {{Session::get('harga_error_status')}}
                                     </small>
                                 </div>
                             </div>
@@ -105,6 +105,9 @@
                                 @php($i++)
                                 @endforeach
                                 @endif
+                                <small class="text-danger">
+                                    {{Session::get('user_beli_error_status')}}
+                                </small>
                             </div>
                         </div>
                     </div>

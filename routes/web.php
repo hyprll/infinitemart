@@ -22,9 +22,10 @@ Route::group(["middleware" => ["auth.q"]], function () {
     Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 });
 
-Route::group(["middleware" => ["auth.q", "hasStore"]], function () {
-    Route::get('/toko/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
-    Route::post('/toko/add', [ProdukController::class, "tambahProdukProses"])->name("tambahProdukProses");
+Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], function () {
+    Route::get('/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
+    Route::post('/add', [ProdukController::class, "tambahProdukProses"])->name("tambahProdukProses");
+    Route::post('/delete', [ProdukController::class, "delete_produk"]);
 });
 
 Route::group(["middleware" => ["auth.q", "noStore"]], function () {

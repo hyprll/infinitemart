@@ -32,8 +32,8 @@ class ProdukController extends Controller
         if (!$result["success"]) {
             return redirect("/");
         }
-        
-        
+
+
         if (count($produk) > 0) {
             $ch2 = curl_init();
 
@@ -213,16 +213,9 @@ class ProdukController extends Controller
             $post_field
         );
 
-        //return the transfer as a string 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        // $output contains the output string 
         $output = curl_exec($ch);
-
-        // tutup curl 
         curl_close($ch);
-
-        // menampilkan hasil curl
         $result = json_decode($output, true);
 
         if ($result == null) {
@@ -242,5 +235,50 @@ class ProdukController extends Controller
             }
             return redirect("/toko/add");
         }
+    }
+
+    public function delete_produk(Request $request)
+    {
+        $session = session()->get("auth_session");
+
+        $id_produk = $request->id_produk;
+        $id_toko = $request->id_toko;
+
+
+        // * cek apakah produk ini dimiliki oleh toko
+        $ch = curl_init();
+
+        // set url 
+        curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/produk/" . $id_produk);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($output, true);
+        if ($result != null) {
+            if ($result['success']) {
+                if ($result['data'][0]["id_toko"] != $id_toko) {
+                    return redirect("toko/" . $id_toko);
+                }
+            }
+        }
+
+        // * Delete Produk
+        $ch = curl_init();
+        $authorization = "Authorization: Bearer " . $session["token"];
+        $headers = [
+            $authorization
+        ];
+
+        curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/produk/delete?id_produk=" . $id_produk);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $output = curl_exec($ch);
+
+        $result = json_decode($output, true);
+        $request->session()->flash("sukses_delete_produk", "sukses");
+
+        return redirect("/toko/" . $id_toko);
     }
 }

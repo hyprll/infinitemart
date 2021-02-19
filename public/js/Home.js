@@ -117,3 +117,27 @@ if (harga.length > 0) {
     h.innerHTML = formatter.toRupiah(h.dataset.fare);
   });
 }
+
+const btn_delete = Array.from(document.querySelectorAll(".btn-delete"));
+
+if (btn_delete.length != 0) {
+  btn_delete.map((bd) => {
+    bd.addEventListener("click", function (e) {
+      e.preventDefault();
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const form = bd.parentNode.childNodes[3];
+          form.submit();
+        }
+      });
+    });
+  });
+}
