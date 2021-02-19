@@ -41,25 +41,48 @@
         <hr>
     </div>
     <div class="row">
+        @if ($produk)
+        @foreach ($produk as $key)
         <div class="col-md-3">
-            <div class="sellerCard-Barang mb-4">
-                <div class="topImg-seller d-flex justify-content-center">
-                    <img src="{{asset("img/Produk/gelasPink.png")}}" alt="">
-                </div>
-                <div class="container d-flex justify-content-between">
 
-                    <div class="contentCard-Barang d-flex flex-column mt-2">
-                        <h5 class="fw-bold">Gelas Pink</h5>
-                        <span style="color: gold;">Rp. 55.000</span>
-                        <div class="setDiskon-Flash">
-                            <span>Rp. 55.000</span>
-                            <span class="fw-bold text-danger">18% OFF</span>
+            <div class="sellerCard-Barang mb-4 pb-3">
+                <a href="{{url("/detail/" . $key['id_produk'])}}" style="text-decoration: none;color:inherit;">
+                    <div class="topImg-seller d-flex justify-content-center">
+                        <img src="http://localhost:8080/uploads/produk/{{$key["gambar"]}}"
+                            alt="InfiniteMart {{$key["nama_produk"]}}" height="250px" class="user-select-none">
+                    </div>
+                    <div class="container d-flex justify-content-between">
+
+                        <div class="contentCard-Barang d-flex flex-column mt-2">
+                            <h5 class="fw-bold">{{$key["nama_produk"]}}</h5>
+                            <span class="stuff-fare" data-fare="{{$key["harga"]}}" style="color: gold;">
+                                {{$key["harga"]}}
+                            </span>
+                            <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
                         </div>
-                        <div class="lineSucces-Flash mb-3 mt-2"></div>
+
+                    </div>
+                </a>
+
+                <div class="container mb-3">
+                    <div class="row g-1">
+                        <div class="col-9">
+                            <a href="{{url("toko/edit/".$key["id_produk"])}}" class="btn btn-primary w-100">Edit
+                                Barang</a>
+                        </div>
+                        <div class="col-3">
+                            <a href="{{url("toko/delete/".$key["id_produk"])}}" class="btn btn-danger w-100">
+                                <i class="fa fa-trash-alt"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
+        @endforeach
+        @endif
+
     </div>
 </div>
 

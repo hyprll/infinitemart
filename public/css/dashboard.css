@@ -14,6 +14,11 @@ body {
   overflow-x: hidden;
 }
 
+.StokTersedia {
+  font-size: 13px;
+  color: #c4c4c4;
+}
+
 .slider {
   width: 20px;
   transition: 0.5s;

@@ -40,7 +40,7 @@
             <a href="{{url("/detail/" . $item['id_produk'])}}" style="text-decoration: none;color:inherit;">
                 <div class="sellerCard-Barang mb-4">
                     <div class="topImg-seller d-flex justify-content-center">
-                        <img src="http://localhost:8080/uploads/produk/{{$item["gambar"]}}" alt="" height="250px">
+                        <img src="http://localhost:8080/uploads/produk/{{$item["gambar"]}}" alt="InfiniteMart {{$item["nama_produk"]}}" height="250px" class="user-select-none">
                     </div>
                     <div class="container d-flex justify-content-between">
 
