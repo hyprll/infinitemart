@@ -48,8 +48,12 @@ function validateLogin() {
   validates.map((validate, i) => {
     const parent = validate.parentNode;
     const input = parent.childNodes[1].childNodes[3];
-
-    const cek = justRequired(input);
+    let cek = [];
+    if (i == 1) {
+      cek = justRequiredAndMin(input, 6);
+    } else {
+      cek = justRequired(input);
+    }
     if (cek[0]) {
       input.classList.add("is-valid");
       input.classList.remove("is-invalid");

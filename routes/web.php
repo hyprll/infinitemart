@@ -39,7 +39,9 @@ Route::get('/', [HomeController::class, "index"])->name("home");
 Route::get('/detail/{id}', [ProdukController::class, "detail"]);
 Route::get('/toko/{id}', [HomeController::class, "toko"]);
 
-Route::get("/login", [AuthController::class, "login"])->name("login");
-Route::post("/login", [AuthController::class, "login_proses"])->name("login_proses");
-Route::get("/register", [AuthController::class, "register"])->name("register");
-Route::post("/register", [AuthController::class, "regist_proses"])->name("regist_proses");
+Route::group(["middleware" => ["not_auth.q"]], function () {
+    Route::get("/login", [AuthController::class, "login"])->name("login");
+    Route::post("/login", [AuthController::class, "login_proses"])->name("login_proses");
+    Route::get("/register", [AuthController::class, "register"])->name("register");
+    Route::post("/register", [AuthController::class, "regist_proses"])->name("regist_proses");
+});
