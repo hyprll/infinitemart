@@ -90,6 +90,11 @@ class AuthController extends Controller
         $country_code = $request->country_code;
         $address = $request->address;
 
+
+        $explode_country = explode("(", $country_code);
+        $explode_country2 = explode(")", $explode_country[1]);
+        $final_explode = $explode_country2[0];
+
         $ch = curl_init();
 
         // set url 
@@ -98,7 +103,7 @@ class AuthController extends Controller
         curl_setopt(
             $ch,
             CURLOPT_POSTFIELDS,
-            "username=$username&email=$email&role=1&first_name=$firstName&last_name=$lastName&password=$password&phone=$PhoneNumber&city=$kota&postal_code=$postal_code&country_code=$country_code&address=$address"
+            "username=$username&email=$email&role=1&first_name=$firstName&last_name=$lastName&password=$password&phone=$PhoneNumber&city=$kota&postal_code=$postal_code&country_code=$final_explode&address=$address"
         );
 
         //return the transfer as a string 

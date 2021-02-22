@@ -134,12 +134,19 @@
                                             <div class="col-md-6">
                                                 <div class="inputValue">
                                                     <label for="country_code">Code Negara</label>
-                                                    <input type="text" name="country_code" id="country_code"
-                                                        class="mt-2 form-control" value="{{ old('country_code') }}">
+                                                    <input class="form-control mt-2" list="dataCountry"
+                                                        name="country_code" id="country_code" autocomplete="off">
+                                                    <datalist id="dataCountry">
+                                                        <option value="San Francisco">
+                                                        <option value="New York">
+                                                        <option value="Seattle">
+                                                        <option value="Los Angeles">
+                                                        <option value="Chicago">
+                                                    </datalist>
                                                 </div>
-                                                <small class="validate text-danger">
+                                                {{-- <small class="validate text-danger">
                                                     {{Session::get('country_code_error_status')}}
-                                                </small>
+                                                </small> --}}
                                             </div>
                                         </div>
 

@@ -8,6 +8,25 @@ $(function () {
         document.querySelector(".rightCard").style.height = `${height}px`;
       }
     });
+
+    $.ajax({
+      url: "https://restcountries.eu/rest/v2/all",
+      type: "GET",
+      method: "GET",
+      success: function (responses) {
+        // console.log(responses);
+        let handler = "";
+        responses.map((response) => {
+          const name = response.name;
+          const code = response.alpha3Code;
+          handler += /* html */ `
+            <option value=" ${name} (${code}) ">
+          `;
+        });
+
+        document.getElementById("dataCountry").innerHTML = handler;
+      },
+    });
   } else if ($("#form-login").length > 0) {
     $("#form-login").on("submit", function (e) {
       if (!validateLogin()) {
