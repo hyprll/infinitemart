@@ -23,6 +23,8 @@ Route::group(["middleware" => ["auth.q"]], function () {
 });
 
 Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], function () {
+    Route::post("/updateToko", [HomeController::class, "updateToko"])->name("updateToko");
+
     Route::get('/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
     Route::get('/edit/{id_produk}', [ProdukController::class, "edit"]);
     Route::post('/add', [ProdukController::class, "tambahProdukProses"])->name("tambahProdukProses");

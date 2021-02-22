@@ -71,6 +71,20 @@
       title: "Hapus Produk Sukses",
     });
 </script>
+@elseif(Session::get('sukses_update_toko'))
+<script>
+    Toast.fire({
+      icon: "success",
+      title: "Sukses Update Toko",
+    });
+</script>
+@elseif(Session::get('error_update_toko'))
+<script>
+    Toast.fire({
+      icon: "error",
+      title: "Error Update Toko",
+    });
+</script>
 @elseif(Session::get('error_produk'))
 <script>
     Toast.fire({

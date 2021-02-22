@@ -204,3 +204,58 @@ if (btn_delete.length != 0) {
     });
   });
 }
+
+if ($("#btn-edit-toko") !== null) {
+  $("#btn-edit-toko").on("click", function () {
+    $(".no-edit-toko-content").hide();
+    $(".edit-toko-content").show();
+  });
+  $("#btn-cancel-toko").on("click", function () {
+    $(".no-edit-toko-content").show();
+    $(".edit-toko-content").hide();
+  });
+
+  $("#logo").on("change", function () {
+    const input = document.getElementById("logo");
+    const imgPreview = document.querySelector("#logo-img");
+
+    const file = new FileReader();
+    file.readAsDataURL(input.files[0]);
+
+    file.onload = function (e) {
+      imgPreview.src = e.target.result;
+    };
+  });
+
+  $("#background").on("change", function () {
+    const input = document.getElementById("background");
+    const imgPreview = document.querySelector("#background-img");
+
+    const file = new FileReader();
+    file.readAsDataURL(input.files[0]);
+
+    file.onload = function (e) {
+      imgPreview.src = e.target.result;
+    };
+  });
+
+  $("#form-update-toko").on("submit", function (e) {
+    const validation = Array.from(document.querySelectorAll(".validation"));
+    validation.map((v, i) => {
+      let input = v.parentNode.childNodes[3];
+      
+      if (input.value == "") {
+        e.preventDefault();
+        input.classList.add("is-invalid");
+        v.innerHTML = "Harus diisi";
+      } else if (input.value.length < 6) {
+        e.preventDefault();
+        input.classList.add("is-invalid");
+        v.innerHTML = "Minimal 6 karakter";
+      } else {
+        input.classList.add("is-valid");
+        v.innerHTML = "";
+      }
+    });
+  });
+}
