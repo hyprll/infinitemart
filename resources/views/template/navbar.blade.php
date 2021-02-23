@@ -15,7 +15,8 @@
                         <form action="{{route("home")}}" method="GET">
                             <div class="searchBarWrap p-3">
                                 <input type="text" class="searchBar form-control img-fluid"
-                                    placeholder="Laper Pengen Seblak" name="keyword">
+                                    placeholder="Laper Pengen Seblak" name="keyword" autocomplete="off"
+                                    value="{{isset($keyword) ? $keyword : ""}}">
                                 <button class="btn mx-2" type="submit">
                                     <img src="{{asset("img/icon/ikon-search-btn.png")}}" alt="">
                                 </button>
