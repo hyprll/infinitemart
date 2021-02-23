@@ -6,43 +6,80 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $session = session()->get("auth_session");
-
+        $keyword = $request->keyword;
         $produk = [];
-        $ch = curl_init();
+        if ($keyword == null) {
+            $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/produk");
-        //return the transfer as a string 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/produk");
+            //return the transfer as a string 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        // $output contains the output string 
-        $output = curl_exec($ch);
+            // $output contains the output string 
+            $output = curl_exec($ch);
 
-        $result = json_decode($output, true);
+            $result = json_decode($output, true);
 
-        if ($result != null) {
-            ($result['success']) ? $produk = $result["data"] : $produk = [];
-        }
+            if ($result != null) {
+                ($result['success']) ? $produk = $result["data"] : $produk = [];
+            }
 
-        if ($session != null) {
-            $data = [
-                "token" => $session["token"],
-                "session" => $session["data"],
-                "css" => "home.css",
-                "produk" => $produk
-            ];
+            if ($session != null) {
+                $data = [
+                    "token" => $session["token"],
+                    "session" => $session["data"],
+                    "css" => "home.css",
+                    "produk" => $produk
+                ];
+            } else {
+                $data = [
+                    "token" => null,
+                    "session" => null,
+                    "css" => "home.css",
+                    "produk" => $produk
+                ];
+            }
+
+            return view("user/home", $data);
         } else {
-            $data = [
-                "token" => null,
-                "session" => null,
-                "css" => "home.css",
-                "produk" => $produk
-            ];
-        }
+            $ch = curl_init();
 
-        return view("user/home", $data);
+            curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/findproduk?keyword=" . $keyword);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+
+            $result = json_decode($output, true);
+            $message = "";
+            if ($result != null) {
+                $message = $result["message"];
+                ($result['success']) ? $produk = $result["data"] : $produk = [];
+            }
+
+            if ($session != null) {
+                $data = [
+                    "token" => $session["token"],
+                    "session" => $session["data"],
+                    "css" => "home.css",
+                    "keyword" => $keyword,
+                    "message" => $message,
+                    "produk" => $produk
+                ];
+            } else {
+                $data = [
+                    "token" => null,
+                    "session" => null,
+                    "css" => "home.css",
+                    "keyword" => $keyword,
+                    "message" => $message,
+                    "produk" => $produk
+                ];
+            }
+
+            return view("user/search", $data);
+        }
     }
 
     public function toko($id)

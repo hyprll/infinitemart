@@ -82,21 +82,6 @@ span.category {
   height: 10vh;
 }
 
-.Footer {
-  width: 100vw;
-  background: #01384f;
-}
-
-.social-mediaIcon img {
-  margin: 0 10px;
-  cursor: pointer;
-}
-
-.GoodleApp-Store {
-  margin: 5px 0;
-  cursor: pointer;
-}
-
 .wrap-navbar-collapse {
   display: none;
 }
@@ -104,3 +89,54 @@ span.category {
 .collapse-navbar-home {
   display: none;
 }
+
+.footer {
+  width: 100%;
+  height: auto;
+  min-height: 243px;
+  background-color: #01384f;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-family: var(--font-secondary);
+}
+
+.wrap-footer-search {
+  width: 100%;
+  display: flex;
+}
+
+.form-footer {
+  width: 90%;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  padding-left: 2rem;
+  padding-right: 2.5rem;
+  margin-left: 1.5rem;
+}
+
+.form-footer::placeholder {
+  color: #fff;
+}
+
+.wrap-right-footer {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer-icon {
+  font-size: 25px;
+  margin-left: 1.5rem;
+}
+
+.footer-icon-search {
+  position: relative;
+  margin-left: -2rem;
+  margin-top: 0.6rem;
+}
+/* ? /footer */

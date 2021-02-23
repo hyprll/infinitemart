@@ -1,40 +1,31 @@
-<!-- * Footer -->
+<!-- * footer -->
 
-<div class="Footer mt-5 py-5">
+<footer class="footer mt-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 text-center text-white">
-                <h3 class="mb-4">Company</h3>
-                <p>About Us</p>
-                <p>Blog</p>
-                <p>Careers</p>
-                <p>Contact Us</p>
+            <div class="col-md-4 left-footer">
+                <h4>Indonesia, ID</h4>
+                <span>Depok city of Indonesia</span><br>
+                <span>Copyright 2021. all right reserved</span>
             </div>
-            <div class="col-md-3 text-center text-white">
-                <h3 class="mb-4">Support</h3>
-                <p>Help Center</p>
-                <p>Safety Center</p>
-                <p>Community Guidelines</p>
+            <div class="col-md-4 center-footer">
+                <div class="d-flex justify-content-center">
+                    <img src="{{asset("img/logo_transparent.png")}}" alt="" width="60px" style="margin: -3rem 0 2rem 0;">
+                </div>
+                <div class="wrap-footer-search">
+                    <input type="text" class="form-control form-footer" placeholder="search">
+                    <i class="fa fa-arrow-right footer-icon-search"></i>
+                </div>
             </div>
-            <div class="col-md-3 text-center text-white">
-                <h3 class="mb-4">Legal</h3>
-                <p>Cookies Policy</p>
-                <p>Privacy Policy</p>
-                <p>Terms Of Serfice</p>
-                <p>Low Enforcement</p>
-            </div>
-            <div class="col-md-3 text-center text-white">
-                <h3 class="mb-4">Install App</h3>
-                <img src="{{asset("img/Home/Google-Play.png")}}" class="GoodleApp-Store">
-                <img src="{{asset("img/Home/AppIos.png")}}" class="GoodleApp-Store">
-                <div class="d-flex social-mediaIcon d-flex justify-content-center mt-3">
-                    <img src="{{asset("img/Home/Instagram.png")}}" alt="">
-                    <img src="{{asset("img/Home/Twitter.png")}}" alt="">
-                    <img src="{{asset("img/Home/Youtube.png")}}" alt="">
+            <div class="col-md-4 right-footer">
+                <div class="wrap-right-footer">
+                    <i class="fa fa-phone footer-icon"></i>
+                    <i class="fab fa-whatsapp footer-icon"></i>
+                    <i class="fab fa-google-plus footer-icon"></i>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</footer>
 
-<!-- /footer -->
+<!-- ? /footer -->
