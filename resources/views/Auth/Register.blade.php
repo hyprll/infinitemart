@@ -144,9 +144,9 @@
                                                         <option value="Chicago">
                                                     </datalist>
                                                 </div>
-                                                {{-- <small class="validate text-danger">
+                                                <small class="validate text-danger">
                                                     {{Session::get('country_code_error_status')}}
-                                                </small> --}}
+                                                </small>
                                             </div>
                                         </div>
 

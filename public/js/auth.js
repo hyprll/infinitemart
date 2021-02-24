@@ -1,4 +1,5 @@
 // alert("ok");
+let country = [];
 $(function () {
   if ($("#registerAccount").length > 0) {
     $("#registerAccount").on("submit", function (e) {
@@ -31,7 +32,7 @@ $(function () {
         document.body.style.overflowY = "hidden";
 
         $.ajax({
-          url: "http://localhost:8080/register",
+          url: BASE_URL_SERVER + "/register",
           data: form,
           method: "POST",
           dataType: "json",
@@ -44,9 +45,7 @@ $(function () {
             Swal.fire({
               title: "<strong>Register Successful</strong>",
               icon: "success",
-              html:
-                "Register Successful, " +
-                '<a href="/login">Login Now</a> ',
+              html: "Register Successful, " + '<a href="/login">Login Now</a> ',
               showCloseButton: false,
               showCancelButton: false,
               allowOutsideClick: false,
@@ -59,10 +58,39 @@ $(function () {
             });
           },
           error: function (xhr, status) {
+            $(".blankLoad").hide();
+            document.body.style.overflowY = "auto";
             const data = xhr.responseJSON;
-            data.map((d) => {
-              console.log(d);
-            });
+            if (data != undefined) {
+              const keys = Object.keys(data);
+              const validation = Array.from(
+                document.querySelectorAll(".validate")
+              );
+              keys.map((key) => {
+                const value = eval("data." + key);
+                if (key == "username") {
+                  validation[1].innerHTML = value[0];
+                } else if (key == "email") {
+                  validation[0].innerHTML = value[0];
+                } else if (key == "first_name") {
+                  validation[2].innerHTML = value[0];
+                } else if (key == "last_name") {
+                  validation[3].innerHTML = value[0];
+                } else if (key == "phone") {
+                  validation[4].innerHTML = value[0];
+                } else if (key == "address") {
+                  validation[9].innerHTML = value[0];
+                } else if (key == "city") {
+                  validation[6].innerHTML = value[0];
+                } else if (key == "postal_code") {
+                  validation[5].innerHTML = value[0];
+                } else if (key == "password") {
+                  validation[8].innerHTML = value[0];
+                } else if (key == "country_code") {
+                  validation[7].innerHTML = value[0];
+                }
+              });
+            }
           },
         });
       }
@@ -78,9 +106,11 @@ $(function () {
         responses.map((response) => {
           const name = response.name;
           const code = response.alpha3Code;
+          const countryVal = `${name} (${code})`;
           handler += /* html */ `
-            <option value=" ${name} (${code}) ">
+            <option value="${countryVal}">
           `;
+          country = [...country, countryVal.toLowerCase()];
         });
 
         document.getElementById("dataCountry").innerHTML = handler;
@@ -94,7 +124,7 @@ $(function () {
         form.append("email", $("#email").val());
         form.append("password", $("#password").val());
         $.ajax({
-          url: "http://localhost:8080/login",
+          url: BASE_URL_SERVER + "/login",
           data: form,
           method: "POST",
           dataType: "json",
@@ -155,6 +185,50 @@ function validateLogin() {
   return turn;
 }
 
+const countryValidate = (input) => {
+  let turn = [true, "sukses"];
+
+  if (input.value == "") {
+    turn = [false, "harus diisi"];
+  }
+
+  if (input.value != "") {
+    const value = input.value.toLowerCase().split(" ");
+    let handlerValue = "";
+    if (value[0] == "") {
+      value.map((v, i) => {
+        if (i != 0) {
+          if (i == 1) {
+            handlerValue += v + " ";
+          } else if (i == value.length - 1) {
+            handlerValue += v;
+          } else {
+            handlerValue += v + " ";
+          }
+        }
+      });
+    } else {
+      value.map((v, i) => {
+        if (i == 0) {
+          handlerValue += v + " ";
+        } else if (i == value.length - 1) {
+          handlerValue += v;
+        } else {
+          handlerValue += v + " ";
+        }
+      });
+    }
+
+    const cek = country.indexOf(handlerValue);
+
+    if (cek == -1) {
+      turn = [false, "Kode negara tidak valid"];
+    }
+  }
+
+  return turn;
+};
+
 function validateRegister() {
   const validates = Array.from(document.querySelectorAll(".validate"));
   let turn = true;
@@ -180,6 +254,18 @@ function validateRegister() {
       }
     } else if (i == 1) {
       const cek2 = validateUsername(input);
+      if (cek2[0]) {
+        input.classList.add("is-valid");
+        input.classList.remove("is-invalid");
+        validate.innerHTML = "";
+      } else {
+        turn = false;
+        input.classList.add("is-invalid");
+        input.classList.remove("is-valid");
+        validate.innerHTML = cek2[1];
+      }
+    } else if (i == 7) {
+      const cek2 = countryValidate(input);
       if (cek2[0]) {
         input.classList.add("is-valid");
         input.classList.remove("is-invalid");

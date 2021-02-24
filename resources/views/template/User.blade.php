@@ -31,6 +31,7 @@
 <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 <script src="{{asset("Js/owl.carousel.min.js")}}"></script>
 <script src="{{asset("Js/FormatMoney.js")}}"></script>
+<script src="{{asset("Js/App.js")}}"></script>
 <script src="{{asset("Js/Home.js")}}"></script>
 <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous" async defer></script>
 

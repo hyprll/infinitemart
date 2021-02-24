@@ -239,29 +239,29 @@ if ($("#img-produk").length > 0) {
   showAllProduk();
 
   $.ajax({
-    url: "http://localhost:8080/produk/" + produkId,
+    url: BASE_URL_SERVER + "/produk/" + produkId,
     type: "GET",
     success: function (res) {
       if (res.success) {
         $("#img-produk").attr(
           "src",
-          `http://localhost:8080/uploads/produk/${res.data[0].gambar}`
+          BASE_URL_SERVER + `/uploads/produk/${res.data[0].gambar}`
         );
         $("#img-produk-lainnya").attr(
           "src",
-          `http://localhost:8080/uploads/produk/${res.data[0].gambar_lain}`
+          BASE_URL_SERVER + `/uploads/produk/${res.data[0].gambar_lain}`
         );
         $("#produkName").html(res.data[0].nama_produk);
         $("#produkFare").html(formatter.toRupiah(res.data[0].harga));
 
         // * get toko
-        fetch("http://localhost:8080/toko/" + res.data[0].id_toko)
+        fetch(BASE_URL_SERVER + "/toko/" + res.data[0].id_toko)
           .then((res) => res.json())
           .then((res) => {
             if (res.success) {
               $("#logoToko").attr(
                 "src",
-                `http://localhost:8080/uploads/toko/${res.data[0].logo}`
+                BASE_URL_SERVER + `/uploads/toko/${res.data[0].logo}`
               );
               $("#tokoName").attr("href", `/toko/${res.data[0].id_toko}`);
               $("#tokoName").html(res.data[0].nama_toko);
@@ -365,18 +365,18 @@ if ($("#background-img").length > 0) {
   const idToko = document.querySelector("#idToko").dataset.idtoko;
   showTokoProduk(idToko);
   $.ajax({
-    url: `http://localhost:8080/toko/${idToko}`,
+    url: BASE_URL_SERVER + `/toko/${idToko}`,
     type: "GET",
     success: function (res) {
       console.log(res);
       if (res.success) {
         $("#background-img").attr(
           "src",
-          `http://localhost:8080/uploads/toko/${res.data[0].background}`
+          BASE_URL_SERVER + `/uploads/toko/${res.data[0].background}`
         );
         $("#logo-img").attr(
           "src",
-          `http://localhost:8080/uploads/toko/${res.data[0].logo}`
+          BASE_URL_SERVER + `/uploads/toko/${res.data[0].logo}`
         );
         $("#namaToko").html(res.data[0].nama_toko);
         $("#deskripsiToko").text(`${res.data[0].deskripsi}`);
@@ -390,7 +390,7 @@ if ($("#background-img").length > 0) {
 
 function showTokoProduk(idToko) {
   $.ajax({
-    url: `http://localhost:8080/produk/toko/${idToko}`,
+    url: BASE_URL_SERVER + `/produk/toko/${idToko}`,
     type: "GET",
     success: function (res) {
       console.log(res);
@@ -404,7 +404,7 @@ function showTokoProduk(idToko) {
             }" style="text-decoration: none;color:inherit;">
                 <div class="sellerCard-Barang mb-4">
                     <div class="topImg-seller d-flex justify-content-center">
-                        <img src="http://localhost:8080/uploads/produk/${
+                        <img src="${BASE_URL_SERVER}/uploads/produk/${
                           result.gambar
                         }" alt="InfiniteMart ${
             result.nama_produk
@@ -447,7 +447,7 @@ function showTokoProduk(idToko) {
 
 function showAllProduk() {
   $.ajax({
-    url: "http://localhost:8080/produk",
+    url: BASE_URL_SERVER + "/produk",
     type: "GET",
     success: function (res) {
       let handler = "";
@@ -460,7 +460,7 @@ function showAllProduk() {
           }" style="text-decoration: none;color:inherit;">
               <div class="sellerCard-Barang mb-4">
                   <div class="topImg-seller d-flex justify-content-center">
-                      <img src="http://localhost:8080/uploads/produk/${
+                      <img src="${BASE_URL_SERVER}/uploads/produk/${
                         result.gambar
                       }" alt="InfiniteMart ${
             result.nama_produk
