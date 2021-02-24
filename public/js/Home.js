@@ -1,7 +1,7 @@
 const harga = Array.from(document.querySelectorAll(".stuff-fare"));
 const formatter = new FormatMoney();
 
-if ($(".headerCarousel2") !== null) {
+if ($(".headerCarousel2").length > 0) {
   $(function () {
     $(".headerCarousel2").owlCarousel({
       center: false,
@@ -17,7 +17,7 @@ if ($(".headerCarousel2") !== null) {
   });
 }
 
-if ($("#btn-upload-produk")) {
+if ($("#btn-upload-produk").length > 0) {
   $("#btn-upload-produk").on("click", function (e) {
     const validation = Array.from(document.querySelectorAll(".validation"));
     validation.map((v, i) => {
@@ -91,7 +91,7 @@ if ($("#btn-upload-produk")) {
   });
 }
 
-if ($("#btn-update-produk")) {
+if ($("#btn-update-produk").length > 0) {
   $("#btn-update-produk").on("click", function (e) {
     const validation = Array.from(document.querySelectorAll(".validation"));
     validation.map((v, i) => {
@@ -179,7 +179,7 @@ if ($("#btn-update-produk")) {
   });
 }
 
-if ($("#img-produk") !== null) {
+if ($("#img-produk").length > 0) {
   const produkId = document.querySelector("#idProduk").dataset.idproduk;
   showAllProduk();
 
@@ -251,7 +251,7 @@ if (btn_delete.length != 0) {
   });
 }
 
-if ($("#btn-edit-toko") !== null) {
+if ($("#btn-edit-toko").length > 0) {
   $("#btn-edit-toko").on("click", function () {
     $(".no-edit-toko-content").hide();
     $(".edit-toko-content").show();
@@ -306,10 +306,88 @@ if ($("#btn-edit-toko") !== null) {
   });
 }
 
-async function doAjax(url) {
-  const res = await fetch(url);
-  const response = await res.json();
-  return response;
+if ($("#background-img").length > 0) {
+  const idToko = document.querySelector("#idToko").dataset.idtoko;
+  showTokoProduk(idToko);
+  $.ajax({
+    url: `http://localhost:8080/toko/${idToko}`,
+    type: "GET",
+    success: function (res) {
+      console.log(res);
+      if (res.success) {
+        $("#background-img").attr(
+          "src",
+          `http://localhost:8080/uploads/toko/${res.data[0].background}`
+        );
+        $("#logo-img").attr(
+          "src",
+          `http://localhost:8080/uploads/toko/${res.data[0].logo}`
+        );
+        $("#namaToko").html(res.data[0].nama_toko);
+        $("#deskripsiToko").text(`${res.data[0].deskripsi}`);
+      }
+    },
+    error: function (err) {
+      alert("error");
+    },
+  });
+}
+
+function showTokoProduk(idToko) {
+  $.ajax({
+    url: `http://localhost:8080/produk/toko/${idToko}`,
+    type: "GET",
+    success: function (res) {
+      console.log(res);
+      if (res.success) {
+        let handler = "";
+        res.data.map((result) => {
+          handler += /* html */ `
+          <div class="col-md-3">
+            <a href="/detail/${
+              result.id_produk
+            }" style="text-decoration: none;color:inherit;">
+                <div class="sellerCard-Barang mb-4">
+                    <div class="topImg-seller d-flex justify-content-center">
+                        <img src="http://localhost:8080/uploads/produk/${
+                          result.gambar
+                        }" alt="InfiniteMart ${
+            result.nama_produk
+          }" height="250px" class="user-select-none">
+                    </div>
+                    <div class="container d-flex justify-content-between">
+
+                        <div class="contentCard-Barang d-flex flex-column mt-3">
+                            <h5 class="fw-bold"></h5>
+                            <span style="color: gold;" class="stuff-fare" data-fare="${
+                              result.harga
+                            }">
+                            ${formatter.toRupiah(result.harga)}
+                            </span>
+                            <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
+                        </div>
+
+                    </div>
+                </div>
+            </a>
+        </div>
+          `;
+        });
+        if (document.querySelector("#produkTokoPlace") !== null) {
+          document.querySelector("#produkTokoPlace").innerHTML = handler;
+        }
+      }else {
+        if (document.querySelector("#produkTokoPlace") !== null) {
+          document.querySelector("#produkTokoPlace").innerHTML = `
+            <h3 class="text-center my-5">Tidak Ada Produk Yang Tersedia</h3>
+          `;
+        }
+      }
+    },
+    error: function (err) {
+      alert("error");
+    },
+  });
 }
 
 function showAllProduk() {

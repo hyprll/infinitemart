@@ -124,7 +124,8 @@ class HomeController extends Controller
                 "session" => $session["data"],
                 "css" => "dashboard.css",
                 "toko" => $toko,
-                "produk" => $produk
+                "produk" => $produk,
+                "idToko" => $id
             ];
         } else {
             $data = [
@@ -132,7 +133,8 @@ class HomeController extends Controller
                 "session" => null,
                 "css" => "dashboard.css",
                 "toko" => $toko,
-                "produk" => $produk
+                "produk" => $produk,
+                "idToko" => $id
             ];
         }
 

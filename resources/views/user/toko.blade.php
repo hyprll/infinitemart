@@ -7,25 +7,31 @@
 <!-- * Header -->
 
 <div class="headerCarousel3">
-    <img src="http://localhost:8080/uploads/toko/{{$toko['background']}}" class="w-100 img-fluid" id="background-img">
+    {{-- <img src="http://localhost:8080/uploads/toko/{{$toko['background']}}" class="w-100 img-fluid"
+    id="background-img"> --}}
+    <img class="w-100 img-fluid" id="background-img">
 </div>
 
 <!-- /Header -->
 
 <div class="container">
+    <div class="col-md-12 d-none"><span id="idToko" data-idtoko="{{$idToko}}">{{$idToko}}</span></div>
     <div class="col-md-12">
         <div class="infoHeader">
             <div class="ProfileImgToko d-flex justify-content-center align-items-center">
-                <img src="http://localhost:8080/uploads/toko/{{$toko['logo']}}" alt="" class="rounded-circle"
-                    id="logo-img">
+                {{-- <img src="http://localhost:8080/uploads/toko/{{$toko['logo']}}" alt="" class="rounded-circle"
+                id="logo-img"> --}}
+                <img alt="" class="rounded-circle" id="logo-img">
             </div>
             <div class="row px-3 no-edit-toko-content">
-                <h4 class="no-edit-toko-content">{{$toko['nama_toko']}}</h4>
-                <span class="no-edit-toko-content">
+                {{-- <h4 class="no-edit-toko-content" id="namaToko">{{$toko['nama_toko']}}</h4> --}}
+                <h4 class="no-edit-toko-content" id="namaToko"></h4>
+                {{-- <span class="no-edit-toko-content">
                     @php
                     echo nl2br($toko["deskripsi"])
                     @endphp
-                </span>
+                </span> --}}
+                <span class="no-edit-toko-content" id="deskripsiToko"></span>
             </div>
 
             @if ($session !== null)
@@ -96,8 +102,8 @@
         <h3>Barang Di Toko</h3>
         <hr>
     </div>
-    <div class="row">
-        @if ($produk)
+    <div class="row" id="produkTokoPlace">
+        {{-- @if ($produk)
         @foreach ($produk as $key)
         <div class="col-md-3">
 
@@ -148,7 +154,7 @@
         @endforeach
         @else
         <h3 class="text-center my-5">Tidak Ada Produk Yang Tersedia</h3>
-        @endif
+        @endif --}}
 
     </div>
 </div>
