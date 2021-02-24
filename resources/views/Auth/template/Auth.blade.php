@@ -23,7 +23,7 @@
     const height = document.querySelector(".card-login");
     
     if (height != null) {
-        document.querySelector(".rightCard").style.height = `${heigh.offsetHeight}px`;
+        document.querySelector(".rightCard").style.height = `${height.offsetHeight}px`;
     }
 </script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>

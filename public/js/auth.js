@@ -29,8 +29,35 @@ $(function () {
     });
   } else if ($("#form-login").length > 0) {
     $("#form-login").on("submit", function (e) {
-      if (!validateLogin()) {
-        e.preventDefault();
+      e.preventDefault();
+      if (validateLogin()) {
+        let form = new FormData();
+        form.append("email", $("#email").val());
+        form.append("password", $("#password").val());
+        $.ajax({
+          url: "http://localhost:8080/login",
+          data: form,
+          method: "POST",
+          dataType: "json",
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response, status, xhr) {
+            $("#error_something").html("");
+            if (response.success) {
+              localStorage.setItem(
+                "auth_session",
+                JSON.stringify(response.data)
+              );
+              localStorage.setItem("token", response.token);
+              document.location.href = "/";
+            }
+          },
+          error: function (xhr, status) {
+            const data = xhr.responseJSON;
+            $("#error_something").html(data.message);
+          },
+        });
       }
     });
   } else if ($("#form-seller").length > 0) {

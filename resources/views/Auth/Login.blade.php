@@ -25,13 +25,11 @@
                                         <h1>Sign In for better experience</h1>
                                     </div>
                                 </div>
-                                @if (Session()->get("error_pass"))
                                 <div class="row">
-                                    <span class="text-danger">
+                                    <span class="text-danger" id="error_something">
                                         {{Session()->get("error_pass")}}
                                     </span>
                                 </div>
-                                @endif
                                 <div class="row mt-3">
                                     <form action="{{route("login_proses")}}" method="POST" id="form-login">
                                         @csrf

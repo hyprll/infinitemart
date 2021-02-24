@@ -14,6 +14,10 @@ if ($(".headerCarousel2").length > 0) {
     });
 
     showAllProduk();
+
+    const auth = JSON.parse(localStorage.getItem("auth_session"));
+    const token = localStorage.getItem("token");
+    console.log(auth);
   });
 }
 
