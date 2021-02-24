@@ -2,10 +2,69 @@
 $(function () {
   if ($("#registerAccount").length > 0) {
     $("#registerAccount").on("submit", function (e) {
+      e.preventDefault();
       if (!validateRegister()) {
-        e.preventDefault();
         const height = document.querySelector(".card-login").offsetHeight;
         document.querySelector(".rightCard").style.height = `${height}px`;
+      } else {
+        let split1 = $("#country_code").val().split("(");
+        let split2 = split1[1].split(")");
+        let finalSplit = split2[0];
+
+        console.log(finalSplit);
+
+        let form = new FormData();
+        form.append("email", $("#email").val());
+        form.append("username", $("#username").val());
+        form.append("city", $("#kota").val());
+        form.append("password", $("#password").val());
+        form.append("first_name", $("#firstName").val());
+        form.append("last_name", $("#lastName").val());
+        form.append("phone", $("#phone").val());
+        form.append("postal_code", $("#postal_code").val());
+        form.append("country_code", finalSplit);
+        form.append("address", $("#address").val());
+        form.append("role", "1");
+
+        $(".blankLoad").show();
+        $(".blankLoad").css("display", "flex");
+        document.body.style.overflowY = "hidden";
+
+        $.ajax({
+          url: "http://localhost:8080/register",
+          data: form,
+          method: "POST",
+          dataType: "json",
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response, status, xhr) {
+            $(".blankLoad").hide();
+            console.log(response);
+            Swal.fire({
+              title: "<strong>Register Successful</strong>",
+              icon: "success",
+              html:
+                "Register Successful, " +
+                '<a href="/login">Login Now</a> ',
+              showCloseButton: false,
+              showCancelButton: false,
+              allowOutsideClick: false,
+              focusConfirm: true,
+              confirmButtonText:
+                '<a href="/login" style="color:inherit;text-decoration:none"><i class="fa fa-thumbs-up"></i> Login Now!</a>',
+              confirmButtonAriaLabel: "Thumbs up, great!",
+              cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+              cancelButtonAriaLabel: "Thumbs down",
+            });
+          },
+          error: function (xhr, status) {
+            const data = xhr.responseJSON;
+            data.map((d) => {
+              console.log(d);
+            });
+          },
+        });
       }
     });
 
