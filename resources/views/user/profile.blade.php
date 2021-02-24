@@ -30,6 +30,8 @@
                         <i class="fas fa-store-alt store-left"></i>
                         <a href="{{route("seller")}}" class="store-card-left" type="button">Buat Toko</a>
                         @endif
+                        <i class="fas fa-history history-left"></i>
+                        <a href="{{route("profile")}}" class="history-card-left" type="button">History</a>
 
                         <i class="fas fa-sign-in-alt logout-left"></i>
                         <label for="label-left" class="logout-card-left" type="button" onclick="
@@ -60,22 +62,25 @@
                         <div class="row">
                             <div class="col-4">
                                 <h6>Username</h6>
-                                <label name="username" class="username">{{$session["username"]}}</label>
+                                <label name="username" class="username">
+                                    {{$session["username"]}}
+                                </label>
                                 <h3>Nama Depan</h3>
-                                <input type="text" class="field-text form-control form-control-sm"
-                                    value="{{$session["first_name"]}}">
+                                <label name="username" class="username">
+                                    {{$session["first_name"]}}
+                                </label>
                                 <h3>Nama Belakang</h3>
-                                <input type="text" class="field-text form-control form-control-sm"
-                                    value="{{$session["last_name"]}}">
+                                <label name="username" class="username">
+                                    {{$session["last_name"]}}
+                                </label>
                                 <h3>alamat Email</h3>
-                                <input type="text" class="field-text form-control form-control-sm"
-                                    value="{{$session["email"]}}">
+                                <label name="username" class="username">
+                                    {{$session["email"]}}
+                                </label>
                                 <h3>No.Telepon</h3>
-                                <input type="text" class="field-text2 form-control form-control-sm"
-                                    value="{{$session["phone"]}}">
-                                <form action="#" method="POST">
-                                    <button type="submit" class="btn-save">Simpan</button>
-                                </form>
+                                <label name="username" class="username">
+                                    {{$session["phone"]}}
+                                </label>
                             </div>
                             <div class="col-8">
                                 <div class="card right-area">

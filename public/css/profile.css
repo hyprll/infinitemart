@@ -185,7 +185,7 @@ h6 {
   margin-top: -20px;
 }
 .anima5 {
-  margin-top: 80px;
+  margin-top: 100px;
   margin-left: -15px;
   width: 15vw;
   height: 52vh;
@@ -241,9 +241,14 @@ h6 {
   margin-top: 40px;
   color: lightskyblue;
 }
-.logout-left {
+.history-left {
   position: absolute;
   margin-top: 75px;
+  color: lightskyblue;
+}
+.logout-left {
+  position: absolute;
+  margin-top: 105px;
   color: lightskyblue;
 }
 .profile-card-left {
@@ -266,9 +271,19 @@ h6 {
   font-size: 14px;
   font-weight: 600;
 }
-.logout-card-left {
+.history-card-left {
   position: absolute;
   margin-top: 73px;
+  margin-left: 45px;
+  text-decoration: none;
+  color: inherit;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+.logout-card-left {
+  position: absolute;
+  margin-top: 103px;
   margin-left: 45px;
   font-family: "Poppins", sans-serif;
   font-size: 14px;

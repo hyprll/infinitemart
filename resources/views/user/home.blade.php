@@ -31,9 +31,9 @@
         <hr>
     </div>
 
-    <div class="row">
+    <div class="row" id="produkPlace">
 
-        @if (count($produk) > 0)
+        {{-- @if (count($produk) > 0)
         @foreach ($produk as $item)
 
         <div class="col-md-3">
@@ -57,7 +57,7 @@
         </div>
 
         @endforeach
-        @endif
+        @endif --}}
 
     </div>
     <div class="btnSelengkapnya d-flex justify-content-center mt-5 ">

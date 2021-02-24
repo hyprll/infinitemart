@@ -243,7 +243,7 @@ if ($("#btn-edit-toko") !== null) {
     const validation = Array.from(document.querySelectorAll(".validation"));
     validation.map((v, i) => {
       let input = v.parentNode.childNodes[3];
-      
+
       if (input.value == "") {
         e.preventDefault();
         input.classList.add("is-invalid");
@@ -257,5 +257,54 @@ if ($("#btn-edit-toko") !== null) {
         v.innerHTML = "";
       }
     });
+  });
+}
+
+if ($("#produkPlace") !== null) {
+  $.ajax({
+    url: "http://localhost:8080/produk",
+    type: "GET",
+    success: function (res) {
+      let handler = "";
+      if (res.success) {
+        res.data.map((result) => {
+          handler += /*html*/ `
+          <div class="col-md-3">
+          <a href="/detail/${
+            result.id_produk
+          }" style="text-decoration: none;color:inherit;">
+              <div class="sellerCard-Barang mb-4">
+                  <div class="topImg-seller d-flex justify-content-center">
+                      <img src="http://localhost:8080/uploads/produk/${
+                        result.gambar
+                      }" alt="InfiniteMart ${
+            result.nama_produk
+          }" height="250px" class="user-select-none">
+                  </div>
+                  <div class="container d-flex justify-content-between">
+
+                      <div class="contentCard-Barang d-flex flex-column mt-3">
+                          <h5 class="fw-bold"></h5>
+                          <span style="color: gold;" class="stuff-fare" data-fare="${
+                            result.harga
+                          }">
+                          ${formatter.toRupiah(result.harga)}
+                          </span>
+                          <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
+                      </div>
+
+                  </div>
+              </div>
+          </a>
+      </div>
+          `;
+        });
+
+        document.querySelector("#produkPlace").innerHTML = handler;
+      }
+    },
+    error: function (e) {
+      alert("error");
+    },
   });
 }
