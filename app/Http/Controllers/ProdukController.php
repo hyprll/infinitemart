@@ -73,7 +73,8 @@ class ProdukController extends Controller
                 "css" => "detail.css",
                 "produk" => $produk,
                 "toko" => $toko,
-                "produkAll" => $produkAll
+                "produkAll" => $produkAll,
+                "idProduk" => $id
             ];
         } else {
             $data = [
@@ -82,7 +83,8 @@ class ProdukController extends Controller
                 "css" => "detail.css",
                 "produk" => $produk,
                 "toko" => $toko,
-                "produkAll" => $produkAll
+                "produkAll" => $produkAll,
+                "idProduk" => $id
             ];
         }
 

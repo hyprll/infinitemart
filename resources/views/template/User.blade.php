@@ -30,8 +30,8 @@
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 <script src="{{asset("Js/owl.carousel.min.js")}}"></script>
-<script src="{{asset("Js/FormatMoney.js")}}" async defer></script>
-<script src="{{asset("Js/Home.js")}}" async defer></script>
+<script src="{{asset("Js/FormatMoney.js")}}"></script>
+<script src="{{asset("Js/Home.js")}}"></script>
 <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous" async defer></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>

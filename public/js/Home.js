@@ -1,12 +1,19 @@
-if ($(".headerCarousel2")) {
-  $(".headerCarousel2").owlCarousel({
-    center: false,
-    margin: 0,
-    loop: true,
-    autoWidth: true,
-    items: 3,
-    autoplay: true,
-    autoplayTimeout: 5000,
+const harga = Array.from(document.querySelectorAll(".stuff-fare"));
+const formatter = new FormatMoney();
+
+if ($(".headerCarousel2") !== null) {
+  $(function () {
+    $(".headerCarousel2").owlCarousel({
+      center: false,
+      margin: 0,
+      loop: true,
+      autoWidth: true,
+      items: 3,
+      autoplay: true,
+      autoplayTimeout: 5000,
+    });
+
+    showAllProduk();
   });
 }
 
@@ -172,8 +179,47 @@ if ($("#btn-update-produk")) {
   });
 }
 
-const harga = Array.from(document.querySelectorAll(".stuff-fare"));
-const formatter = new FormatMoney();
+if ($("#img-produk") !== null) {
+  const produkId = document.querySelector("#idProduk").dataset.idproduk;
+  showAllProduk();
+
+  $.ajax({
+    url: "http://localhost:8080/produk/" + produkId,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        $("#img-produk").attr(
+          "src",
+          `http://localhost:8080/uploads/produk/${res.data[0].gambar}`
+        );
+        $("#img-produk-lainnya").attr(
+          "src",
+          `http://localhost:8080/uploads/produk/${res.data[0].gambar_lain}`
+        );
+        $("#produkName").html(res.data[0].nama_produk);
+        $("#produkFare").html(formatter.toRupiah(res.data[0].harga));
+
+        // * get toko
+        fetch("http://localhost:8080/toko/" + res.data[0].id_toko)
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.success) {
+              $("#logoToko").attr(
+                "src",
+                `http://localhost:8080/uploads/toko/${res.data[0].logo}`
+              );
+              $("#tokoName").attr("href", `/toko/${res.data[0].id_toko}`);
+              $("#tokoName").html(res.data[0].nama_toko);
+            }
+          })
+          .catch((err) => alert("error"));
+      }
+    },
+    error: function () {
+      alert("error");
+    },
+  });
+}
 
 if (harga.length > 0) {
   harga.map((h) => {
@@ -260,7 +306,13 @@ if ($("#btn-edit-toko") !== null) {
   });
 }
 
-if ($("#produkPlace") !== null) {
+async function doAjax(url) {
+  const res = await fetch(url);
+  const response = await res.json();
+  return response;
+}
+
+function showAllProduk() {
   $.ajax({
     url: "http://localhost:8080/produk",
     type: "GET",
@@ -300,7 +352,9 @@ if ($("#produkPlace") !== null) {
           `;
         });
 
-        document.querySelector("#produkPlace").innerHTML = handler;
+        if (document.querySelector("#produkPlace") !== null) {
+          document.querySelector("#produkPlace").innerHTML = handler;
+        }
       }
     },
     error: function (e) {
