@@ -17,10 +17,10 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::group(["middleware" => ["auth.q"]], function () {
-    Route::get("/profile", [ProfileController::class, "index"])->name("profile");
-    Route::post("/logout", [AuthController::class, "logout"])->name("logout");
-});
+// Route::group(["middleware" => ["auth.q"]], function () {
+// });
+Route::get("/profile", [ProfileController::class, "index"])->name("profile");
+Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
 Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], function () {
     Route::post("/updateToko", [HomeController::class, "updateToko"])->name("updateToko");

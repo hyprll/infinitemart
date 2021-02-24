@@ -17,26 +17,23 @@
                     </div>
                     <div class="card-body">
                         <label for="user-profil" class="user-profil">
-                            {{$session["username"]}}
+                            {{-- {{$session["username"]}} --}}
                         </label>
                     </div>
                     <div class="card-body">
                         <i class="fas fa-user user-left"></i>
                         <a href="{{route("profile")}}" class="profile-card-left" type="button">My Profile</a>
-                        @if ($hasToko)
+                        {{-- @if ($hasToko)
                         <i class="fas fa-store-alt store-left"></i>
                         <a href="{{url("toko/".$id_toko)}}" class="store-card-left" type="button">Toko Saya</a>
-                        @else
+                        @else --}}
                         <i class="fas fa-store-alt store-left"></i>
                         <a href="{{route("seller")}}" class="store-card-left" type="button">Buat Toko</a>
-                        @endif
                         <i class="fas fa-history history-left"></i>
                         <a href="{{route("profile")}}" class="history-card-left" type="button">History</a>
 
                         <i class="fas fa-sign-in-alt logout-left"></i>
-                        <label for="label-left" class="logout-card-left" type="button" onclick="
-                        event.preventDefault();
-                        document.querySelector('#logoutForm').submit()">
+                        <label for="label-left" class="logout-card-left" type="button" id="logoutBtn">
                             Logout
                         </label>
                         <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
@@ -60,8 +57,8 @@
                 <div class="card right-area-bottom">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-4">
-                                <h6>Username</h6>
+                            <div class="col-4" id="biodata">
+                                {{-- <h6>Username</h6>
                                 <label name="username" class="username">
                                     {{$session["username"]}}
                                 </label>
@@ -80,7 +77,7 @@
                                 <h3>No.Telepon</h3>
                                 <label name="username" class="username">
                                     {{$session["phone"]}}
-                                </label>
+                                </label> --}}
                             </div>
                             <div class="col-8">
                                 <div class="card right-area">

@@ -27,14 +27,10 @@
             </div>
 
             <div class="col-3 wrap-navbar-login">
-                <div class="row justify-content-end d-flex">
-                    @if ($token == null)
-                    <a href="{{route("login")}}" class="btn btn-login">Login</a>&nbsp;&nbsp;
-                    <a href="{{route("register")}}" class="btn btn-signup">Sign up</a>
-                    @else
-                    <a href="{{route("profile")}}" class="btn btn-signup">Profile</a>
-                    @endif
-
+                <div class="row justify-content-end d-flex" id="btn-place">
+                    {{-- <a href="{{route("login")}}" class="btn btn-login">Login</a>&nbsp;&nbsp;
+                    <a href="{{route("register")}}" class="btn btn-signup">Sign up</a> --}}
+                    {{-- <a href="{{route("profile")}}" class="btn btn-signup" id="profile">Profile</a> --}}
                 </div>
             </div>
 
@@ -76,17 +72,14 @@
                     <span class="mx-3 fw-bold">Keranjang</span>
                 </div>
             </div>
-            <div class="row">
-                @if ($token == null)
-                <div class="col-12 mt-3">
+            <div class="row" id="btn-place2">
+                {{-- <div class="col-12 mt-3">
                     <a href="#" class="btn btn-login">Login</a>&nbsp;&nbsp;
                     <a href="#" class="btn btn-signup">Sign up</a>
                 </div>
-                @else
                 <div class="col-12 mt-3">
                     <a href="#" class="btn btn-signup">Profile</a>
-                </div>
-                @endif
+                </div> --}}
             </div>
         </div>
 

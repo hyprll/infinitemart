@@ -1,6 +1,61 @@
 const harga = Array.from(document.querySelectorAll(".stuff-fare"));
 const formatter = new FormatMoney();
 
+const auth = JSON.parse(localStorage.getItem("auth_session"));
+const token = localStorage.getItem("token");
+let btnAuth = "";
+if (auth == null) {
+  btnAuth = `
+      <a href="/login"" class="btn btn-login">Login</a>&nbsp;&nbsp;
+      <a href="/register" class="btn btn-signup">Sign up</a>
+      `;
+} else {
+  btnAuth = `
+      <a href="/profile" class="btn btn-signup">Profile</a>
+      `;
+}
+$("#btn-place").html(btnAuth);
+$("#btn-place2").html(btnAuth);
+console.log(auth);
+
+if ($("#biodata").length > 0) {
+  if (auth == null) {
+    document.location.href = "/login";
+  }
+
+  let handler = /* html */ `
+      <h6>Username</h6>
+      <label name="username" class="username">
+          ${auth.username}
+      </label>
+      <h3>Nama Depan</h3>
+      <label name="username" class="username">
+          ${auth.first_name}
+      </label>
+      <h3>Nama Belakang</h3>
+      <label name="username" class="username">
+          ${auth.last_name}
+      </label>
+      <h3>alamat Email</h3>
+      <label name="username" class="username">
+          ${auth.address}
+      </label>
+      <h3>No.Telepon</h3>
+      <label name="username" class="username">
+          +62 ${auth.phone}
+      </label>
+  `;
+
+  $("#biodata").html(handler);
+
+  $("#logoutBtn").click(function (e) {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("auth_session");
+    document.location.href = "/login";
+  });
+}
+
 if ($(".headerCarousel2").length > 0) {
   $(function () {
     $(".headerCarousel2").owlCarousel({
@@ -14,10 +69,6 @@ if ($(".headerCarousel2").length > 0) {
     });
 
     showAllProduk();
-
-    const auth = JSON.parse(localStorage.getItem("auth_session"));
-    const token = localStorage.getItem("token");
-    console.log(auth);
   });
 }
 
@@ -380,7 +431,7 @@ function showTokoProduk(idToko) {
         if (document.querySelector("#produkTokoPlace") !== null) {
           document.querySelector("#produkTokoPlace").innerHTML = handler;
         }
-      }else {
+      } else {
         if (document.querySelector("#produkTokoPlace") !== null) {
           document.querySelector("#produkTokoPlace").innerHTML = `
             <h3 class="text-center my-5">Tidak Ada Produk Yang Tersedia</h3>
