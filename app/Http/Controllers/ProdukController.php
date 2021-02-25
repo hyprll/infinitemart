@@ -11,69 +11,53 @@ class ProdukController extends Controller
     {
         $session = session()->get("auth_session");
 
-        $produk = [];
-        $toko = [];
-        $produkAll = [];
-        $ch = curl_init();
+        // $produk = [];
+        // $toko = [];
+        // $produkAll = [];
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/produk/" . $id);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // $output = curl_exec($ch);
+        // $result = json_decode($output, true);
 
-        curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/produk/" . $id);
+        // if ($result != null) {
+        //     ($result['success']) ? $produk = $result["data"] : $produk = [];
+        // }
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-
-        $output = curl_exec($ch);
-
-        $result = json_decode($output, true);
-
-        if ($result != null) {
-            ($result['success']) ? $produk = $result["data"] : $produk = [];
-        }
-
-        if (!$result["success"]) {
-            return redirect("/");
-        }
+        // if (!$result["success"]) {
+        //     return redirect("/");
+        // }
 
 
-        if (count($produk) > 0) {
-            $ch2 = curl_init();
+        // if (count($produk) > 0) {
+        //     $ch2 = curl_init();
+        //     curl_setopt($ch2, CURLOPT_URL, "http://localhost:8080/toko/" . $produk[0]["id_toko"]);
+        //     curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
+        //     $output = curl_exec($ch2);
+        //     $result = json_decode($output, true);
+        //     if ($result != null) {
+        //         ($result['success']) ? $toko = $result["data"] : $toko = [];
+        //     }
+        // }
 
-            curl_setopt($ch2, CURLOPT_URL, "http://localhost:8080/toko/" . $produk[0]["id_toko"]);
+        // $ch3 = curl_init();
+        // curl_setopt($ch3, CURLOPT_URL, "http://localhost:8080/produk");
+        // curl_setopt($ch3, CURLOPT_RETURNTRANSFER, 1);
+        // $output = curl_exec($ch3);
+        // $result = json_decode($output, true);
 
-            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
-
-
-            $output = curl_exec($ch2);
-
-            $result = json_decode($output, true);
-
-            if ($result != null) {
-                ($result['success']) ? $toko = $result["data"] : $toko = [];
-            }
-        }
-
-        $ch3 = curl_init();
-
-        curl_setopt($ch3, CURLOPT_URL, "http://localhost:8080/produk");
-
-        curl_setopt($ch3, CURLOPT_RETURNTRANSFER, 1);
-
-
-        $output = curl_exec($ch3);
-
-        $result = json_decode($output, true);
-
-        if ($result != null) {
-            ($result['success']) ? $produkAll = $result["data"] : $produkAll = [];
-        }
+        // if ($result != null) {
+        //     ($result['success']) ? $produkAll = $result["data"] : $produkAll = [];
+        // }
 
         if ($session != null) {
             $data = [
                 "token" => $session["token"],
                 "session" => $session["data"],
                 "css" => "detail.css",
-                "produk" => $produk,
-                "toko" => $toko,
-                "produkAll" => $produkAll,
+                // "produk" => $produk,
+                // "toko" => $toko,
+                // "produkAll" => $produkAll,
                 "idProduk" => $id
             ];
         } else {
@@ -81,9 +65,9 @@ class ProdukController extends Controller
                 "token" => null,
                 "session" => null,
                 "css" => "detail.css",
-                "produk" => $produk,
-                "toko" => $toko,
-                "produkAll" => $produkAll,
+                // "produk" => $produk,
+                // "toko" => $toko,
+                // "produkAll" => $produkAll,
                 "idProduk" => $id
             ];
         }
@@ -93,62 +77,43 @@ class ProdukController extends Controller
 
     public function tambahProduk()
     {
-        $session = session()->get("auth_session");
-        $user = [];
+        // $session = session()->get("auth_session");
+        // $user = [];
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/allbuyer");
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_URL, "http://localhost:8080/allbuyer");
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // $output = curl_exec($ch);
+        // $result = json_decode($output, true);
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // if ($result != null) {
+        //     ($result['success']) ? $user = $result["data"] : $user = [];
+        // }
+        // $toko = [];
+        // $ch2 = curl_init();
+
+        // curl_setopt($ch2, CURLOPT_URL, "http://localhost:8080/toko");
+        // curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
+        // $output = curl_exec($ch2);
+
+        // $result2 = json_decode($output, true);
+        // if ($result2 !== null) {
+        //     $toko = ($result2['success']) ? $result2["data"] : [];
+        // }
+        // $id_toko = 0;
+
+        // foreach ($toko as $key) {
+        //     if ($key['id_user'] == $session["data"]['id_user']) {
+        //         $id_toko = $key["id_toko"];
+        //     }
+        // }
 
 
-        $output = curl_exec($ch);
-
-        $result = json_decode($output, true);
-
-        if ($result != null) {
-            ($result['success']) ? $user = $result["data"] : $user = [];
-        }
-
-        $toko = [];
-        $ch2 = curl_init();
-
-        curl_setopt($ch2, CURLOPT_URL, "http://localhost:8080/toko");
-
-        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
-
-
-        $output = curl_exec($ch2);
-
-        $result2 = json_decode($output, true);
-        if ($result2 !== null) {
-            $toko = ($result2['success']) ? $result2["data"] : [];
-        }
-        $id_toko = 0;
-
-        foreach ($toko as $key) {
-            if ($key['id_user'] == $session["data"]['id_user']) {
-                $id_toko = $key["id_toko"];
-            }
-        }
-
-        if ($session != null) {
-            $data = [
-                "token" => $session["token"],
-                "session" => $session["data"],
-                "css" => "tambahProduk.css",
-                "user" => $user,
-                "id_toko" => $id_toko
-            ];
-        } else {
-            $data = [
-                "token" => null,
-                "session" => null,
-                "css" => "tambahProduk.css",
-                "user" => $user,
-                "id_toko" => $id_toko
-            ];
-        }
+        $data = [
+            "token" => null,
+            "session" => null,
+            "css" => "tambahProduk.css"
+        ];
 
         return view("user/tambahProduk", $data);
     }

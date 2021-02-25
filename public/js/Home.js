@@ -138,8 +138,14 @@ if ($(".headerCarousel2").length > 0) {
 
 // * Javascript for section add produk
 if ($("#btn-upload-produk").length > 0) {
+  if (auth == null) {
+    document.location.href = "/login";
+  }
+  getPermittedUser(auth, token);
+
   $("#btn-upload-produk").on("click", function (e) {
     const validation = Array.from(document.querySelectorAll(".validation"));
+    let sukses = false;
     validation.map((v, i) => {
       let input = "";
 
@@ -151,50 +157,30 @@ if ($("#btn-upload-produk").length > 0) {
         input = v.parentNode.childNodes[3].childNodes[3];
       }
 
+      e.preventDefault();
       if (input.value == "") {
-        e.preventDefault();
         input.classList.add("is-invalid");
         v.innerHTML = "Harus diisi";
       } else {
         input.classList.add("is-valid");
         v.innerHTML = "";
+        sukses = true;
       }
     });
+
+    if (sukses) {
+      uploadProduk();
+    }
   });
 
-  $("#main_img").change(function () {
-    const input = document.getElementById("main_img");
-    const imgPreview = document.querySelector("#main_img_preview");
-
-    const file = new FileReader();
-    file.readAsDataURL(input.files[0]);
-
-    file.onload = function (e) {
-      imgPreview.src = e.target.result;
-    };
-  });
-
-  $("#other_img").change(function () {
-    const input = document.getElementById("other_img");
-    const imgPreview = document.querySelector("#other_img_preview");
-
-    const file = new FileReader();
-    file.readAsDataURL(input.files[0]);
-
-    file.onload = function (e) {
-      imgPreview.src = e.target.result;
-    };
-  });
-
-  const checkbox = Array.from(document.querySelectorAll(".checkIzinUser"));
   let izinUser = "";
-  checkbox.map((c) => {
-    c.addEventListener("change", function () {
-      if (c.checked) {
-        izinUser += c.value + ",";
+  document.body.addEventListener("change", function (e) {
+    if (e.target.classList.contains("checkIzinUser")) {
+      if (e.target.checked) {
+        izinUser += e.target.value + ",";
       } else {
         const array = izinUser.split(",");
-        const index = array.indexOf(c.value);
+        const index = array.indexOf(e.target.value);
         if (index > -1) {
           array.splice(index, 1);
         }
@@ -207,7 +193,27 @@ if ($("#btn-upload-produk").length > 0) {
         izinUser = ganti;
       }
       document.querySelector("#checkUser").value = izinUser;
-    });
+    } else if (e.target.getAttribute("id") == "other_img") {
+      const input = document.getElementById("other_img");
+      const imgPreview = document.querySelector("#other_img_preview");
+
+      const file = new FileReader();
+      file.readAsDataURL(input.files[0]);
+
+      file.onload = function (e) {
+        imgPreview.src = e.target.result;
+      };
+    } else if (e.target.getAttribute("id") == "main_img") {
+      const input = document.getElementById("main_img");
+      const imgPreview = document.querySelector("#main_img_preview");
+
+      const file = new FileReader();
+      file.readAsDataURL(input.files[0]);
+
+      file.onload = function (e) {
+        imgPreview.src = e.target.result;
+      };
+    }
   });
 }
 
@@ -889,6 +895,152 @@ function deleteProduk(id_produk, id_toko) {
       Toast.fire({
         icon: "error",
         title: "Error Hapus Produk",
+      });
+    },
+  });
+}
+
+// * Function for get permitted user
+function getPermittedUser(auth) {
+  // * cek toko
+  $.ajax({
+    url: BASE_URL_SERVER + "/toko",
+    type: "GET",
+    success: (res) => {
+      if (res.success) {
+        let idToko = 0;
+        let status = false;
+        res.data.map((result) => {
+          if (result.id_user == auth.id_user) {
+            idToko = result.id_toko;
+            status = true;
+          }
+        });
+        if (status) {
+          $("#id_toko").val(idToko);
+        } else {
+          document.location.href = "/";
+        }
+      }
+    },
+    error: (err) => {
+      console.log(err);
+      document.location.href = "/";
+    },
+  });
+
+  $.ajax({
+    url: BASE_URL_SERVER + "/allbuyer",
+    type: "GET",
+    success: (res) => {
+      if (res.success) {
+        let handler = "";
+        handler += /*html*/ `
+          <input type="hidden" name="checkUser" id="checkUser" class="form-control">
+        `;
+        res.data.map((result, i) => {
+          handler += /*html */ `
+            <div class="col-6">
+                <div class="form-check">
+                    <input class="form-check-input checkIzinUser" name="izinUser${
+                      i + 1
+                    }}"
+                        type="checkbox" value="${result.id_user}" id="izinUser${
+            i + 1
+          }}">
+                    <label class="form-check-label" for="izinUser${i + 1}}">
+                        ${result.username}
+                    </label>
+                </div>
+            </div>
+            `;
+        });
+
+        $("#permitted_user").html(handler);
+      }
+    },
+    error: (err) => {
+      console.log(err);
+    },
+  });
+}
+
+// * function for upload produk
+function uploadProduk() {
+  let main_img = document.getElementById("main_img").files[0];
+  let other_img = document.getElementById("other_img").files[0];
+
+  let checkuser = $("#checkUser").val();
+  let user_permitted = "";
+  let split1 = checkuser.split(",");
+  split1.map((s, i) => {
+    if (i != split1.length - 1) {
+      if (i == split1.length - 2) {
+        user_permitted += s;
+      } else {
+        user_permitted += s + ",";
+      }
+    }
+  });
+
+  let form = new FormData();
+  form.append("gambar", main_img);
+  form.append("gambar_lain", other_img);
+  form.append("nama_produk", $("#NamaProduk").val());
+  form.append("harga", $("#hargaProduk").val());
+  form.append("user_beli", user_permitted);
+  form.append("id_toko", $("#id_toko").val());
+
+  $(".blankLoad").show();
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
+  // * send request
+  $.ajax({
+    url: BASE_URL_SERVER + "/produk/add",
+    data: form,
+    method: "POST",
+    dataType: "json",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token,
+    },
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: (res) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      console.log(res);
+      Swal.fire({
+        title: "<strong>Add Product Successful</strong>",
+        icon: "success",
+        html:
+          "Register Successful, " +
+          '<a href="/toko/"' +
+          $("#id_toko").val() +
+          ">See Product now</a> ",
+        showCloseButton: false,
+        showCancelButton: false,
+        allowOutsideClick: false,
+        focusConfirm: true,
+        confirmButtonText:
+          '<a href="/toko/"' +
+          $("#id_toko").val() +
+          '" style="color:inherit;text-decoration:none"><i class="fa fa-thumbs-up"></i> See Product </a>',
+        confirmButtonAriaLabel: "Thumbs up, great!",
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: "Thumbs down",
+      });
+      // document.location.href = "/toko/" + res.id_toko;
+    },
+    error: (err) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      console.log(err);
+      Toast.fire({
+        icon: "error",
+        title: "Error Upload Produk",
       });
     },
   });
