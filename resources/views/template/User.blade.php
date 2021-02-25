@@ -23,6 +23,8 @@
 
   @yield('content')
 
+  <div id="search_root"></div>
+
   @include('template.footer')
 
 </body>

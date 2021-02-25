@@ -18,6 +18,23 @@ $("#btn-place").html(btnAuth);
 $("#btn-place2").html(btnAuth);
 console.log(auth);
 
+// * Javascript for searching
+document.addEventListener("submit", function (e) {
+  if (e.target.getAttribute("id") == "formSearching") {
+    e.preventDefault();
+    const keyword = $("#keywordSearch").val();
+    searchingNow(keyword);
+  }
+});
+
+document.body.addEventListener("click", function (e) {
+  if (e.target.getAttribute("id") == "btnBackSearch") {
+    $(".root").show();
+    $("#keywordSearch").val("");
+    $("#search_root").html("");
+  }
+});
+
 // * javascript for Section Profile
 if ($("#biodata").length > 0) {
   if (auth == null) {
@@ -505,33 +522,33 @@ function showAllProduk() {
         res.data.map((result) => {
           handler += /*html*/ `
           <div class="col-md-3">
-          <a href="/detail/${
-            result.id_produk
-          }" style="text-decoration: none;color:inherit;">
-              <div class="sellerCard-Barang mb-4">
+            <div class="sellerCard-Barang mb-4 pb-3">
+              <a href="/detail/${
+                result.id_produk
+              }" style="text-decoration: none;color:inherit;">
                   <div class="topImg-seller d-flex justify-content-center">
-                      <img src="${BASE_URL_SERVER}/uploads/produk/${
+                      <img src=" ${BASE_URL_SERVER}/uploads/produk/${
             result.gambar
-          }" alt="InfiniteMart ${
-            result.nama_produk
-          }" height="250px" class="user-select-none">
+          } "
+                          alt="InfiniteMart ${
+                            result.nama_produk
+                          }" height="250px" class="user-select-none">
                   </div>
                   <div class="container d-flex justify-content-between">
 
-                      <div class="contentCard-Barang d-flex flex-column mt-3">
-                          <h5 class="fw-bold"></h5>
-                          <span style="color: gold;" class="stuff-fare" data-fare="${
-                            result.harga
-                          }">
-                          ${formatter.toRupiah(result.harga)}
+                      <div class="contentCard-Barang d-flex flex-column mt-2">
+                          <h5 class="fw-bold">${result.nama_produk}</h5>
+                          <span class="stuff-fare" style="color: gold;">
+                            ${formatter.toRupiah(result.harga)}
                           </span>
                           <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
                       </div>
 
                   </div>
-              </div>
-          </a>
-      </div>
+              </a>
+          </div>       
+
+        </div>
           `;
         });
 
@@ -709,4 +726,111 @@ function updateToko(idToko) {
       });
     },
   });
+}
+
+// * function for searching
+function searchingNow(keyword) {
+  $(".blankLoad").show();
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
+  $.ajax({
+    url: BASE_URL_SERVER + "/findproduk?keyword=" + keyword,
+    type: "GET",
+    success: function (res) {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      $(".root").hide();
+      let handler = /*html */ `
+      <div class="container mt-5">
+
+          <div class="row">
+            <p style="font-size:25px">
+              <i class="fa fa-arrow-left mr-5" id="btnBackSearch" style="cursor:pointer"></i>
+              Hasil Pencarian untuk <strong>"${keyword}"</strong>
+            </p>
+            <hr>
+          </div>
+      
+          <div class="row">
+              ${showSearchProduk(res)}
+          </div>
+      </div>
+      
+      `;
+
+      $("#search_root").html(handler);
+    },
+    error: function (err) {
+      let res = err.responseJSON;
+      if (res != null) {
+        $(".blankLoad").hide();
+        document.body.style.overflowY = "auto";
+        $(".root").hide();
+        let handler = /*html */ `
+      <div class="container mt-5">
+
+          <div class="row">
+            <p style="font-size:25px">
+              <i class="fa fa-arrow-left mr-5" id="btnBackSearch" style="cursor:pointer"></i>
+              Hasil Pencarian untuk <strong>"${keyword}"</strong>
+            </p>
+            <hr>
+          </div>
+      
+          <div class="row">
+            <div class="col-12 my-5">
+                <div class="row justify-content-center">
+                    <img src="/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
+                    <h2 class="text-center">${res.message}</h2>
+                </div>
+            </div>
+          </div>
+      </div>
+      
+      `;
+
+        $("#search_root").html(handler);
+      }
+    },
+  });
+}
+
+// * function for serach result produk
+function showSearchProduk(res) {
+  console.log(res);
+  let handler = "";
+  res.data.map((result) => {
+    handler += /*html*/ `
+          <div class="col-md-3">
+            <div class="sellerCard-Barang mb-4 pb-3">
+              <a href="/detail/${
+                result.id_produk
+              }" style="text-decoration: none;color:inherit;">
+                  <div class="topImg-seller d-flex justify-content-center">
+                      <img src=" ${BASE_URL_SERVER}/uploads/produk/${
+      result.gambar
+    } "
+                          alt="InfiniteMart ${
+                            result.nama_produk
+                          }" height="250px" class="user-select-none">
+                  </div>
+                  <div class="container d-flex justify-content-between">
+
+                      <div class="contentCard-Barang d-flex flex-column mt-2">
+                          <h5 class="fw-bold">${result.nama_produk}</h5>
+                          <span class="stuff-fare" style="color: gold;">
+                            ${formatter.toRupiah(result.harga)}
+                          </span>
+                          <span class="StokTersedia mt-1 mb-3">Stok Tersedia</span>
+                      </div>
+
+                  </div>
+              </a>
+          </div>       
+
+        </div>
+          `;
+  });
+
+  return handler;
 }

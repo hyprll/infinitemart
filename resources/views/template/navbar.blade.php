@@ -12,10 +12,10 @@
             <div class="col-md-6 wrap-navbar-login">
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <form action="{{route("home")}}" method="GET">
+                        <form action="{{route("home")}}" method="GET" id="formSearching">
                             <div class="searchBarWrap p-3">
                                 <input type="text" class="searchBar form-control img-fluid"
-                                    placeholder="Laper Pengen Seblak" name="keyword" autocomplete="off"
+                                    placeholder="Laper Pengen Seblak" name="keyword" autocomplete="off" id="keywordSearch"
                                     value="{{isset($keyword) ? $keyword : ""}}">
                                 <button class="btn mx-2" type="submit">
                                     <img src="{{asset("img/icon/ikon-search-btn.png")}}" alt="">

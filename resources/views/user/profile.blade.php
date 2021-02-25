@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container root">
     <div class="row">
         <div class="col">
             <div class="card left-area">
@@ -37,7 +37,7 @@
                             Logout
                         </label> --}}
                         {{-- <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
-                            @csrf
+                        @csrf
                         </form> --}}
                     </div>
                     <div class="card-body">
@@ -100,7 +100,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 @endsection
