@@ -16,18 +16,18 @@
                         <i class="fa fa-pen icon-pencil" type="button"></i>
                     </div>
                     <div class="card-body">
-                        <label for="user-profil" class="user-profil">
+                        <label for="user-profil" class="user-profil" id="user-profil-name">
                             {{-- {{$session["username"]}} --}}
                         </label>
                     </div>
-                    <div class="card-body">
-                        <i class="fas fa-user user-left"></i>
-                        <a href="{{route("profile")}}" class="profile-card-left" type="button">My Profile</a>
+                    <div class="card-body" id="card-menu-profile">
+                        {{-- <i class="fas fa-user user-left"></i>
+                        <a href="{{route("profile")}}" class="profile-card-left" type="button">My Profile</a> --}}
                         {{-- @if ($hasToko)
                         <i class="fas fa-store-alt store-left"></i>
                         <a href="{{url("toko/".$id_toko)}}" class="store-card-left" type="button">Toko Saya</a>
                         @else --}}
-                        <i class="fas fa-store-alt store-left"></i>
+                        {{-- <i class="fas fa-store-alt store-left"></i>
                         <a href="{{route("seller")}}" class="store-card-left" type="button">Buat Toko</a>
                         <i class="fas fa-history history-left"></i>
                         <a href="{{route("profile")}}" class="history-card-left" type="button">History</a>
@@ -35,10 +35,10 @@
                         <i class="fas fa-sign-in-alt logout-left"></i>
                         <label for="label-left" class="logout-card-left" type="button" id="logoutBtn">
                             Logout
-                        </label>
-                        <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
+                        </label> --}}
+                        {{-- <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
                             @csrf
-                        </form>
+                        </form> --}}
                     </div>
                     <div class="card-body">
                         <img src="{{asset("img/character/anima5.png")}}" class="anima5 user-select-none">

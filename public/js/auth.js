@@ -1,6 +1,7 @@
 // alert("ok");
 let country = [];
 $(function () {
+  // * Javasript for section register
   if ($("#registerAccount").length > 0) {
     $("#registerAccount").on("submit", function (e) {
       e.preventDefault();
@@ -116,7 +117,9 @@ $(function () {
         document.getElementById("dataCountry").innerHTML = handler;
       },
     });
-  } else if ($("#form-login").length > 0) {
+  }
+  // * Javascript for section login
+  else if ($("#form-login").length > 0) {
     $("#form-login").on("submit", function (e) {
       e.preventDefault();
       if (validateLogin()) {
@@ -149,10 +152,56 @@ $(function () {
         });
       }
     });
-  } else if ($("#form-seller").length > 0) {
+  }
+  // * Javascript for section seller
+  else if ($("#form-seller").length > 0) {
+    const auth = JSON.parse(localStorage.getItem("auth_session"));
+    const token = localStorage.getItem("token");
+    if (auth == null) {
+      document.location.href = "/login";
+    }
+
+    console.log(auth);
+
     $("#form-seller").on("submit", function (e) {
-      if (!validateSeller()) {
-        e.preventDefault();
+      e.preventDefault();
+      if (validateSeller()) {
+        let logo = document.getElementById("logoToko").files[0];
+        let bg = document.getElementById("bgToko").files[0];
+
+        let form = new FormData();
+        form.append("logo", logo);
+        form.append("background", bg);
+        form.append("nama_toko", $("#nama_toko").val());
+        form.append("deskripsi", $("#deskripsiToko").val());
+        form.append("id_user", auth.id_user);
+
+        $(".blankLoad").show();
+        $(".blankLoad").css("display", "flex");
+        document.body.style.overflowY = "hidden";
+        // * send request
+        $.ajax({
+          url: BASE_URL_SERVER + "/toko/add",
+          data: form,
+          method: "POST",
+          dataType: "json",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + token,
+          },
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: (res) => {
+            $(".blankLoad").hide();
+            console.log(res);
+            document.location.href = "/toko/" + res.id_toko;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
       }
     });
   }

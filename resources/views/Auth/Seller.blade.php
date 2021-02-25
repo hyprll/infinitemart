@@ -21,7 +21,7 @@
 
                                 <div class="form-group mt-2">
                                     <label for="" class="form-label small">Nama Toko</label>
-                                    <input type="text" class="w-100 form-control form-control-sm" name="nama_toko" autocomplete="off">
+                                    <input type="text" class="w-100 form-control form-control-sm" name="nama_toko" autocomplete="off" id="nama_toko">
                                     <small class="validate">
                                         {{Session::get('nama_toko_error_status')}}
                                     </small>
@@ -48,7 +48,7 @@
                                 <div class="form-group">
                                     <label for="" class="form-label small">Deskripsi Toko</label>
                                     <textarea name="deskripsi" style="resize:none"
-                                        class="w-100 form-control"></textarea>
+                                        class="w-100 form-control" id="deskripsiToko"></textarea>
                                     <small class="validate">
                                         {{Session::get('deskripsi_error_status')}}
                                     </small>

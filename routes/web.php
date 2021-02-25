@@ -33,10 +33,10 @@ Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], funct
 });
 
 Route::group(["middleware" => ["auth.q", "noStore"]], function () {
-    Route::get("/seller", [AuthController::class, "seller"])->name("seller");
     Route::post("/seller", [AuthController::class, "seller_proses"])->name("seller_proses");
 });
 
+Route::get("/seller", [AuthController::class, "seller"])->name("seller");
 Route::get('/', [HomeController::class, "index"])->name("home");
 Route::get('/detail/{id}', [ProdukController::class, "detail"]);
 Route::get('/toko/{id}', [HomeController::class, "toko"]);

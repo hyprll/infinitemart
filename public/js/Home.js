@@ -18,10 +18,55 @@ $("#btn-place").html(btnAuth);
 $("#btn-place2").html(btnAuth);
 console.log(auth);
 
+// * javascript for Section Profile
 if ($("#biodata").length > 0) {
   if (auth == null) {
     document.location.href = "/login";
   }
+
+  $("#user-profil-name").html(`${auth.username}`);
+
+  // * check if user has toko or no
+  let hasToko = false;
+  let idToko = 0;
+  $.ajax({
+    url: `${BASE_URL_SERVER}/toko`,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        res.data.forEach((response) => {
+          if (response.id_user == auth.id_user) {
+            hasToko = true;
+            idToko = response.id_toko;
+          }
+
+          let handlerCardMenu = /* html */ `
+            <i class="fas fa-user user-left"></i>
+            <a href="/profile" class="profile-card-left" type="button">My Profile</a>
+            ${
+              hasToko
+                ? `<i class="fas fa-store-alt store-left"></i>
+            <a href="toko/${idToko}" class="store-card-left" type="button">Toko Saya</a>`
+                : `<i class="fas fa-store-alt store-left"></i>
+            <a href="/seller" class="store-card-left" type="button">Buat Toko</a>`
+            }
+            <i class="fas fa-history history-left"></i>
+            <a href="/history" class="history-card-left" type="button">History</a>
+
+            <i class="fas fa-sign-in-alt logout-left"></i>
+            <label for="label-left" class="logout-card-left" type="button" id="logoutBtn">
+                Logout
+            </label>
+            `;
+
+          $("#card-menu-profile").html(handlerCardMenu);
+        });
+      }
+    },
+    error: (err) => {
+      alert("Error");
+    },
+  });
 
   let handler = /* html */ `
       <h6>Username</h6>
@@ -48,14 +93,16 @@ if ($("#biodata").length > 0) {
 
   $("#biodata").html(handler);
 
-  $("#logoutBtn").click(function (e) {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("auth_session");
-    document.location.href = "/login";
+  document.body.addEventListener("click", function (e) {
+    if (e.target.getAttribute("id") == "logoutBtn") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("auth_session");
+      document.location.href = "/login";
+    }
   });
 }
 
+// * Javascript for section home
 if ($(".headerCarousel2").length > 0) {
   $(function () {
     $(".headerCarousel2").owlCarousel({
@@ -72,6 +119,7 @@ if ($(".headerCarousel2").length > 0) {
   });
 }
 
+// * Javascript for section add produk
 if ($("#btn-upload-produk").length > 0) {
   $("#btn-upload-produk").on("click", function (e) {
     const validation = Array.from(document.querySelectorAll(".validation"));
@@ -146,6 +194,7 @@ if ($("#btn-upload-produk").length > 0) {
   });
 }
 
+// * Javascript for section update produk
 if ($("#btn-update-produk").length > 0) {
   $("#btn-update-produk").on("click", function (e) {
     const validation = Array.from(document.querySelectorAll(".validation"));
@@ -234,6 +283,7 @@ if ($("#btn-update-produk").length > 0) {
   });
 }
 
+// * javascript for section detail
 if ($("#img-produk").length > 0) {
   const produkId = document.querySelector("#idProduk").dataset.idproduk;
   showAllProduk();
@@ -306,6 +356,7 @@ if (btn_delete.length != 0) {
   });
 }
 
+// * Javascript for section update dashboard toko
 if ($("#btn-edit-toko").length > 0) {
   $("#btn-edit-toko").on("click", function () {
     $(".no-edit-toko-content").hide();
@@ -361,6 +412,7 @@ if ($("#btn-edit-toko").length > 0) {
   });
 }
 
+// * Javascript for section dashboard toko
 if ($("#background-img").length > 0) {
   const idToko = document.querySelector("#idToko").dataset.idtoko;
   showTokoProduk(idToko);
@@ -388,6 +440,7 @@ if ($("#background-img").length > 0) {
   });
 }
 
+// * function for show produk in store
 function showTokoProduk(idToko) {
   $.ajax({
     url: BASE_URL_SERVER + `/produk/toko/${idToko}`,
@@ -405,8 +458,8 @@ function showTokoProduk(idToko) {
                 <div class="sellerCard-Barang mb-4">
                     <div class="topImg-seller d-flex justify-content-center">
                         <img src="${BASE_URL_SERVER}/uploads/produk/${
-                          result.gambar
-                        }" alt="InfiniteMart ${
+            result.gambar
+          }" alt="InfiniteMart ${
             result.nama_produk
           }" height="250px" class="user-select-none">
                     </div>
@@ -445,6 +498,7 @@ function showTokoProduk(idToko) {
   });
 }
 
+// * function for show all produk
 function showAllProduk() {
   $.ajax({
     url: BASE_URL_SERVER + "/produk",
@@ -461,8 +515,8 @@ function showAllProduk() {
               <div class="sellerCard-Barang mb-4">
                   <div class="topImg-seller d-flex justify-content-center">
                       <img src="${BASE_URL_SERVER}/uploads/produk/${
-                        result.gambar
-                      }" alt="InfiniteMart ${
+            result.gambar
+          }" alt="InfiniteMart ${
             result.nama_produk
           }" height="250px" class="user-select-none">
                   </div>
