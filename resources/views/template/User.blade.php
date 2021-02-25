@@ -15,6 +15,9 @@
 </head>
 
 <body>
+  <div class="blankLoad">
+    <img src="{{asset("img/gif/roll1.gif")}}" alt="" width="100px">
+  </div>
 
   @include('template.navbar')
 

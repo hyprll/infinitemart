@@ -358,112 +358,8 @@ if (btn_delete.length != 0) {
 
 // * Javascript for section dashboard toko
 if ($("#background-img").length > 0) {
-  const auth = JSON.parse(localStorage.getItem("auth_session"));
-  const token = localStorage.getItem("token");
-
   const idToko = document.querySelector("#idToko").dataset.idtoko;
-  $.ajax({
-    url: BASE_URL_SERVER + `/toko/${idToko}`,
-    type: "GET",
-    success: function (res) {
-      if (res.success) {
-        $("#background-img").attr(
-          "src",
-          BASE_URL_SERVER + `/uploads/toko/${res.data[0].background}`
-        );
-        let myToko = false;
-        if (auth != null) {
-          if (res.data[0].id_user == auth.id_user) {
-            myToko = true;
-          }
-        }
-
-        showTokoProduk(idToko, myToko);
-        let handlerToko = /* html */ `
-        <div class="ProfileImgToko d-flex justify-content-center align-items-center">
-            <img src="${
-              BASE_URL_SERVER + `/uploads/toko/` + res.data[0].logo
-            }" alt="" class="rounded-circle"
-            id="logo-img">
-        </div>
-        <div class="row px-3 no-edit-toko-content">
-            <h4 class="no-edit-toko-content" id="namaToko">
-            ${res.data[0].nama_toko}</h4>
-            <h4 class="no-edit-toko-content" id="namaToko"></h4>
-            <span class="no-edit-toko-content">
-                ${res.data[0].deskripsi}
-            </span>
-        </div>        
-        `;
-
-        if (myToko) {
-          handlerToko += /* html */ `
-          <form action="/toko" method="POST" id="form-update-toko" enctype="multipart/form-data">
-            <input type="hidden" name="id_toko" value="${res.data[0].id_toko}">
-            <input type="hidden" name="old_logo" value="${res.data[0].logo}">
-            <input type="hidden" name="old_bg" value="${res.data[0].background}">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="row px-3">
-                        <div class="col-md-12">
-                            <label for="" class="edit-toko-content">Nama Toko</label>
-                            <input type="text" class="form-control edit-toko-content" value="${res.data[0].nama_toko}"
-                                name="namaToko">
-                            <small class="validation text-danger edit-toko-content"></small>
-                        </div>
-                    </div>
-                    <div class="row px-3">
-                        <div class="col-md-12">
-                            <label for="" class="edit-toko-content mt-3">Deskripsi Toko</label>
-                            <textarea name="deskripsi" id="deskripsi" class="form-control edit-toko-content"
-                                style="min-height: 150px">${res.data[0].deskripsi}</textarea>
-                            <small class="validation text-danger edit-toko-content"></small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 edit-toko-content">
-                    <div class="row px-3 mb-3">
-                        <label for="">Ubah Logo</label>
-                        <input class="form-control" type="file" id="logo" name="logo">
-                    </div>
-                    <div class="row px-3 mb-3">
-                        <label for="">Ubah Backgorund</label>
-                        <input class="form-control" type="file" id="background" name="background">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <button type="submit" class="btn w-100 btn-success" id="btn-update-toko">Update
-                                Toko</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button type="button" class="btn w-100 btn-danger"
-                                id="btn-cancel-toko">Batalkan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-          `;
-
-          handlerToko += /* html */ `
-          <div class="row mt-3 px-3 no-edit-toko-content">
-            <div class="col-md-3 mb-3">
-                <button class="btn w-100 btn-info" id="btn-edit-toko">Edit Toko</button>
-            </div>
-            <div class="col-md-3">
-                <a href="/toko/add" class="btn w-100 btn-success">Tambah produk</a>
-            </div>
-          </div>
-          `;
-        }
-
-        $("#kontent-toko").html(handlerToko);
-      }
-    },
-    error: function (err) {
-      alert("error");
-    },
-  });
+  showTokoDash(idToko);
 
   document.body.addEventListener("click", function (e) {
     if (e.target.getAttribute("id") == "btn-edit-toko") {
@@ -501,21 +397,21 @@ if ($("#background-img").length > 0) {
 
   document.body.addEventListener("submit", function (e) {
     if (e.target.getAttribute("id") == "form-update-toko") {
+      e.preventDefault();
       const validation = Array.from(document.querySelectorAll(".validation"));
       validation.map((v, i) => {
         let input = v.parentNode.childNodes[3];
 
         if (input.value == "") {
-          e.preventDefault();
           input.classList.add("is-invalid");
           v.innerHTML = "Harus diisi";
         } else if (input.value.length < 6) {
-          e.preventDefault();
           input.classList.add("is-invalid");
           v.innerHTML = "Minimal 6 karakter";
         } else {
           input.classList.add("is-valid");
           v.innerHTML = "";
+          updateToko(idToko);
         }
       });
     }
@@ -646,6 +542,171 @@ function showAllProduk() {
     },
     error: function (e) {
       alert("error");
+    },
+  });
+}
+
+// * function for show toko dashboard
+function showTokoDash(idToko) {
+  const auth = JSON.parse(localStorage.getItem("auth_session"));
+  const token = localStorage.getItem("token");
+
+  $.ajax({
+    url: BASE_URL_SERVER + `/toko/${idToko}`,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        $("#background-img").attr(
+          "src",
+          BASE_URL_SERVER + `/uploads/toko/${res.data[0].background}`
+        );
+        let myToko = false;
+        if (auth != null) {
+          if (res.data[0].id_user == auth.id_user) {
+            myToko = true;
+          }
+        }
+
+        showTokoProduk(idToko, myToko);
+        let handlerToko = /* html */ `
+        <div class="ProfileImgToko d-flex justify-content-center align-items-center">
+            <img src="${
+              BASE_URL_SERVER + `/uploads/toko/` + res.data[0].logo
+            }" alt="" class="rounded-circle"
+            id="logo-img">
+        </div>
+        <div class="row px-3 no-edit-toko-content">
+            <h4 class="no-edit-toko-content" id="namaToko">
+            ${res.data[0].nama_toko}</h4>
+            <h4 class="no-edit-toko-content" id="namaToko"></h4>
+            <span class="no-edit-toko-content">
+                ${res.data[0].deskripsi}
+            </span>
+        </div>        
+        `;
+
+        if (myToko) {
+          handlerToko += /* html */ `
+          <form action="/toko" method="POST" id="form-update-toko" enctype="multipart/form-data">
+            <input type="hidden" name="id_toko" value="${res.data[0].id_toko}">
+            <input type="hidden" name="old_logo" id="old_logo" value="${res.data[0].logo}">
+            <input type="hidden" name="old_bg" id="old_bg" value="${res.data[0].background}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row px-3">
+                        <div class="col-md-12">
+                            <label for="" class="edit-toko-content">Nama Toko</label>
+                            <input type="text" class="form-control edit-toko-content" value="${res.data[0].nama_toko}" id="nama_toko"
+                                name="namaToko">
+                            <small class="validation text-danger edit-toko-content"></small>
+                        </div>
+                    </div>
+                    <div class="row px-3">
+                        <div class="col-md-12">
+                            <label for="" class="edit-toko-content mt-3">Deskripsi Toko</label>
+                            <textarea name="deskripsi" id="deskripsi" class="form-control edit-toko-content"
+                                style="min-height: 150px">${res.data[0].deskripsi}</textarea>
+                            <small class="validation text-danger edit-toko-content"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 edit-toko-content">
+                    <div class="row px-3 mb-3">
+                        <label for="">Ubah Logo</label>
+                        <input class="form-control" type="file" id="logo" name="logo">
+                    </div>
+                    <div class="row px-3 mb-3">
+                        <label for="">Ubah Background</label>
+                        <input class="form-control" type="file" id="background" name="background">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <button type="submit" class="btn w-100 btn-success" id="btn-update-toko">Update
+                                Toko</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn w-100 btn-danger"
+                                id="btn-cancel-toko">Batalkan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+          `;
+
+          handlerToko += /* html */ `
+          <div class="row mt-3 px-3 no-edit-toko-content">
+            <div class="col-md-3 mb-3">
+                <button class="btn w-100 btn-info" id="btn-edit-toko">Edit Toko</button>
+            </div>
+            <div class="col-md-3">
+                <a href="/toko/add" class="btn w-100 btn-success">Tambah produk</a>
+            </div>
+          </div>
+          `;
+        }
+
+        $("#kontent-toko").html(handlerToko);
+      }
+    },
+    error: function (err) {
+      alert("error");
+    },
+  });
+}
+
+// * function for updateToko
+function updateToko(idToko) {
+  const auth = JSON.parse(localStorage.getItem("auth_session"));
+  const token = localStorage.getItem("token");
+
+  let logo = document.getElementById("logo").files[0];
+  let bg = document.getElementById("background").files[0];
+
+  let form = new FormData();
+  form.append("logo", logo);
+  form.append("background", bg);
+  form.append("nama_toko", $("#nama_toko").val());
+  form.append("deskripsi", $("#deskripsi").val());
+  form.append("id_toko", idToko);
+  form.append("logo_old", $("#old_logo").val());
+  form.append("bg_old", $("#old_bg").val());
+
+  $(".blankLoad").show();
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
+
+  $.ajax({
+    url: BASE_URL_SERVER + "/toko/update",
+    data: form,
+    method: "POST",
+    dataType: "json",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token,
+    },
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: (res) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      console.log(res);
+      Toast.fire({
+        icon: "success",
+        title: "Update Toko Sukses",
+      });
+      showTokoDash(idToko);
+    },
+    error: (err) => {
+      console.log(err);
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Toast.fire({
+        icon: "error",
+        title: "Update Toko Error",
+      });
     },
   });
 }
