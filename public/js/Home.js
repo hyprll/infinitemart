@@ -385,6 +385,22 @@ if ($("#background-img").length > 0) {
     } else if (e.target.getAttribute("id") == "btn-cancel-toko") {
       $(".no-edit-toko-content").show();
       $(".edit-toko-content").hide();
+    } else if (e.target.classList.contains("btn-delete-produk")) {
+      e.preventDefault();
+      const idProduk = e.target.dataset.idproduk;
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You will delete this product permanently!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteProduk(idProduk, idToko);
+        }
+      });
     }
   });
 
@@ -481,8 +497,8 @@ function showTokoProduk(idToko, myStore = false) {
                           Edit Barang</a>
                       </div>
                       <div class="col-3">
-                          <a href="toko/delete" class="btn btn-danger w-100 btn-delete">
-                              <i class="fa fa-trash-alt"></i>
+                          <a href="toko/delete" class="btn btn-danger w-100 btn-delete btn-delete-produk" data-idproduk="${result.id_produk}">
+                              <i class="fa fa-trash-alt btn-delete-produk" data-idproduk="${result.id_produk}"></i>
                           </a>
                       </div>
                   </div>
@@ -584,6 +600,7 @@ function showTokoDash(idToko) {
           }
         }
 
+        let deskripsiTokoNya = res.data[0].deskripsi.replace("/n", "</br>");
         showTokoProduk(idToko, myToko);
         let handlerToko = /* html */ `
         <div class="ProfileImgToko d-flex justify-content-center align-items-center">
@@ -597,7 +614,7 @@ function showTokoDash(idToko) {
             ${res.data[0].nama_toko}</h4>
             <h4 class="no-edit-toko-content" id="namaToko"></h4>
             <span class="no-edit-toko-content">
-                ${res.data[0].deskripsi}
+                ${deskripsiTokoNya}
             </span>
         </div>        
         `;
@@ -833,4 +850,46 @@ function showSearchProduk(res) {
   });
 
   return handler;
+}
+
+// * function for delete produk
+function deleteProduk(id_produk, id_toko) {
+  const auth = JSON.parse(localStorage.getItem("auth_session"));
+  const token = localStorage.getItem("token");
+
+  $(".blankLoad").show();
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
+
+  $.ajax({
+    url: BASE_URL_SERVER + "/produk/delete?id_produk=" + id_produk,
+    type: "DELETE",
+    dataType: "json",
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: (res) => {
+      console.log(res);
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Toast.fire({
+        icon: "success",
+        title: "Sukses Hapus Produk",
+      });
+      showTokoProduk(id_toko, true);
+    },
+    error: (res) => {
+      console.log(res);
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Toast.fire({
+        icon: "error",
+        title: "Error Hapus Produk",
+      });
+    },
+  });
 }
