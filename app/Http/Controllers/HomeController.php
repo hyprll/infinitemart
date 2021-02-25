@@ -93,10 +93,7 @@ class HomeController extends Controller
         // $ch2 = curl_init();
 
         // curl_setopt($ch2, CURLOPT_URL, "http://localhost:8080//produk/toko/" . $id);
-        // //return the transfer as a string 
         // curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
-
-        // // $output contains the output string 
         // $output = curl_exec($ch2);
         // $result = json_decode($output, true);
         // if ($result !== null) {
