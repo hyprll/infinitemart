@@ -442,28 +442,17 @@ if ($("#background-img").length > 0) {
       validation.map((v, i) => {
         let input = v.parentNode.childNodes[3];
 
-        if (i == validation.length - 2 || i == validation.length - 1) {
-          if (input.files.length == 0) {
-            success = false;
-            input.classList.add("is-invalid");
-            v.innerHTML = "Harus diisi";
-          } else {
-            input.classList.add("is-valid");
-            v.innerHTML = "";
-          }
+        if (input.value == "") {
+          success = false;
+          input.classList.add("is-invalid");
+          v.innerHTML = "Harus diisi";
+        } else if (input.value.length < 6) {
+          success = false;
+          input.classList.add("is-invalid");
+          v.innerHTML = "Minimal 6 karakter";
         } else {
-          if (input.value == "") {
-            success = false;
-            input.classList.add("is-invalid");
-            v.innerHTML = "Harus diisi";
-          } else if (input.value.length < 6) {
-            success = false;
-            input.classList.add("is-invalid");
-            v.innerHTML = "Minimal 6 karakter";
-          } else {
-            input.classList.add("is-valid");
-            v.innerHTML = "";
-          }
+          input.classList.add("is-valid");
+          v.innerHTML = "";
         }
       });
       if (success) {
@@ -666,12 +655,10 @@ function showTokoDash(idToko) {
                     <div class="row px-3 mb-3">
                         <label for="">Ubah Logo</label>
                         <input class="form-control" type="file" id="logo" name="logo">
-                        <small class="validation text-danger edit-toko-content"></small>
                     </div>
                     <div class="row px-3 mb-3">
                         <label for="">Ubah Background</label>
                         <input class="form-control" type="file" id="background" name="background">
-                        <small class="validation text-danger edit-toko-content"></small>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -714,13 +701,17 @@ function updateToko(idToko) {
   const auth = JSON.parse(localStorage.getItem("auth_session"));
   const token = localStorage.getItem("token");
 
-  let logo = document.getElementById("logo").files[0];
-  let bg = document.getElementById("background").files[0];
+  let logo = document.getElementById("logo").files;
+  let bg = document.getElementById("background").files;
   let namaToko = $("#nama_toko").val();
 
   let form = new FormData();
-  form.append("logo", logo);
-  form.append("background", bg);
+  if (logo.length > 0) {
+    form.append("logo", logo[0]);
+  }
+  if (bg.length > 0) {
+    form.append("background", bg[0]);
+  }
   form.append("nama_toko", namaToko);
   form.append("deskripsi", $("#deskripsi").val());
   form.append("id_toko", idToko);
