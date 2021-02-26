@@ -66,7 +66,6 @@ class ApiTokoController extends Controller
         | Validation request.
         |--------------------------------------------------------------------------
         */
-
         $validation = Validator::make($input, [
             "nama_toko" => "required|string|min:6",
             "deskripsi" => "required|string",

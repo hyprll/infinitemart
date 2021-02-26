@@ -66,7 +66,7 @@ Route::get("/api/toko/{id_toko}", [ApiTokoController::class, "tokobyid"])->name(
 Route::get("/api/toko", [ApiTokoController::class, "tokoall"])->name("apitokoall");
 Route::group(["prefix" => "api/toko", "middleware" => ["jwtadmin.auth"]], function() use ($router){
     Route::post("/add", [ApiTokoController::class, "create"])->name("apicreatetoko");
-    Route::post("/update", [ApiTokoController::class, "create"])->name("apiupdatetoko");
+    Route::post("/update", [ApiTokoController::class, "update"])->name("apiupdatetoko");
 });
 
 Route::get("/api/produk/{id_produk}", [ApiProdukController::class, "produkbyid"])->name("apiprodukbyid");

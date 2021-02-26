@@ -13,8 +13,6 @@ $(function () {
         let split2 = split1[1].split(")");
         let finalSplit = split2[0];
 
-        console.log(finalSplit);
-
         let form = new FormData();
         form.append("email", $("#email").val());
         form.append("username", $("#username").val());
@@ -128,6 +126,9 @@ $(function () {
         form.append("password", $("#password").val());
         $.ajax({
           url: BASE_URL_SERVER + "/login",
+          headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          },
           data: form,
           method: "POST",
           dataType: "json",
@@ -147,6 +148,7 @@ $(function () {
           },
           error: function (xhr, status) {
             const data = xhr.responseJSON;
+            console.log(xhr);
             $("#error_something").html(data.message);
           },
         });

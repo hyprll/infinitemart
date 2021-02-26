@@ -318,11 +318,11 @@ if ($("#img-produk").length > 0) {
       if (res.success) {
         $("#img-produk").attr(
           "src",
-          BASE_URL_SERVER + `/uploads/produk/${res.data[0].gambar}`
+          BASE_URL + `/uploads/produk/${res.data[0].gambar}`
         );
         $("#img-produk-lainnya").attr(
           "src",
-          BASE_URL_SERVER + `/uploads/produk/${res.data[0].gambar_lain}`
+          BASE_URL + `/uploads/produk/${res.data[0].gambar_lain}`
         );
         $("#produkName").html(res.data[0].nama_produk);
         $("#produkFare").html(formatter.toRupiah(res.data[0].harga));
@@ -334,7 +334,7 @@ if ($("#img-produk").length > 0) {
             if (res.success) {
               $("#logoToko").attr(
                 "src",
-                BASE_URL_SERVER + `/uploads/toko/${res.data[0].logo}`
+                BASE_URL + `/uploads/toko/${res.data[0].logo}`
               );
               $("#tokoName").attr("href", `/toko/${res.data[0].id_toko}`);
               $("#tokoName").html(res.data[0].nama_toko);
@@ -438,21 +438,37 @@ if ($("#background-img").length > 0) {
     if (e.target.getAttribute("id") == "form-update-toko") {
       e.preventDefault();
       const validation = Array.from(document.querySelectorAll(".validation"));
+      let success = true;
       validation.map((v, i) => {
         let input = v.parentNode.childNodes[3];
 
-        if (input.value == "") {
-          input.classList.add("is-invalid");
-          v.innerHTML = "Harus diisi";
-        } else if (input.value.length < 6) {
-          input.classList.add("is-invalid");
-          v.innerHTML = "Minimal 6 karakter";
+        if (i == validation.length - 2 || i == validation.length - 1) {
+          if (input.files.length == 0) {
+            success = false;
+            input.classList.add("is-invalid");
+            v.innerHTML = "Harus diisi";
+          } else {
+            input.classList.add("is-valid");
+            v.innerHTML = "";
+          }
         } else {
-          input.classList.add("is-valid");
-          v.innerHTML = "";
-          updateToko(idToko);
+          if (input.value == "") {
+            success = false;
+            input.classList.add("is-invalid");
+            v.innerHTML = "Harus diisi";
+          } else if (input.value.length < 6) {
+            success = false;
+            input.classList.add("is-invalid");
+            v.innerHTML = "Minimal 6 karakter";
+          } else {
+            input.classList.add("is-valid");
+            v.innerHTML = "";
+          }
         }
       });
+      if (success) {
+        updateToko(idToko);
+      }
     }
   });
 }
@@ -473,9 +489,7 @@ function showTokoProduk(idToko, myStore = false) {
                 result.id_produk
               }" style="text-decoration: none;color:inherit;">
                   <div class="topImg-seller d-flex justify-content-center">
-                      <img src=" ${BASE_URL_SERVER}/uploads/produk/${
-            result.gambar
-          } "
+                      <img src=" ${BASE_URL}/uploads/produk/${result.gambar} "
                           alt="InfiniteMart ${
                             result.nama_produk
                           }" height="250px" class="user-select-none">
@@ -549,9 +563,7 @@ function showAllProduk() {
                 result.id_produk
               }" style="text-decoration: none;color:inherit;">
                   <div class="topImg-seller d-flex justify-content-center">
-                      <img src=" ${BASE_URL_SERVER}/uploads/produk/${
-            result.gambar
-          } "
+                      <img src=" ${BASE_URL}/uploads/produk/${result.gambar} "
                           alt="InfiniteMart ${
                             result.nama_produk
                           }" height="250px" class="user-select-none">
@@ -597,7 +609,7 @@ function showTokoDash(idToko) {
       if (res.success) {
         $("#background-img").attr(
           "src",
-          BASE_URL_SERVER + `/uploads/toko/${res.data[0].background}`
+          BASE_URL + `/uploads/toko/${res.data[0].background}`
         );
         let myToko = false;
         if (auth != null) {
@@ -611,7 +623,7 @@ function showTokoDash(idToko) {
         let handlerToko = /* html */ `
         <div class="ProfileImgToko d-flex justify-content-center align-items-center">
             <img src="${
-              BASE_URL_SERVER + `/uploads/toko/` + res.data[0].logo
+              BASE_URL + `/uploads/toko/` + res.data[0].logo
             }" alt="" class="rounded-circle"
             id="logo-img">
         </div>
@@ -654,10 +666,12 @@ function showTokoDash(idToko) {
                     <div class="row px-3 mb-3">
                         <label for="">Ubah Logo</label>
                         <input class="form-control" type="file" id="logo" name="logo">
+                        <small class="validation text-danger edit-toko-content"></small>
                     </div>
                     <div class="row px-3 mb-3">
                         <label for="">Ubah Background</label>
                         <input class="form-control" type="file" id="background" name="background">
+                        <small class="validation text-danger edit-toko-content"></small>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -702,13 +716,15 @@ function updateToko(idToko) {
 
   let logo = document.getElementById("logo").files[0];
   let bg = document.getElementById("background").files[0];
+  let namaToko = $("#nama_toko").val();
 
   let form = new FormData();
   form.append("logo", logo);
   form.append("background", bg);
-  form.append("nama_toko", $("#nama_toko").val());
+  form.append("nama_toko", namaToko);
   form.append("deskripsi", $("#deskripsi").val());
   form.append("id_toko", idToko);
+  form.append("id_user", auth.id_user);
   form.append("logo_old", $("#old_logo").val());
   form.append("bg_old", $("#old_bg").val());
 
@@ -718,14 +734,13 @@ function updateToko(idToko) {
 
   $.ajax({
     url: BASE_URL_SERVER + "/toko/update",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+      Authorization: "Bearer " + token,
+    },
     data: form,
     method: "POST",
     dataType: "json",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + token,
-    },
     cache: false,
     contentType: false,
     processData: false,
@@ -740,7 +755,7 @@ function updateToko(idToko) {
       showTokoDash(idToko);
     },
     error: (err) => {
-      console.log(err);
+      console.log(err.responseJSON);
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
       Toast.fire({
@@ -830,9 +845,7 @@ function showSearchProduk(res) {
                 result.id_produk
               }" style="text-decoration: none;color:inherit;">
                   <div class="topImg-seller d-flex justify-content-center">
-                      <img src=" ${BASE_URL_SERVER}/uploads/produk/${
-      result.gambar
-    } "
+                      <img src=" ${BASE_URL}/uploads/produk/${result.gambar} "
                           alt="InfiniteMart ${
                             result.nama_produk
                           }" height="250px" class="user-select-none">
