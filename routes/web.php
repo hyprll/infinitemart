@@ -24,15 +24,13 @@ use App\Http\Controllers\ApiTokoController;
 |
 */
 
-Route::group(["middleware" => ["auth.q"]], function () {
-    Route::get("/profile", [ProfileController::class, "index"])->name("profile");
-    Route::post("/logout", [AuthController::class, "logout"])->name("logout");
-});
+// Route::group(["middleware" => ["auth.q"]], function () {
+// });
+Route::get("/profile", [ProfileController::class, "index"])->name("profile");
+Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
 Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], function () {
     Route::post("/updateToko", [HomeController::class, "updateToko"])->name("updateToko");
-
-    Route::get('/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
     Route::get('/edit/{id_produk}', [ProdukController::class, "edit"]);
     Route::post('/add', [ProdukController::class, "tambahProdukProses"])->name("tambahProdukProses");
     Route::post('/edit', [ProdukController::class, "editProdukProses"])->name("editProdukProses");
@@ -40,12 +38,13 @@ Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], funct
 });
 
 Route::group(["middleware" => ["auth.q", "noStore"]], function () {
-    Route::get("/seller", [AuthController::class, "seller"])->name("seller");
     Route::post("/seller", [AuthController::class, "seller_proses"])->name("seller_proses");
 });
 
+Route::get("/seller", [AuthController::class, "seller"])->name("seller");
 Route::get('/', [HomeController::class, "index"])->name("home");
 Route::get('/detail/{id}', [ProdukController::class, "detail"]);
+Route::get('/toko/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
 Route::get('/toko/{id}', [HomeController::class, "toko"]);
 
 Route::group(["middleware" => ["not_auth.q"]], function () {

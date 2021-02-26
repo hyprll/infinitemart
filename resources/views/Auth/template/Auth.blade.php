@@ -11,19 +11,23 @@
 </head>
 
 <body>
+    <div class="blankLoad">
+        <img src="{{asset("img/gif/roll1.gif")}}" alt="" width="100px">
+    </div>
     @yield('content')
 </body>
 
 <script src='{{asset("/Js/popper.min.js")}}'></script>
 <script src="{{asset("/Js/bootstrap.min.js")}}"></script>
 <script src="{{asset("/Js/Jquery.min.js")}}"></script>
+<script src="{{asset("Js/App.js")}}"></script>
 <script src="{{asset("/js/auth.js")}}"></script>
 
 <script>
     const height = document.querySelector(".card-login");
     
     if (height != null) {
-        document.querySelector(".rightCard").style.height = `${heigh.offsetHeight}px`;
+        document.querySelector(".rightCard").style.height = `${height.offsetHeight}px`;
     }
 </script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>

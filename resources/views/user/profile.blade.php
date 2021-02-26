@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container root">
     <div class="row">
         <div class="col">
             <div class="card left-area">
@@ -16,30 +16,29 @@
                         <i class="fa fa-pen icon-pencil" type="button"></i>
                     </div>
                     <div class="card-body">
-                        <label for="user-profil" class="user-profil">
-                            {{$session["username"]}}
+                        <label for="user-profil" class="user-profil" id="user-profil-name">
+                            {{-- {{$session["username"]}} --}}
                         </label>
                     </div>
-                    <div class="card-body">
-                        <i class="fas fa-user user-left"></i>
-                        <a href="{{route("profile")}}" class="profile-card-left" type="button">My Profile</a>
-                        @if ($hasToko)
+                    <div class="card-body" id="card-menu-profile">
+                        {{-- <i class="fas fa-user user-left"></i>
+                        <a href="{{route("profile")}}" class="profile-card-left" type="button">My Profile</a> --}}
+                        {{-- @if ($hasToko)
                         <i class="fas fa-store-alt store-left"></i>
                         <a href="{{url("toko/".$id_toko)}}" class="store-card-left" type="button">Toko Saya</a>
-                        @else
-                        <i class="fas fa-store-alt store-left"></i>
+                        @else --}}
+                        {{-- <i class="fas fa-store-alt store-left"></i>
                         <a href="{{route("seller")}}" class="store-card-left" type="button">Buat Toko</a>
-                        @endif
+                        <i class="fas fa-history history-left"></i>
+                        <a href="{{route("profile")}}" class="history-card-left" type="button">History</a>
 
                         <i class="fas fa-sign-in-alt logout-left"></i>
-                        <label for="label-left" class="logout-card-left" type="button" onclick="
-                        event.preventDefault();
-                        document.querySelector('#logoutForm').submit()">
+                        <label for="label-left" class="logout-card-left" type="button" id="logoutBtn">
                             Logout
-                        </label>
-                        <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
-                            @csrf
-                        </form>
+                        </label> --}}
+                        {{-- <form action="{{route("logout")}}" method="POST" class="d-none" id="logoutForm">
+                        @csrf
+                        </form> --}}
                     </div>
                     <div class="card-body">
                         <img src="{{asset("img/character/anima5.png")}}" class="anima5 user-select-none">
@@ -58,24 +57,27 @@
                 <div class="card right-area-bottom">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-4">
-                                <h6>Username</h6>
-                                <label name="username" class="username">{{$session["username"]}}</label>
+                            <div class="col-4" id="biodata">
+                                {{-- <h6>Username</h6>
+                                <label name="username" class="username">
+                                    {{$session["username"]}}
+                                </label>
                                 <h3>Nama Depan</h3>
-                                <input type="text" class="field-text form-control form-control-sm"
-                                    value="{{$session["first_name"]}}">
+                                <label name="username" class="username">
+                                    {{$session["first_name"]}}
+                                </label>
                                 <h3>Nama Belakang</h3>
-                                <input type="text" class="field-text form-control form-control-sm"
-                                    value="{{$session["last_name"]}}">
+                                <label name="username" class="username">
+                                    {{$session["last_name"]}}
+                                </label>
                                 <h3>alamat Email</h3>
-                                <input type="text" class="field-text form-control form-control-sm"
-                                    value="{{$session["email"]}}">
+                                <label name="username" class="username">
+                                    {{$session["email"]}}
+                                </label>
                                 <h3>No.Telepon</h3>
-                                <input type="text" class="field-text2 form-control form-control-sm"
-                                    value="{{$session["phone"]}}">
-                                <form action="#" method="POST">
-                                    <button type="submit" class="btn-save">Simpan</button>
-                                </form>
+                                <label name="username" class="username">
+                                    {{$session["phone"]}}
+                                </label> --}}
                             </div>
                             <div class="col-8">
                                 <div class="card right-area">
@@ -98,7 +100,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 @endsection
