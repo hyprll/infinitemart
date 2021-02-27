@@ -218,60 +218,65 @@ if ($("#btn-upload-produk").length > 0) {
 }
 
 // * Javascript for section update produk
-if ($("#btn-update-produk").length > 0) {
-  $("#btn-update-produk").on("click", function (e) {
-    const validation = Array.from(document.querySelectorAll(".validation"));
-    validation.map((v, i) => {
-      let input = "";
+if ($("#headTambahProdukContent").length > 0) {
+  updateTokoDash();
 
-      if (i == 0) {
-        input = v.parentNode.childNodes[3];
-      } else {
-        input = v.parentNode.childNodes[3].childNodes[3];
+  document.body.addEventListener("click", function (e) {
+    if (e.target.getAttribute("id") == "btn-update-produk") {
+      e.preventDefault();
+      const validation = Array.from(document.querySelectorAll(".validation"));
+      let success = true;
+      validation.map((v, i) => {
+        let input = "";
+
+        if (i == 0) {
+          input = v.parentNode.childNodes[3];
+        } else {
+          input = v.parentNode.childNodes[3].childNodes[3];
+        }
+
+        if (input.value == "") {
+          success = false;
+          input.classList.add("is-invalid");
+          v.innerHTML = "Harus diisi";
+        } else {
+          input.classList.add("is-valid");
+          v.innerHTML = "";
+        }
+      });
+
+      if (success) {
+        updateProduk();
       }
-
-      if (input.value == "") {
-        e.preventDefault();
-        input.classList.add("is-invalid");
-        v.innerHTML = "Harus diisi";
-      } else {
-        input.classList.add("is-valid");
-        v.innerHTML = "";
-      }
-    });
+    }
   });
 
-  $("#main_img").change(function () {
-    const input = document.getElementById("main_img");
-    const imgPreview = document.querySelector("#main_img_preview");
+  document.body.addEventListener("change", function (e) {
+    if (e.target.getAttribute("id") == "main_img") {
+      const input = document.getElementById("main_img");
+      const imgPreview = document.querySelector("#main_img_preview");
 
-    const file = new FileReader();
-    file.readAsDataURL(input.files[0]);
+      const file = new FileReader();
+      file.readAsDataURL(input.files[0]);
 
-    file.onload = function (e) {
-      imgPreview.src = e.target.result;
-    };
-  });
+      file.onload = function (e) {
+        imgPreview.src = e.target.result;
+      };
+    } else if (e.target.getAttribute("id") == "other_img") {
+      const input = document.getElementById("other_img");
+      const imgPreview = document.querySelector("#other_img_preview");
 
-  $("#other_img").change(function () {
-    const input = document.getElementById("other_img");
-    const imgPreview = document.querySelector("#other_img_preview");
+      const file = new FileReader();
+      file.readAsDataURL(input.files[0]);
 
-    const file = new FileReader();
-    file.readAsDataURL(input.files[0]);
-
-    file.onload = function (e) {
-      imgPreview.src = e.target.result;
-    };
-  });
-
-  const checkbox = Array.from(document.querySelectorAll(".checkIzinUser2"));
-  checkbox.map((c) => {
-    c.addEventListener("change", function () {
+      file.onload = function (e) {
+        imgPreview.src = e.target.result;
+      };
+    } else if (e.target.classList.contains("checkIzinUser2")) {
       let izinUser = document.querySelector("#checkUser").value;
-      if (c.checked) {
+      if (e.target.checked) {
         let array = izinUser.split(",");
-        array = [...array, c.value];
+        array = [...array, e.target.value];
         let ganti = "";
         array.map((a, i) => {
           if (a == "") {
@@ -285,7 +290,7 @@ if ($("#btn-update-produk").length > 0) {
         izinUser = ganti;
       } else {
         const array = izinUser.split(",");
-        const index = array.indexOf(c.value);
+        const index = array.indexOf(e.target.value);
         if (index > -1) {
           array.splice(index, 1);
         }
@@ -302,7 +307,7 @@ if ($("#btn-update-produk").length > 0) {
         izinUser = ganti;
       }
       document.querySelector("#checkUser").value = izinUser;
-    });
+    }
   });
 }
 
@@ -502,7 +507,7 @@ function showTokoProduk(idToko, myStore = false) {
               <div class="container mb-3">
                   <div class="row g-1">
                       <div class="col-9">
-                          <a href="toko/edit/" class="btn btn-primary w-100">
+                          <a href="edit/${result.id_produk}" class="btn btn-primary w-100">
                           Edit Barang</a>
                       </div>
                       <div class="col-3">
@@ -877,6 +882,7 @@ function deleteProduk(id_produk, id_toko) {
     dataType: "json",
     headers: {
       Accept: "application/json",
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
       Authorization: "Bearer " + token,
     },
     cache: false,
@@ -1006,7 +1012,7 @@ function uploadProduk() {
     dataType: "json",
     headers: {
       Accept: "application/json",
-      "Content-Type": "multipart/form-data",
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
       Authorization: "Bearer " + token,
     },
     cache: false,
@@ -1015,13 +1021,12 @@ function uploadProduk() {
     success: (res) => {
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
-      console.log(res);
       Swal.fire({
         title: "<strong>Add Product Successful</strong>",
         icon: "success",
         html:
-          "Register Successful, " +
-          '<a href="/toko/"' +
+          "Success Add Product, " +
+          '<a href="/toko/' +
           $("#id_toko").val() +
           ">See Product now</a> ",
         showCloseButton: false,
@@ -1029,14 +1034,13 @@ function uploadProduk() {
         allowOutsideClick: false,
         focusConfirm: true,
         confirmButtonText:
-          '<a href="/toko/"' +
+          '<a href="/toko/' +
           $("#id_toko").val() +
-          '" style="color:inherit;text-decoration:none"><i class="fa fa-thumbs-up"></i> See Product </a>',
+          '" style="color:inherit;text-decoration:none">See Product Now</a>',
         confirmButtonAriaLabel: "Thumbs up, great!",
         cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
         cancelButtonAriaLabel: "Thumbs down",
       });
-      // document.location.href = "/toko/" + res.id_toko;
     },
     error: (err) => {
       $(".blankLoad").hide();
@@ -1045,6 +1049,258 @@ function uploadProduk() {
       Toast.fire({
         icon: "error",
         title: "Error Upload Produk",
+      });
+    },
+  });
+}
+
+// * function for update toko
+function updateTokoDash() {
+  // * cek toko
+  $.ajax({
+    url: BASE_URL_SERVER + "/toko",
+    type: "GET",
+    success: (res) => {
+      if (res.success) {
+        let idToko = 0;
+        let status = false;
+        res.data.map((result) => {
+          if (result.id_user == auth.id_user) {
+            idToko = result.id_toko;
+            status = true;
+          }
+        });
+        if (status) {
+          $("#id_toko").val(idToko);
+        } else {
+          document.location.href = "/";
+        }
+      }
+    },
+    error: (err) => {
+      console.log(err);
+      document.location.href = "/";
+    },
+  });
+
+  if (auth == null) {
+    document.location.href = BASE_URL + "/login";
+  }
+
+  const id_produk = $("#id_produk").val();
+  $.ajax({
+    url: BASE_URL_SERVER + "/produk/" + id_produk,
+    method: "GET",
+    success: (res) => {
+      if (res.success) {
+        let handler = /* html */ `
+          <div class="cardTambahProduk">
+            <div class="headerTambahProduk mt-3">
+                <h5>Tambah Produk</h5>
+            </div>
+            <div class="contentTambahProduk">
+                <p class="mt-3">Upload Gambar Produk</p>
+                <div class="imgFlex">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="cardImgFlex d-flex justify-content-center align-items-center">
+                                <img src=" ${BASE_URL}/uploads/produk/${res.data[0].gambar}"
+                                    class="img-fluid user-select-none" id="main_img_preview" style="width: 50%">
+                            </div>
+                            <div class="footerCardImg mt-2 text-center">
+                                <label for="main_img" class="text-center" style="cursor: pointer">Gambar Utama</label>
+                                <input type="file" name="main_img" class="d-none" id="main_img"
+                                    accept="image/jpg,image/png,image/jpeg"><br>
+                                <small class="text-danger"></small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="cardImgFlex d-flex justify-content-center align-items-center">
+                                <img src=" ${BASE_URL}/uploads/produk/${res.data[0].gambar_lain}"
+                                    class="img-fluid user-select-none" id="other_img_preview" style="width: 50%">
+                            </div>
+                            <div class="footerCardImg mt-2 text-center">
+                                <label for="other_img" class="text-center" style="cursor: pointer">Gambar
+                                    Lainnya</label>
+                                <input type="file" name="other_img" class="d-none" id="other_img"
+                                    accept="image/jpg,image/png,image/jpeg"><br>
+                                <small class="text-danger"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          `;
+        $("#headTambahProdukContent").html(handler);
+        let handler2 = /*html */ `
+        <div class="cardDetailProduk mt-4">
+            <div class="headerDetailProduk mt-3">
+                <h5>Detail Produk</h5>
+                <input type="hidden" class="form-control" name="img_main_old" placeholder="Nama Produk" id="img_main_old" value="${res.data[0].gambar}">
+                <input type="hidden" class="form-control" name="img_other_old" placeholder="Nama Produk" id="img_other_old" value="${res.data[0].gambar_lain}">
+            </div>
+            <div class="contentDetailProduk">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="inputValue d-flex flex-column mt-3">
+                                    <label for="" class="mb-2">Nama Produk</label>
+                                    <input type="text" class="form-control" id="NamaProduk" name="NamaProduk" placeholder="Nama Produk"
+                                        value="${res.data[0].nama_produk}">
+                                    <small class="validation text-danger"></small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="inputValue d-flex flex-column mt-3">
+                                    <label for="" class="mb-2">Harga Produk</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Rp</span>
+                                        <input type="text" class="form-control" placeholder="Harga Produk" id="hargaProduk"
+                                            name="hargaProduk" aria-label="Username" aria-describedby="basic-addon1"
+                                            onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
+                                            value="${res.data[0].harga}">
+                                    </div>
+                                    <small class="validation text-danger"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+        get_user_permitted_update(res.data[0].user_beli, handler2);
+      }
+    },
+    error: (res) => {
+      alert("error");
+      console.log(res);
+    },
+  });
+}
+
+// * function for show update produk content
+function get_user_permitted_update(user_permitted, before) {
+  const user_izin = user_permitted.split(",");
+  $.ajax({
+    url: BASE_URL_SERVER + "/allbuyer",
+    type: "GET",
+    success: (res) => {
+      if (res.success) {
+        let handler = /*html*/ `
+            <div class="col-md-6">
+            <div class="inputValue d-flex flex-column mt-3">
+            <label for="" class="mb-2">User Di Izinkan</label>
+            <div class="row">
+            <input type="hidden" name="checkUser" id="checkUser" class="form-control"
+            value="${user_permitted}">`;
+
+        res.data.map((result, i) => {
+          handler += /*html */ `
+          <div class="col-6">
+              <div class="form-check">
+                  <input class="form-check-input checkIzinUser2" name="izinUser${i}"
+                      type="checkbox" value="${
+                        result.id_user
+                      }" id="izinUser${i}" 
+                      ${
+                        user_izin.indexOf(result.id_user.toString()) != -1
+                          ? "checked"
+                          : ""
+                      }>
+                  <label class="form-check-label" for="izinUser${i}">
+                      ${result.username}
+                  </label>
+              </div>
+          </div>
+          `;
+        });
+
+        handler += /* html */ `<small class="text-danger"></small></div></div></div><div class="col-md-12"><div class="d-flex mt-3"><button type="submit" class="btn btn-primary" style="width: 15vw;" id="btn-update-produk">Update Produk</button></div></div></div></div></div>`;
+
+        let handlerAll = before + handler;
+
+        $("#contentTambahProduk").html(handlerAll);
+      }
+    },
+    error: (err) => {
+      alert("error");
+      console.log(err);
+    },
+  });
+}
+
+// * function for update produk
+function updateProduk() {
+  let main_img = document.getElementById("main_img").files;
+  let other_img = document.getElementById("other_img").files;
+
+  let checkuser = $("#checkUser").val();
+
+  let form = new FormData();
+  if (main_img.length > 0) {
+    form.append("gambar", main_img[0]);
+  }
+
+  if (other_img.length > 0) {
+    form.append("gambar_lain", other_img[0]);
+  }
+
+  form.append("gambar_old", $("#img_main_old").val());
+  form.append("gambar_lain_old", $("#img_other_old").val());
+  form.append("nama_produk", $("#NamaProduk").val());
+  form.append("harga", $("#hargaProduk").val());
+  form.append("user_beli", checkuser);
+  form.append("id_toko", $("#id_toko").val());
+  form.append("id_produk", $("#id_produk").val());
+
+  $(".blankLoad").show();
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
+  // * send request
+  $.ajax({
+    url: BASE_URL_SERVER + "/produk/update",
+    data: form,
+    method: "POST",
+    dataType: "json",
+    headers: {
+      Accept: "application/json",
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+      Authorization: "Bearer " + token,
+    },
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: (res) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Swal.fire({
+        title: "<strong>Update Product Successful</strong>",
+        icon: "success",
+        html:
+          "Success Update Product, " +
+          '<a href="/toko/' +
+          $("#id_toko").val() +
+          ">See Product now</a> ",
+        showCloseButton: false,
+        showCancelButton: false,
+        allowOutsideClick: false,
+        focusConfirm: true,
+        confirmButtonText:
+          '<a href="/toko/' +
+          $("#id_toko").val() +
+          '" style="color:inherit;text-decoration:none">See Product Now</a>',
+        confirmButtonAriaLabel: "Thumbs up, great!",
+        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+        cancelButtonAriaLabel: "Thumbs down",
+      });
+    },
+    error: (err) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      console.log(err);
+      Toast.fire({
+        icon: "error",
+        title: "Error Update Produk",
       });
     },
   });

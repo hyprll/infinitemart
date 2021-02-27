@@ -195,8 +195,8 @@ class ApiProdukController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $input['gambar'] = "";
-        $input['gambar_lain'] = "";
+        $input['gambar'] = $request->gambar_old;
+        $input['gambar_lain'] = $request->gambar_lain_old;
 
         if ($request->hasFile('gambar')) {
             $file_ext = $request->file('gambar')->extension();                         // Get an extension of image.

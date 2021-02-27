@@ -178,7 +178,7 @@ class ApiAuthController extends Controller
     public function allbuyer()
     {
 
-        $user = Users::where("id_user", '1')->get();
+        $user = Users::get();
 
         if ($user->isEmpty()) {
             return response()->json([
