@@ -179,6 +179,7 @@ class ApiAuthController extends Controller
     public function allbuyer()
     {
 
+<<<<<<< HEAD
         $user = Users::where("role", '1')->get();
 
         if ($user->isEmpty()) {
@@ -198,6 +199,9 @@ class ApiAuthController extends Controller
     {
 
         $user = Toko::where("id_user", $request->id_user)->get();
+=======
+        $user = Users::get();
+>>>>>>> 0173de93be24dd53bf8b905bd91155e82d9244dd
 
         if ($user->isEmpty()) {
             return response()->json([

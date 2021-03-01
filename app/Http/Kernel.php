@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'not_auth.q' => \App\Http\Middleware\not_auth::class,
         'hasStore' => \App\Http\Middleware\hasStore::class,
         'noStore' => \App\Http\Middleware\noStore::class,
+        'jwtadmin.auth' => \App\Http\Middleware\JwtAdminMiddleware::class,
     ];
 }

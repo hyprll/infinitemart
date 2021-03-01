@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield("title")</title>
     <link rel="icon" href="{{asset("/img/logo_transparent.png")}}">
     <link rel='stylesheet' href='{{asset("/css/bootstrap.min.css")}}'>
@@ -11,19 +12,23 @@
 </head>
 
 <body>
+    <div class="blankLoad">
+        <img src="{{asset("img/gif/roll1.gif")}}" alt="" width="100px">
+    </div>
     @yield('content')
 </body>
 
 <script src='{{asset("/Js/popper.min.js")}}'></script>
 <script src="{{asset("/Js/bootstrap.min.js")}}"></script>
 <script src="{{asset("/Js/Jquery.min.js")}}"></script>
+<script src="{{asset("Js/App.js")}}"></script>
 <script src="{{asset("/js/auth.js")}}"></script>
 
 <script>
     const height = document.querySelector(".card-login");
     
     if (height != null) {
-        document.querySelector(".rightCard").style.height = `${heigh.offsetHeight}px`;
+        document.querySelector(".rightCard").style.height = `${height.offsetHeight}px`;
     }
 </script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>

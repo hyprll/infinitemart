@@ -4,9 +4,9 @@
 
 @section('content')
 
-<form action="{{route("tambahProdukProses")}}" method="POST" enctype="multipart/form-data">
+<form action="" method="POST" enctype="multipart/form-data">
     @csrf
-    <input type="hidden" name="id_toko" id="id_toko" value="{{$id_toko}}">
+    <input type="hidden" name="id_toko" id="id_toko" value="">
     <div class="container mt-5">
         <div class="cardTambahProduk">
             <div class="headerTambahProduk mt-3">
@@ -62,7 +62,7 @@
                             <div class="col-12">
                                 <div class="inputValue d-flex flex-column mt-3">
                                     <label for="" class="mb-2">Nama Produk</label>
-                                    <input type="text" class="form-control" name="NamaProduk" placeholder="Nama Produk">
+                                    <input type="text" class="form-control" name="NamaProduk" placeholder="Nama Produk" id="NamaProduk">
                                     <small class="validation text-danger">
                                         {{Session::get('nama_produk_error_status')}}
                                     </small>
@@ -74,7 +74,7 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Rp</span>
                                         <input type="text" class="form-control" placeholder="Harga Produk"
-                                            name="hargaProduk" aria-label="Username" aria-describedby="basic-addon1"
+                                            name="hargaProduk" id="hargaProduk" aria-label="Username" aria-describedby="basic-addon1"
                                             onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                                     </div>
                                     <small class="validation text-danger">
@@ -87,9 +87,9 @@
                     <div class="col-md-6">
                         <div class="inputValue d-flex flex-column mt-3">
                             <label for="" class="mb-2">User Di Izinkan</label>
-                            <div class="row">
-                                <input type="hidden" name="checkUser" id="checkUser" class="form-control">
-                                @if ($user)
+                            <div class="row" id="permitted_user">
+                                {{-- <input type="hidden" name="checkUser" id="checkUser" class="form-control"> --}}
+                                {{-- @if ($user)
                                 @php($i=1)
 
                                 @foreach ($user as $key)
@@ -104,7 +104,7 @@
                                 </div>
                                 @php($i++)
                                 @endforeach
-                                @endif
+                                @endif --}}
                                 <small class="text-danger">
                                     {{Session::get('user_beli_error_status')}}
                                 </small>
@@ -115,8 +115,6 @@
                         <div class="d-flex mt-3">
                             <button type="submit" class="btn btn-primary" style="width: 15vw;"
                                 id="btn-upload-produk">Upload</button>
-                            {{-- <button type="submit" class="btn btn-danger"
-                                                        style="width: 15vw; margin-left: 2.5vw;">Batal</button> --}}
                         </div>
                     </div>
                 </div>

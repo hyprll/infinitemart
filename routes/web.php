@@ -24,29 +24,25 @@ use App\Http\Controllers\ApiTokoController;
 |
 */
 
-Route::group(["middleware" => ["auth.q"]], function () {
-    Route::get("/profile", [ProfileController::class, "index"])->name("profile");
-    Route::post("/logout", [AuthController::class, "logout"])->name("logout");
-});
+// Route::group(["middleware" => ["auth.q"]], function () {
+// });
+Route::get("/profile", [ProfileController::class, "index"])->name("profile");
+Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
 Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], function () {
     Route::post("/updateToko", [HomeController::class, "updateToko"])->name("updateToko");
-
-    Route::get('/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
-    Route::get('/edit/{id_produk}', [ProdukController::class, "edit"]);
     Route::post('/add', [ProdukController::class, "tambahProdukProses"])->name("tambahProdukProses");
     Route::post('/edit', [ProdukController::class, "editProdukProses"])->name("editProdukProses");
     Route::post('/delete', [ProdukController::class, "delete_produk"]);
 });
 
-Route::group(["middleware" => ["auth.q", "noStore"]], function () {
-    Route::get("/seller", [AuthController::class, "seller"])->name("seller");
-    Route::post("/seller", [AuthController::class, "seller_proses"])->name("seller_proses");
-});
 
+Route::get("/seller", [AuthController::class, "seller"])->name("seller");
 Route::get('/', [HomeController::class, "index"])->name("home");
 Route::get('/detail/{id}', [ProdukController::class, "detail"]);
+Route::get('/toko/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
 Route::get('/toko/{id}', [HomeController::class, "toko"]);
+Route::get('toko/edit/{id_produk}', [ProdukController::class, "edit"]);
 
 Route::group(["middleware" => ["not_auth.q"]], function () {
     Route::get("/login", [AuthController::class, "login"])->name("login");
@@ -68,7 +64,7 @@ Route::get("/api/toko/{id_toko}", [ApiTokoController::class, "tokobyid"])->name(
 Route::get("/api/toko", [ApiTokoController::class, "tokoall"])->name("apitokoall");
 Route::group(["prefix" => "api/toko", "middleware" => ["jwtadmin.auth"]], function() use ($router){
     Route::post("/add", [ApiTokoController::class, "create"])->name("apicreatetoko");
-    Route::post("/update", [ApiTokoController::class, "create"])->name("apiupdatetoko");
+    Route::post("/update", [ApiTokoController::class, "update"])->name("apiupdatetoko");
 });
 
 Route::get("/api/produk/{id_produk}", [ApiProdukController::class, "produkbyid"])->name("apiprodukbyid");

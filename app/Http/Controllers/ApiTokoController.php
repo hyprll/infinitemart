@@ -66,7 +66,6 @@ class ApiTokoController extends Controller
         | Validation request.
         |--------------------------------------------------------------------------
         */
-
         $validation = Validator::make($input, [
             "nama_toko" => "required|string|min:6",
             "deskripsi" => "required|string",
@@ -163,7 +162,7 @@ class ApiTokoController extends Controller
         | Validation request.
         |--------------------------------------------------------------------------
         */
-
+        
         $validation = Validator::make($input, [
             "nama_toko" => "required|string|min:6",
             "deskripsi" => "required|string",
@@ -181,8 +180,8 @@ class ApiTokoController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $input['logo'] = "";
-        $input['background'] = "";
+        $input['logo'] = $request->logo_old;
+        $input['background'] = $request->bg_old;
 
         if ($request->hasFile('logo')) {
             $file_ext = $request->file('logo')->extension();                         // Get an extension of image.
