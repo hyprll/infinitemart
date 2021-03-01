@@ -143,7 +143,11 @@ $(function () {
                 JSON.stringify(response.data)
               );
               localStorage.setItem("token", response.token);
-              document.location.href = "/";
+              if(response.data.role == 1){
+                document.location.href = "/dasbord";
+              } else {
+                document.location.href = "/";
+              }
             }
           },
           error: function (xhr, status) {
