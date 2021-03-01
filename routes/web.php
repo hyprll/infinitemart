@@ -57,6 +57,7 @@ Route::group(["middleware" => ["not_auth.q"]], function () {
 // API
 Route::post("/api/login", [ApiAuthController::class, "login"])->name("apilogin");
 Route::post("/api/register", [ApiAuthController::class, "register"])->name("apiregister");
+Route::get("/api/cektoko/{id_user}", [ApiAuthController::class, "cektoko"])->name("apicektoko");
 Route::get("/api/allbuyer", [ApiAuthController::class, "allbuyer"])->name("apiallbuyer");
 
 Route::get("/api/toko/{id_toko}", [ApiTokoController::class, "tokobyid"])->name("apitokobyid");
@@ -77,6 +78,7 @@ Route::group(["prefix" => "api/produk", "middleware" => ["jwtadmin.auth"]], func
     Route::delete("/delete", [ApiProdukController::class, "delete"])->name("apideleteproduk");
 });
 
+Route::get("/api/checkout/all", [ApiCheckoutController::class, "checkoutall"])->name("apicheckoutall");
 Route::get("/api/checkout/toko/{id_toko}", [ApiCheckoutController::class, "checkoutbyidtoko"])->name("apicheckoutbyidtoko");
 Route::get("/api/checkout/produk/{id_produk}", [ApiCheckoutController::class, "checkoutbyidproduk"])->name("apicheckoutbyidproduk");
 Route::get("/api/checkout/user/{id_user}", [ApiCheckoutController::class, "checkoutbyiduser"])->name("apicheckoutbyiduser");
