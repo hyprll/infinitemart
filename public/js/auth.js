@@ -24,7 +24,7 @@ $(function () {
         form.append("postal_code", $("#postal_code").val());
         form.append("country_code", finalSplit);
         form.append("address", $("#address").val());
-        form.append("role", "1");
+        form.append("role", "2");
 
         $(".blankLoad").show();
         $(".blankLoad").css("display", "flex");
