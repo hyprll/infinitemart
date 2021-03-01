@@ -17,15 +17,11 @@
                     <div class="col-md-5">
                         <div class="row">
                             <div class="DetailImg-Barang d-flex justify-content-center">
-                                {{-- <img src="http://localhost:8080/uploads/produk/{{$produk[0]["gambar"]}}"
-                                class="img-fluid" id="img-produk"> --}}
                                 <img class="img-fluid" id="img-produk">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
-                                {{-- <img src="http://localhost:8080/uploads/produk/{{$produk[0]["gambar_lain"]}}"
-                                class="w-100" id="img-produk-lainnya"> --}}
                                 <img class="w-100" id="img-produk-lainnya">
                             </div>
                         </div>
@@ -35,17 +31,11 @@
                             <div class="container">
                                 <div class="headerDetail-Penjelasan my-3">
                                     <h3 class="fw-bold" id="produkName">
-                                        {{-- {{$produk[0]["nama_produk"]}} --}}
                                     </h3>
                                 </div>
                                 <div class="infoHarga mt-2">
-                                    {{-- <h4 class="stuff-fare text-danger fw-bold mb-3" data-fare="{{$produk[0]["harga"]}}">
-                                    {{$produk[0]["harga"]}}</h4> --}}
                                     <h4 class="text-danger fw-bold mb-3" id="produkFare"></h4>
                                     <div class="d-flex flex-column">
-                                        {{-- <div class="overText d-flex">
-                                            <p>Rp 59.000</p>
-                                        </div> --}}
                                         <div class="underText">
                                             <p>Stok Tersedia</p>
                                         </div>
@@ -56,14 +46,34 @@
                                         <span class="mt-1">Kuantitas</span>
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        <input type="number" class="form-control form-control-sm w-50" value="1">
+                                        <input type="text" class="form-control form-control-sm w-100" value="1"
+                                            id="kuantitas"
+                                            onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                                     </div>
                                 </div>
+                                <div class="w-100 text-end">
+                                    <small class="text-danger validation-payment">
+
+                                    </small>
+                                </div>
+                                <div class="setKuantitas mt-3 justify-content-between align-items-center" id="catatan"
+                                    style="display: none">
+                                    <div>
+                                        <span class="mt-1">Catatan</span>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <input type="text" class="form-control form-control-sm w-100" id="catatanInp">
+                                    </div>
+                                </div>
+                                <div class="w-100 text-end">
+                                    <small class="text-danger validation-payment">
+
+                                    </small>
+                                </div>
                                 <div class="btnPayment mt-3 d-flex justify-content-between">
-                                    {{-- <button class="btn btn-payment"><img class="img-keranjang"
-                                            src="../Assets/img/DetailProduk/trolley.png" alt=""> Masukan
-                                        Keranjang</button> --}}
-                                    <button class="btn btn-payment">Beli Sekarang</button>
+                                    <button class="btn btn-payment" id="btn-payment">Beli Sekarang</button>
+                                    <button class="btn btn-payment" id="btn-payment-ready" style="display: none">Beli
+                                        Sekarang</button>
                                 </div>
                             </div>
                         </div>
@@ -81,14 +91,9 @@
                         <div class="cardToko ">
                             <div class="container d-flex flex-column">
                                 <div class="imgTopToko d-flex justify-content-center">
-                                    {{-- <img class="img-fluid rounded-circle mb-3"
-                                        src="http://localhost:8080/uploads/toko/{{$toko[0]["logo"]}}" alt=""> --}}
-
                                     <img class="img-fluid rounded-circle mb-3" id="logoToko" alt="">
                                 </div>
                                 <div class="contentToko d-flex justify-content-center">
-                                    {{-- <a href="{{url("toko/".$toko[0]['id_toko'])}}"
-                                    class="text-center">{{$toko[0]["nama_toko"]}}</a> --}}
                                     <a class="text-center" id="tokoName"></a>
                                 </div>
                                 <div class="locationToko d-flex flex-column mt-3">

@@ -96,9 +96,9 @@ class ApiCheckoutController extends Controller
     public function checkoutall()
     {
 
-        $produk = Checkout::all();
+        $checkout = Checkout::all();
 
-        if ($produk->isEmpty()) {
+        if ($checkout->isEmpty()) {
             return response()->json([
                 'success' => false,
                 'message' => "Data not found."
@@ -108,7 +108,7 @@ class ApiCheckoutController extends Controller
         return response()->json([
             'success' => true,
             'message' => "Data found.",
-            'data' => $produk
+            'data' => $checkout
         ], 200);
     }
 

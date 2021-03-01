@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Users;
+use App\Models\Toko;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Firebase\JWT\JWT;
@@ -18,7 +20,6 @@ class ApiAuthController extends Controller
      */
     public function __construct()
     {
-        
     }
 
     public function jwt($id, $role)
@@ -27,10 +28,10 @@ class ApiAuthController extends Controller
             'iss' => "marketplace-api",     // Issuer of the token.
             'sub' => $id,               // Subject of the token.
             'iat' => time(),            // Time when JWT was issued. 
-            'exp' => time() + 60*60*60,    // Expiration time.
+            'exp' => time() + 60 * 60 * 60,    // Expiration time.
             'role' => $role             // Role.
         ];
-        
+
         /*
         |--------------------------------------------------------------------------
         | As you can see we are passing `JWT_SECRET` as the second parameter that
@@ -129,7 +130,7 @@ class ApiAuthController extends Controller
             'country_code' => 'required',
 
         ]);
- 
+
         $email = $request->input("email");
         $password = $request->input("password");
         $role = $request->input("role");
@@ -141,9 +142,9 @@ class ApiAuthController extends Controller
         $city = $request->input("city");
         $postal_code = $request->input("postal_code");
         $country_code = $request->input("country_code");
- 
+
         $hashPwd = Hash::make($password);
- 
+
         $data = [
             "email" => $email,
             "role" => $role,
@@ -157,8 +158,8 @@ class ApiAuthController extends Controller
             "country_code" => $country_code,
             "password" => $hashPwd
         ];
-        
- 
+
+
         if (Users::create($data)) {
             $out = [
                 "message" => "register_success",
@@ -171,14 +172,30 @@ class ApiAuthController extends Controller
                 "code"   => 401,
             ];
         }
- 
+
         return response()->json($out, $out['code']);
     }
-    
+
     public function allbuyer()
     {
+        $user = Users::where("role", '1')->get();
 
-        $user = Users::get();
+        if ($user->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => "Data not found."
+            ], 400);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => "Data found.",
+            'data' => $user
+        ], 200);
+    }
+
+    public function cektoko(Request $request)
+    {
+        $user = Toko::where("id_user", $request->id_user)->get();
 
         if ($user->isEmpty()) {
             return response()->json([

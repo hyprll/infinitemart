@@ -14,9 +14,9 @@ if (auth == null) {
       <a href="/profile" class="btn btn-signup">Profile</a>
       `;
 }
+
 $("#btn-place").html(btnAuth);
 $("#btn-place2").html(btnAuth);
-console.log(auth);
 
 // * Javascript for searching
 document.addEventListener("submit", function (e) {
@@ -100,7 +100,7 @@ if ($("#biodata").length > 0) {
       </label>
       <h3>alamat Email</h3>
       <label name="username" class="username">
-          ${auth.address}
+          ${auth.email}
       </label>
       <h3>No.Telepon</h3>
       <label name="username" class="username">
@@ -314,6 +314,9 @@ if ($("#headTambahProdukContent").length > 0) {
 // * javascript for section detail
 if ($("#img-produk").length > 0) {
   const produkId = document.querySelector("#idProduk").dataset.idproduk;
+  let idToko = 0;
+  let hargaBarang = 0;
+  let namaBarang = 0;
   showAllProduk();
 
   $.ajax({
@@ -331,6 +334,9 @@ if ($("#img-produk").length > 0) {
         );
         $("#produkName").html(res.data[0].nama_produk);
         $("#produkFare").html(formatter.toRupiah(res.data[0].harga));
+        idToko = res.data[0].id_toko;
+        hargaBarang = res.data[0].harga;
+        namaBarang = res.data[0].nama_produk;
 
         // * get toko
         fetch(BASE_URL_SERVER + "/toko/" + res.data[0].id_toko)
@@ -351,6 +357,27 @@ if ($("#img-produk").length > 0) {
     error: function () {
       alert("error");
     },
+  });
+
+  $("#btn-payment").click(function (e) {
+    $("#catatan").css("display", "flex");
+    $(this).hide();
+    $("#btn-payment-ready").show();
+    e.preventDefault();
+  });
+
+  $("#btn-payment-ready").click(function () {
+    if (validatePayment()) {
+      if (auth == null) {
+        return (document.location.href = BASE_URL + "/login");
+      }
+
+      if (idToko != 0 || hargaBarang != 0 || namaBarang != 0) {
+        checkout(idToko, hargaBarang, namaBarang);
+      } else {
+        alert("error");
+      }
+    }
   });
 }
 
@@ -382,6 +409,40 @@ if (btn_delete.length != 0) {
       });
     });
   });
+}
+
+// * javascript function for validate payment
+function validatePayment() {
+  const validate = Array.from(document.querySelectorAll(".validation-payment"));
+  let turn = true;
+  validate.map((v, i) => {
+    if (i == 0) {
+      const value = document.querySelector("#kuantitas").value;
+      if (value == "") {
+        turn = false;
+        v.innerHTML = "harus diisi";
+      } else {
+        v.innerHTML = "";
+      }
+
+      if (value.split("")[0] == 0) {
+        turn = false;
+        v.innerHTML = "jumlah barang tidak valid";
+      } else {
+        v.innerHTML = "";
+      }
+    } else {
+      const value = document.querySelector("#catatanInp").value;
+      if (value == "") {
+        turn = false;
+        v.innerHTML = "harus diisi";
+      } else {
+        v.innerHTML = "";
+      }
+    }
+  });
+
+  return turn;
 }
 
 // * Javascript for section dashboard toko
@@ -536,7 +597,19 @@ function showTokoProduk(idToko, myStore = false) {
       }
     },
     error: function (err) {
-      alert("error");
+      if (err != null) {
+        const message = err.responseJSON.message;
+        let handler = /* html */ `
+        <div class="col-12 my-5">
+            <div class="row justify-content-center">
+                <img src="/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
+                <h2 class="text-center">${message}</h2>
+            </div>
+        </div>
+        `;
+
+        $("#produkTokoPlace").html(handler);
+      }
     },
   });
 }
@@ -587,6 +660,7 @@ function showAllProduk() {
     },
     error: function (e) {
       alert("error");
+      console.log(e);
     },
   });
 }
@@ -751,13 +825,18 @@ function updateToko(idToko) {
       showTokoDash(idToko);
     },
     error: (err) => {
-      console.log(err.responseJSON);
+      const error = err.responseJSON;
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
       Toast.fire({
         icon: "error",
         title: "Update Toko Error",
       });
+      if (error.message == "Provided token is expired.") {
+        localStorage.removeItem("token");
+        localStorage.removeItem("auth_session");
+        document.location.href = "/login";
+      }
     },
   });
 }
@@ -829,7 +908,7 @@ function searchingNow(keyword) {
   });
 }
 
-// * function for serach result produk
+// * function for search result produk
 function showSearchProduk(res) {
   console.log(res);
   let handler = "";
@@ -906,6 +985,7 @@ function deleteProduk(id_produk, id_toko) {
         icon: "error",
         title: "Error Hapus Produk",
       });
+      logout(err);
     },
   });
 }
@@ -936,6 +1016,7 @@ function getPermittedUser(auth) {
     error: (err) => {
       console.log(err);
       document.location.href = "/";
+      const error = err.responseJSON;
     },
   });
 
@@ -1050,6 +1131,7 @@ function uploadProduk() {
         icon: "error",
         title: "Error Upload Produk",
       });
+      logout(err);
     },
   });
 }
@@ -1174,6 +1256,7 @@ function updateTokoDash() {
     error: (res) => {
       alert("error");
       console.log(res);
+      logout(res);
     },
   });
 }
@@ -1302,6 +1385,90 @@ function updateProduk() {
         icon: "error",
         title: "Error Update Produk",
       });
+      logout(err);
+    },
+  });
+}
+
+// * function for checkout
+function checkout(idToko, harga, nama_barang) {
+  $(".blankLoad").show();
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
+  // * mulai transaksi
+
+  let today = new Date();
+
+  let date =
+    today.getFullYear() +
+    "-" +
+    (today.getMonth() + 1 < 10 ? "0" : "") +
+    (today.getMonth() + 1) +
+    "-" +
+    (today.getDate() + 1 < 10 ? "0" : "") +
+    today.getDate() +
+    " " +
+    today.getHours() +
+    ":" +
+    today.getMinutes() +
+    ":" +
+    today.getSeconds();
+
+  let form = new FormData();
+  form.append(
+    "id_produk",
+    document.querySelector("#idProduk").dataset.idproduk
+  );
+  form.append("id_user", auth.id_user);
+  form.append("id_toko", idToko);
+  form.append("tanggal", date);
+  form.append("deskripsi", $("#catatanInp").val());
+  form.append("total_barang", $("#kuantitas").val());
+  form.append("harga", harga);
+  form.append("status", 0);
+  form.append("first_name", auth.first_name);
+  form.append("last_name", auth.last_name);
+  form.append("address", auth.address);
+  form.append("city", auth.city);
+  form.append("postal_code", auth.postal_code);
+  form.append("phone", auth.phone);
+  form.append("country_code", auth.country_code);
+  form.append("barang", nama_barang);
+
+  $.ajax({
+    url: BASE_URL_SERVER + "/payment/midtrans",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+      Authorization: "Bearer " + token,
+    },
+    data: form,
+    method: "POST",
+    dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: (res) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Toast.fire({
+        icon: "success",
+        title: "Sukses Memesan Produk, selesaikan pembayaran",
+      });
+      let strWindowFeatures =
+        "location=yes,height=650,width=520,scrollbars=yes,status=yes";
+      let URL = res.redirect_url;
+      window.open(URL, "_blank", strWindowFeatures);
+    },
+    error: (err) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Toast.fire({
+        icon: "error",
+        title: "Error Pesan Produk",
+      });
+      const error = err.responseJSON;
+      console.log(err.responseText);
+      console.log(error);
     },
   });
 }
