@@ -62,7 +62,8 @@ $(function () {
           error: function (xhr, status) {
             $(".blankLoad").hide();
             document.body.style.overflowY = "auto";
-            const data = xhr.responseJSON;
+            const data = xhr.responseJSON.errors;
+            console.log(xhr);
             if (data != undefined) {
               const keys = Object.keys(data);
               const validation = Array.from(
