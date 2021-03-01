@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Users;
+use App\Models\Toko; 
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Firebase\JWT\JWT;
@@ -178,7 +179,25 @@ class ApiAuthController extends Controller
     public function allbuyer()
     {
 
-        $user = Users::where("id_user", '1')->get();
+        $user = Users::where("role", '1')->get();
+
+        if ($user->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => "Data not found."
+            ], 400);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => "Data found.",
+            'data' => $user
+        ], 200);
+    }
+
+    public function cektoko(Request $request)
+    {
+
+        $user = Toko::where("id_user", $request->id_user)->get();
 
         if ($user->isEmpty()) {
             return response()->json([
