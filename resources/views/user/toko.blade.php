@@ -26,7 +26,9 @@
         <h3>Barang Di Toko</h3>
         <hr>
     </div>
-    <div class="row" id="produkTokoPlace"></div>
+    <div class="row" id="produkTokoPlace">
+
+    </div>
 </div>
 
 @endsection

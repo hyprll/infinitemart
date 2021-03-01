@@ -34,6 +34,9 @@ $(function () {
           url: BASE_URL_SERVER + "/register",
           data: form,
           method: "POST",
+          headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          },
           dataType: "json",
           cache: false,
           contentType: false,
@@ -163,8 +166,6 @@ $(function () {
       document.location.href = "/login";
     }
 
-    console.log(auth);
-
     $("#form-seller").on("submit", function (e) {
       e.preventDefault();
       if (validateSeller()) {
@@ -189,7 +190,7 @@ $(function () {
           dataType: "json",
           headers: {
             Accept: "application/json",
-            "Content-Type": "multipart/form-data",
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             Authorization: "Bearer " + token,
           },
           cache: false,
@@ -201,7 +202,8 @@ $(function () {
             document.location.href = "/toko/" + res.id_toko;
           },
           error: (err) => {
-            console.log(err);
+            const error = err.responseJSON;
+            logout(err);
           },
         });
       }
