@@ -10,6 +10,8 @@ use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
 use App\Http\Controllers\Controller;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class ApiAuthController extends Controller
 {
@@ -22,29 +24,63 @@ class ApiAuthController extends Controller
     {
     }
 
-    public function jwt($id, $role)
+    // public function jwt($id, $role)
+    // {
+    //     $payload = [
+    //         'iss' => "infinitymart",     // Issuer of the token.
+    //         'sub' => $id,               // Subject of the token.
+    //         'iat' => time(),            // Time when JWT was issued. 
+    //         'exp' => time() + 60 * 60 * 60 * 60,    // Expiration time.
+    //         'role' => $role             // Role.
+    //     ];
+
+    //     /*
+    //     |--------------------------------------------------------------------------
+    //     | As you can see we are passing `JWT_SECRET` as the second parameter that
+    //     | will be used to decode the token in the future.
+    //     |--------------------------------------------------------------------------
+    //     */
+
+    //     return JWT::encode($payload, env('JWT_SECRET'));
+    // }
+
+    public function getAuthenticatedUser()
     {
-        $payload = [
-            'iss' => "marketplace-api",     // Issuer of the token.
-            'sub' => $id,               // Subject of the token.
-            'iat' => time(),            // Time when JWT was issued. 
-            'exp' => time() + 60 * 60 * 60,    // Expiration time.
-            'role' => $role             // Role.
-        ];
+        try {
 
-        /*
-        |--------------------------------------------------------------------------
-        | As you can see we are passing `JWT_SECRET` as the second parameter that
-        | will be used to decode the token in the future.
-        |--------------------------------------------------------------------------
-        */
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                    return response()->json(['user_not_found'], 404);
+            }
 
-        return JWT::encode($payload, env('JWT_SECRET'));
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+
+            return response()->json(['token_expired'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+
+            return response()->json(['token_invalid'], $e->getStatusCode());
+
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+
+            return response()->json(['token_absent'], $e->getStatusCode());
+
+        }
+
+        return response()->json(compact('user'));
     }
 
     public function login(Request $request)
     {
         $input  = $request->only("email", "password"); //Specify Request
+        try {
+                if (! $token = JWTAuth::attempt($input)) {
+                    return response()->json(['error' => 'invalid_credentials'], 400);
+                }
+            } catch (JWTException $e) {
+                return response()->json(['error' => 'could_not_create_token'], 500);
+            }
+
+            // return response()->json(compact('token'));
 
         /*
         |--------------------------------------------------------------------------
@@ -75,11 +111,11 @@ class ApiAuthController extends Controller
             ], 400);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Verify the password and generate the token.
-        |--------------------------------------------------------------------------
-        */
+        
+        // |--------------------------------------------------------------------------
+        // | Verify the password and generate the token.
+        // |--------------------------------------------------------------------------
+        
 
         if (Hash::check($input['password'], $user->password)) {
             return response()->json([
@@ -98,7 +134,7 @@ class ApiAuthController extends Controller
                     "postal_code" => $user->postal_code,
                     "country_code" => $user->country_code,
                 ],
-                'token' => $this->jwt($user->id_user, $user->role)
+                'token' => response()->json(compact('token'))
             ], 200);
         }
 
