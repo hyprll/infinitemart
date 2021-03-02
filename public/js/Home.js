@@ -391,6 +391,7 @@ if ($("#img-produk").length > 0) {
   let idToko = 0;
   let hargaBarang = 0;
   let namaBarang = 0;
+  let userBeli = "";
   showAllProduk();
 
   $.ajax({
@@ -411,6 +412,7 @@ if ($("#img-produk").length > 0) {
         idToko = res.data[0].id_toko;
         hargaBarang = res.data[0].harga;
         namaBarang = res.data[0].nama_produk;
+        userBeli = res.data[0].user_beli;
 
         // * get toko
         fetch(BASE_URL_SERVER + "/toko/" + res.data[0].id_toko)
@@ -446,8 +448,13 @@ if ($("#img-produk").length > 0) {
         return (document.location.href = BASE_URL + "/login");
       }
 
-      if (idToko != 0 || hargaBarang != 0 || namaBarang != 0) {
-        checkout(idToko, hargaBarang, namaBarang);
+      if (
+        idToko != 0 ||
+        hargaBarang != 0 ||
+        namaBarang != 0 ||
+        userBeli != ""
+      ) {
+        checkout(idToko, hargaBarang, namaBarang, userBeli);
       } else {
         alert("error");
       }
@@ -1466,86 +1473,99 @@ function updateProduk() {
 }
 
 // * function for checkout
-function checkout(idToko, harga, nama_barang) {
+function checkout(idToko, harga, nama_barang, user_beli) {
   $(".blankLoad").show();
   $(".blankLoad").css("display", "flex");
   document.body.style.overflowY = "hidden";
-  // * mulai transaksi
+  // * cek apakah user boleh beli atau tidak
+  const id_user = auth.id_user;
+  const user_beli_split = user_beli.split(",");
+  if (user_beli_split.indexOf(id_user.toString()) == -1) {
+    $(".blankLoad").hide();
+    document.body.style.overflowY = "auto";
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Kamu tidak diizinkan membeli barang ini!",
+    });
+  } else {
+    // * mulai transaksi
 
-  let today = new Date();
+    let today = new Date();
 
-  let date =
-    today.getFullYear() +
-    "-" +
-    (today.getMonth() + 1 < 10 ? "0" : "") +
-    (today.getMonth() + 1) +
-    "-" +
-    (today.getDate() + 1 < 10 ? "0" : "") +
-    today.getDate() +
-    " " +
-    today.getHours() +
-    ":" +
-    today.getMinutes() +
-    ":" +
-    today.getSeconds();
+    let date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1 < 10 ? "0" : "") +
+      (today.getMonth() + 1) +
+      "-" +
+      (today.getDate() + 1 < 10 ? "0" : "") +
+      today.getDate() +
+      " " +
+      today.getHours() +
+      ":" +
+      today.getMinutes() +
+      ":" +
+      today.getSeconds();
 
-  let form = new FormData();
-  form.append(
-    "id_produk",
-    document.querySelector("#idProduk").dataset.idproduk
-  );
-  form.append("id_user", auth.id_user);
-  form.append("id_toko", idToko);
-  form.append("tanggal", date);
-  form.append("deskripsi", $("#catatanInp").val());
-  form.append("total_barang", $("#kuantitas").val());
-  form.append("harga", harga);
-  form.append("status", 0);
-  form.append("first_name", auth.first_name);
-  form.append("last_name", auth.last_name);
-  form.append("address", auth.address);
-  form.append("city", auth.city);
-  form.append("postal_code", auth.postal_code);
-  form.append("phone", auth.phone);
-  form.append("country_code", auth.country_code);
-  form.append("barang", nama_barang);
+    let form = new FormData();
+    form.append(
+      "id_produk",
+      document.querySelector("#idProduk").dataset.idproduk
+    );
+    form.append("id_user", auth.id_user);
+    form.append("id_toko", idToko);
+    form.append("tanggal", date);
+    form.append("deskripsi", $("#catatanInp").val());
+    form.append("total_barang", $("#kuantitas").val());
+    form.append("harga", harga);
+    form.append("status", 1);
+    form.append("first_name", auth.first_name);
+    form.append("last_name", auth.last_name);
+    form.append("address", auth.address);
+    form.append("city", auth.city);
+    form.append("postal_code", auth.postal_code);
+    form.append("phone", auth.phone);
+    form.append("country_code", auth.country_code);
+    form.append("barang", nama_barang);
 
-  $.ajax({
-    url: BASE_URL_SERVER + "/payment/midtrans",
-    headers: {
-      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-      Authorization: "Bearer " + token,
-    },
-    data: form,
-    method: "POST",
-    dataType: "json",
-    cache: false,
-    contentType: false,
-    processData: false,
-    success: (res) => {
-      $(".blankLoad").hide();
-      document.body.style.overflowY = "auto";
-      Toast.fire({
-        icon: "success",
-        title: "Sukses Memesan Produk, selesaikan pembayaran",
-      });
-      let strWindowFeatures =
-        "location=yes,height=650,width=520,scrollbars=yes,status=yes";
-      let URL = res.redirect_url;
-      window.open(URL, "_blank", strWindowFeatures);
-    },
-    error: (err) => {
-      $(".blankLoad").hide();
-      document.body.style.overflowY = "auto";
-      Toast.fire({
-        icon: "error",
-        title: "Error Pesan Produk",
-      });
-      const error = err.responseJSON;
-      console.log(err.responseText);
-      console.log(error);
-    },
-  });
+    $.ajax({
+      url: BASE_URL_SERVER + "/payment/midtrans",
+      headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        Authorization: "Bearer " + token,
+      },
+      data: form,
+      method: "POST",
+      dataType: "json",
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: (res) => {
+        $(".blankLoad").hide();
+        document.body.style.overflowY = "auto";
+        Toast.fire({
+          icon: "success",
+          title: "Sukses Memesan Produk, selesaikan pembayaran",
+        });
+        let strWindowFeatures =
+          "location=yes,height=650,width=520,scrollbars=yes,status=yes";
+        let URL = res.redirect_url;
+        window.open(URL, "_blank", strWindowFeatures);
+      },
+      error: (err) => {
+        $(".blankLoad").hide();
+        document.body.style.overflowY = "auto";
+        Toast.fire({
+          icon: "error",
+          title: "Error Pesan Produk",
+        });
+        const error = err.responseJSON;
+        console.log(err.responseText);
+        console.log(error);
+      },
+    });
+  }
 }
 
 // * function for show history
@@ -1583,6 +1603,7 @@ function showHistory(data) {
   }, 3000);
 }
 
+// * function for show data history
 function setHistory(dataHistory, dataProduk) {
   let i = 0;
   let handler = `<div class="container">`;

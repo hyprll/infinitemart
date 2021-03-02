@@ -48,22 +48,18 @@ class ApiAuthController extends Controller
     {
         try {
 
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                    return response()->json(['user_not_found'], 404);
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
             }
-
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
 
             return response()->json(['token_expired'], $e->getStatusCode());
-
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
 
             return response()->json(['token_invalid'], $e->getStatusCode());
-
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
 
             return response()->json(['token_absent'], $e->getStatusCode());
-
         }
 
         return response()->json(compact('user'));
@@ -73,14 +69,14 @@ class ApiAuthController extends Controller
     {
         $input  = $request->only("email", "password"); //Specify Request
         try {
-                if (! $token = JWTAuth::attempt($input)) {
-                    return response()->json(['error' => 'invalid_credentials'], 400);
-                }
-            } catch (JWTException $e) {
-                return response()->json(['error' => 'could_not_create_token'], 500);
+            if (!$token = JWTAuth::attempt($input)) {
+                return response()->json(['error' => 'invalid_credentials'], 400);
             }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
 
-            // return response()->json(compact('token'));
+        // return response()->json(compact('token'));
 
         /*
         |--------------------------------------------------------------------------
@@ -111,11 +107,11 @@ class ApiAuthController extends Controller
             ], 400);
         }
 
-        
+
         // |--------------------------------------------------------------------------
         // | Verify the password and generate the token.
         // |--------------------------------------------------------------------------
-        
+
 
         if (Hash::check($input['password'], $user->password)) {
             return response()->json([
@@ -214,7 +210,7 @@ class ApiAuthController extends Controller
 
     public function allbuyer()
     {
-        $user = Users::where("role", '1')->get();
+        $user = Users::where("role", '2')->get();
 
         if ($user->isEmpty()) {
             return response()->json([

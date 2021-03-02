@@ -151,7 +151,7 @@ $(function () {
                 "auth_session",
                 JSON.stringify(response.data)
               );
-              localStorage.setItem("token", response.token);
+              localStorage.setItem("token", response.token.original.token);
               if (response.data.role == 1) {
                 document.location.href = "/dasbord";
               } else {
@@ -161,8 +161,7 @@ $(function () {
           },
           error: function (xhr, status) {
             const data = xhr.responseJSON;
-            console.log(xhr);
-            $("#error_something").html(data.message);
+            $("#error_something").html(data.error);
           },
         });
       }
