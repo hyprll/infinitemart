@@ -34,6 +34,7 @@ use App\Http\Controllers\ApiTokoController;
 // Route::group(["middleware" => ["auth.q"]], function () {
 // });
 Route::get("/profile", [ProfileController::class, "index"])->name("profile");
+Route::get("/history", [ProfileController::class, "history"])->name("history");
 Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
 Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], function () {

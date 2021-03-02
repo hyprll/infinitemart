@@ -1,0 +1,148 @@
+body{
+    font-family: 'Poppins', sans-serif;  
+}
+
+.search {
+    position: absolute; 
+    border: transparent;
+    margin-left: 639px; 
+    width: 33.5vw;
+    height: 6vh; 
+    background: linear-gradient(110.98deg, #9B43CA 0.31%, #3C74FF 47.99%, #61C0EE 79.47%, #6FDEE7 91.86%); 
+    border-radius: 20px; 
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+}
+.Search {
+    margin-left: 20px;
+    margin-top: 5px;
+    padding-left: 12px;
+    width: 27vw;
+    height: 4.3vh;
+    position: absolute;
+    border: transparent;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    color: white;
+}
+.Search::-webkit-input-placeholder {
+    color:whitesmoke;
+}
+
+.card1 {
+    position: absolute;
+    width: 253px;
+    height: 725px;
+    left: 107px;
+    top: 15%;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.card2{
+    position: absolute;
+    width: 900px;
+    height: 728px;
+    left: 390px;
+    top: 15%;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+div div button{
+    position: absolute;
+    width: 155px;
+    height: 29px;
+    left: 37px;
+    top: 5%;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: transparent;
+}
+
+.produk{
+    position: absolute;
+    width: 833px;
+    height: 159px;
+    left: 37px;
+    top: 15%;
+    background: rgba(196, 196, 196, 0.5);
+    border-radius: 5px;
+}
+
+.produk1{
+    position: absolute;
+    width: 833px;
+    height: 159px;
+    left: 37px;
+    top: 15%;
+    background: rgba(196, 196, 196, 0.5);
+    border-radius: 5px;
+}
+
+.produk2{
+    position: absolute;
+    width: 833px;
+    height: 159px;
+    left: 37px;
+    top: 40%;
+    background: rgba(196, 196, 196, 0.5);
+    border-radius: 5px;
+}
+
+.produk3{
+    position: absolute;
+    width: 833px;
+    height: 159px;
+    left: 37px;
+    top: 65%;
+    background: rgba(196, 196, 196, 0.5);
+    border-radius: 5px;
+}
+
+.avatar{
+    position: absolute;
+    left: 33%;
+    top: 10%;
+}
+
+.underline{
+    position: absolute;
+    width: 120px;
+    height: 0px;
+    left: -15%;
+    top: 100%;
+    border: 2px solid #000000;
+}
+
+h4{
+    color: #3C74FF;
+    position: absolute;
+    margin-left: 35%;
+}
+
+.tag{
+    margin-top: 0%;
+    margin-left: 107px;
+    position: absolute;
+
+}
+
+.name{
+    margin-top: 0.5%;
+    margin-left: 162px;
+    position: absolute;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 36px;
+    color: #9B43CA ;
+
+}
+
+p{
+    position: absolute;
+    margin-top: 100%;
+}

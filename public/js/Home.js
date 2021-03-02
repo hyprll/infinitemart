@@ -119,6 +119,80 @@ if ($("#biodata").length > 0) {
   });
 }
 
+// * javascript for section history
+if ($("#history").length > 0) {
+  if (auth == null) {
+    document.location.href = "/login";
+  }
+
+  $("#user-profil-name").html(`${auth.username}`);
+
+  // * check if user has toko or no
+  let hasToko = false;
+  let idToko = 0;
+  $.ajax({
+    url: `${BASE_URL_SERVER}/toko`,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        res.data.forEach((response) => {
+          if (response.id_user == auth.id_user) {
+            hasToko = true;
+            idToko = response.id_toko;
+          }
+
+          let handlerCardMenu = /* html */ `
+            <i class="fas fa-user user-left"></i>
+            <a href="/profile" class="profile-card-left" type="button">My Profile</a>
+            ${
+              hasToko
+                ? `<i class="fas fa-store-alt store-left"></i>
+            <a href="toko/${idToko}" class="store-card-left" type="button">Toko Saya</a>`
+                : `<i class="fas fa-store-alt store-left"></i>
+            <a href="/seller" class="store-card-left" type="button">Buat Toko</a>`
+            }
+            <i class="fas fa-history history-left"></i>
+            <a href="/history" class="history-card-left" type="button">History</a>
+
+            <i class="fas fa-sign-in-alt logout-left"></i>
+            <label for="label-left" class="logout-card-left" type="button" id="logoutBtn">
+                Logout
+            </label>
+            `;
+
+          $("#card-menu-profile").html(handlerCardMenu);
+        });
+      }
+    },
+    error: (err) => {
+      alert("Error");
+    },
+  });
+
+  $("#history").html(loadingHistory());
+  $.ajax({
+    url: BASE_URL_SERVER + "/checkout/user/" + auth.id_user,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        showHistory(res.data);
+      }
+    },
+    error: (err) => {
+      console.log(err);
+      $("#history").html(errorHistory("Data Not found"));
+    },
+  });
+
+  document.body.addEventListener("click", function (e) {
+    if (e.target.getAttribute("id") == "logoutBtn") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("auth_session");
+      document.location.href = "/login";
+    }
+  });
+}
+
 // * Javascript for section home
 if ($(".headerCarousel2").length > 0) {
   $(function () {
@@ -832,6 +906,7 @@ function updateToko(idToko) {
         icon: "error",
         title: "Update Toko Error",
       });
+      console.log(error);
       if (error.message == "Provided token is expired.") {
         localStorage.removeItem("token");
         localStorage.removeItem("auth_session");
@@ -1471,4 +1546,113 @@ function checkout(idToko, harga, nama_barang) {
       console.log(error);
     },
   });
+}
+
+// * function for show history
+function showHistory(data) {
+  let dataProduk = [];
+  data.map((d) => {
+    $.ajax({
+      url: BASE_URL_SERVER + "/produk/" + d.id_produk,
+      type: "GET",
+      success: (res) => {
+        dataProduk = [...dataProduk, res.data];
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  });
+
+  setTimeout(() => {
+    if (dataProduk.length > 0) {
+      setHistory(data, dataProduk);
+    } else {
+      setTimeout(() => {
+        if (dataProduk.length > 0) {
+          setHistory(data, dataProduk);
+        } else {
+          $("#history").html(
+            errorHistory(
+              "Unable to connect,</br> check your internet connection"
+            )
+          );
+        }
+      }, 5000);
+    }
+  }, 3000);
+}
+
+function setHistory(dataHistory, dataProduk) {
+  let i = 0;
+  let handler = `<div class="container">`;
+  dataHistory.map((data) => {
+    handler += setHistoryProduk(data, dataProduk[i][0]);
+    i++;
+  });
+  handler += "</div>";
+  $("#history").html(handler);
+}
+
+function setHistoryProduk(data, produk) {
+  let handler = /* html */ `
+  <div class="produk p-3 mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="${BASE_URL}/uploads/produk/${produk.gambar}" alt=""
+                class="img-fluid">
+        </div>
+        <div class="col-md-9">
+            <div class="row mt-3">
+                <h4 class="h5">${produk.nama_produk}</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    Penerima : ${data.first_name} ${data.last_name}
+                </div>
+                <div class="col-md-6">
+                    Kode Pos : ${data.postal_code}
+                </div>
+                <div class="col-md-6">
+                    No Telepon : ${data.phone}
+                </div>
+                <div class="col-md-6">
+                    Total : ${formatter.toRupiah(data.harga)}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    Dikirim ke : ${data.address}
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  `;
+
+  return handler;
+}
+
+function loadingHistory() {
+  let handler = /* html */ `
+  <div class="loadingHistory d-flex justify-content-center align-items-center" style="width: 100%;min-height:450px">
+    <img src="${BASE_URL}/img/gif/roll1.gif" alt="" style="width: 100px">
+  </div>
+  `;
+
+  return handler;
+}
+
+function errorHistory(message) {
+  let handler = /* html */ `
+  <div class="loadingHistory d-flex justify-content-center align-items-center"
+  style="width: 100%;min-height:450px">
+    <div class="row justify-content-center">
+        <img src="${BASE_URL}/img/character/intip.png" alt="" style="width: 450px">
+        <h3 class="h2 text-center mt-3">${message}</h3>
+    </div>
+  </div>
+  `;
+
+  return handler;
 }

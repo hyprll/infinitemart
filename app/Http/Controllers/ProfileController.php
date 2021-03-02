@@ -16,4 +16,12 @@ class ProfileController extends Controller
 
         return view("user/profile", $data);
     }
+
+    public function history()
+    {
+        $data = [
+            "css" => "profile.css"
+        ];
+        return view("user/history", $data);
+    }
 }
