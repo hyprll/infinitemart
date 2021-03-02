@@ -1,5 +1,10 @@
 // alert("ok");
 let country = [];
+const auth = JSON.parse(localStorage.getItem("auth_session"));
+const token = localStorage.getItem("token");
+
+console.log(auth);
+console.log(token);
 $(function () {
   // * Javasript for section register
   if ($("#registerAccount").length > 0) {
@@ -24,7 +29,7 @@ $(function () {
         form.append("postal_code", $("#postal_code").val());
         form.append("country_code", finalSplit);
         form.append("address", $("#address").val());
-        form.append("role", "1");
+        form.append("role", "2");
 
         $(".blankLoad").show();
         $(".blankLoad").css("display", "flex");
@@ -62,7 +67,8 @@ $(function () {
           error: function (xhr, status) {
             $(".blankLoad").hide();
             document.body.style.overflowY = "auto";
-            const data = xhr.responseJSON;
+            const data = xhr.responseJSON.errors;
+            console.log(xhr);
             if (data != undefined) {
               const keys = Object.keys(data);
               const validation = Array.from(
@@ -146,7 +152,11 @@ $(function () {
                 JSON.stringify(response.data)
               );
               localStorage.setItem("token", response.token);
-              document.location.href = "/";
+              if (response.data.role == 1) {
+                document.location.href = "/dasbord";
+              } else {
+                document.location.href = "/";
+              }
             }
           },
           error: function (xhr, status) {
