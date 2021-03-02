@@ -153,7 +153,7 @@ $(function () {
               );
               localStorage.setItem("token", response.token.original.token);
               if (response.data.role == 1) {
-                document.location.href = "/dasbord";
+                document.location.href = "/dashbord";
               } else {
                 document.location.href = "/";
               }

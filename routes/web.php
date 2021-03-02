@@ -102,7 +102,7 @@ Route::group(["prefix" => "api/payment", "middleware" => ["jwtverify.auth"]], fu
     Route::post("/midtrans", [ApiMidtransController::class, "getSnapToken"])->name("apigetSnapToken");
 });
 
-Route::get("/dasbord", [DasbordController::class, "index"]);
+Route::get("/dashbord", [DasbordController::class, "index"]);
 Route::get("/profileAdmin", [ProfileAdmin::class, "index"]);
 Route::get("/totalProduk", [TotalProdukController::class, "index"]);
 Route::get("/DataUser", [TotalUserController::class, "index"]);

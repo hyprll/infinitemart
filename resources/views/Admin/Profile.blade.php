@@ -4,8 +4,9 @@
 @section('content')
 <div class="intoAdmin">
     <div class="container">
-        <h1 class="text-white" style="margin-top: 10vh;">Hallo Raqwan</h1>
-        <p class="mt-4 text-white" style="width: 50%;">Ini adalah halaman profil Anda. Anda dapat melihat kemajuan yang Anda buat dengan pekerjaan Anda dan mengelola proyek atau tugas yang diberikan</p>
+        <h1 class="text-white" style="margin-top: 10vh;" id="namaProfile"></h1>
+        <p class="mt-4 text-white" style="width: 50%;">Ini adalah halaman profil Anda. Anda dapat melihat kemajuan yang
+            Anda buat dengan pekerjaan Anda dan mengelola proyek atau tugas yang diberikan</p>
         <button type="submit" class="btn mt-3">Ubah Profil</button>
     </div>
 </div>
@@ -25,23 +26,23 @@
             <div class="container">
                 <div class="col-md-12 mb-2 d-flex justify-content-between">
                     <p>Username</p>
-                    <p>Rizky</p>
+                    <p class="usernameProfile"></p>
                 </div>
                 <div class="col-md-12 mb-2 d-flex justify-content-between">
                     <p>Nama Depan</p>
-                    <p>Rizky</p>
+                    <p class="namaDepanProfile"></p>
                 </div>
                 <div class="col-md-12 mb-2 d-flex justify-content-between">
                     <p>Nama Belakang</p>
-                    <p>Ramadhan</p>
+                    <p class="namaBelakangProfile">Ramadhan</p>
                 </div>
                 <div class="col-md-12  mb-2 d-flex justify-content-between">
-                    <p>Aalamat Email</p>
-                    <p>rizky@gmail.com</p>
+                    <p>Alamat Email</p>
+                    <p class="emailProfile">rizky@gmail.com</p>
                 </div>
                 <div class="col-md-12 mb-2 d-flex justify-content-between">
                     <p>No. Telepon</p>
-                    <p>+62 1209891809</p>
+                    <p class="phoneProfile">+62 1209891809</p>
                 </div>
             </div>
         </div>
@@ -98,10 +99,8 @@
                 </div>
             </div>
             <div class="endProfileCard mt-3">
-                <h5 class="text-center" style="font-size: 20px;">Muhammad Raqwan</h5>
-                <p class="text-center" style="font-size: 15px;">Depok, Indonesia</p>
-                <p class="text-center" style="font-size: 15px;">CEO</p>
-                <h5 class="text-center text-secondary" style="font-size: 17px;">Universitas Institut Teknologi Konfederasi Zürich</h5>
+                <h5 class="text-center nameAllProfile" style="font-size: 20px;"></h5>
+                <p class="text-center cityProfile" style="font-size: 15px;"></p>
             </div>
         </div>
     </div>
