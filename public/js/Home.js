@@ -871,7 +871,6 @@ function updateToko(idToko) {
   form.append("id_user", auth.id_user);
   form.append("logo_old", $("#old_logo").val());
   form.append("bg_old", $("#old_bg").val());
-
   $(".blankLoad").show();
   $(".blankLoad").css("display", "flex");
   document.body.style.overflowY = "hidden";
@@ -900,13 +899,14 @@ function updateToko(idToko) {
     },
     error: (err) => {
       const error = err.responseJSON;
+      console.log(error);
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
       Toast.fire({
         icon: "error",
         title: "Update Toko Error",
       });
-      console.log(error);
+      let errorMsg = "An error while decoding token.";
       if (error.message == "Provided token is expired.") {
         localStorage.removeItem("token");
         localStorage.removeItem("auth_session");
