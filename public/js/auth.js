@@ -1,5 +1,10 @@
 // alert("ok");
 let country = [];
+const auth = JSON.parse(localStorage.getItem("auth_session"));
+const token = localStorage.getItem("token");
+
+console.log(auth);
+console.log(token);
 $(function () {
   // * Javasript for section register
   if ($("#registerAccount").length > 0) {
@@ -147,7 +152,7 @@ $(function () {
                 JSON.stringify(response.data)
               );
               localStorage.setItem("token", response.token);
-              if(response.data.role == 1){
+              if (response.data.role == 1) {
                 document.location.href = "/dasbord";
               } else {
                 document.location.href = "/";
