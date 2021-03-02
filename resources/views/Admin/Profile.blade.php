@@ -22,81 +22,26 @@
                     <div class="lineTitleAdmin"></div>
                 </div>
             </div>
-            <div class="contentProfileAdmin">
-                <div class="container">
-                    <div class="row">
-                        <label class="text-danger AuthUser" style="transform: translateY(-2.5vh); display: none;"></label>
-                        <div class="col-md-6">
-                            <div class="inputAdmin d-flex flex-column">
-                                <label for="email" class="text-secondary">Email</label>
-                                <input type="email" name="email" id="email" value="raqwan@gmail.com" class="form-control mt-2">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="inputAdmin d-flex flex-column">
-                                <label for="name" class="text-secondary">Nama</label>
-                                <input type="text" name="name" id="name" value="Muhammad Raqwan" class="form-control mt-2">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="inputAdmin mt-3 d-flex flex-column">
-                                <label for="password" class="text-secondary">Password</label>
-                                <input type="password" name="password" id="password" class="form-control mt-2">
-                                <label class="text-danger AuthPassword" style="font-size: 14px; display: none;"></label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="inputAdmin mt-3 d-flex flex-column">
-                                <label for="ConfirmPassword" class="text-secondary">Confirmasi Password</label>
-                                <input type="password" name="ConfirmPassword" id="confirmPassword" class="form-control mt-2">
-                                <label class="text-danger AuthConfirmPassword" style="font-size: 14px; display: none;"></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="container">
-                <div class="titleContent">
-                    <p class="my-5">Informasi Kontak</p>
-                    <div class="lineTitleAdmin"></div>
+                <div class="col-md-12 mb-2 d-flex justify-content-between">
+                    <p>Username</p>
+                    <p>Rizky</p>
                 </div>
-            </div>
-            <div class="contentProfileAdmin">
-                <div class="container">
-                    <div class="row">
-                        <label class="text-danger AuthContact" style="transform: translateY(-2.5vh); display: none;"></label>
-                        <div class="col-md-12">
-                            <div class="inputAdmin d-flex flex-column">
-                                <label for="address" class="text-secondary">Alamat</label>
-                                <input type="text" name="address" id="address" value="Jalan Cilangkap" class="form-control mt-2">
-                            </div>
-                        </div>
-                        <div class="col-md-4 mt-3">
-                            <div class="inputAdmin d-flex flex-column">
-                                <label for="city" class="text-secondary">Kota</label>
-                                <input type="text" name="city" id="city" value="Depok" class="form-control mt-2">
-                            </div>
-                        </div>
-                        <div class="col-md-4 mt-3">
-                            <div class="inputAdmin d-flex flex-column">
-                                <label for="Country" class="text-secondary">Negara</label>
-                                <input type="text" name="Country" id="country" value="Indonesia" class="form-control mt-2">
-                            </div>
-                        </div>
-                        <div class="col-md-4 mt-3">
-                            <div class="inputAdmin d-flex flex-column">
-                                <label for="postalCode" class="text-secondary">Kode Pos</label>
-                                <input type="text" name="postalCode" id="postalCode" value="12345" class="form-control mt-2" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-12 mb-2 d-flex justify-content-between">
+                    <p>Nama Depan</p>
+                    <p>Rizky</p>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="container">
-                    <div class="btnContent-profile mt-4">
-                        <button type="submit" class="btn btnUpdate-Profile mb-3">Ubah Profile Anda</button>
-                    </div>
+                <div class="col-md-12 mb-2 d-flex justify-content-between">
+                    <p>Nama Belakang</p>
+                    <p>Ramadhan</p>
+                </div>
+                <div class="col-md-12  mb-2 d-flex justify-content-between">
+                    <p>Aalamat Email</p>
+                    <p>rizky@gmail.com</p>
+                </div>
+                <div class="col-md-12 mb-2 d-flex justify-content-between">
+                    <p>No. Telepon</p>
+                    <p>+62 1209891809</p>
                 </div>
             </div>
         </div>
