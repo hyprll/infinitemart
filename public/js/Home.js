@@ -531,6 +531,7 @@ if ($("#background-img").length > 0) {
   const idToko = document.querySelector("#idToko").dataset.idtoko;
   showTokoDash(idToko);
 
+  let history = false;
   document.body.addEventListener("click", function (e) {
     if (e.target.getAttribute("id") == "btn-edit-toko") {
       $(".no-edit-toko-content").hide();
@@ -554,6 +555,19 @@ if ($("#background-img").length > 0) {
           deleteProduk(idProduk, idToko);
         }
       });
+    } else if (e.target.getAttribute("id") == "btn-history-toko") {
+      history = !history;
+      if (history) {
+        e.target.innerHTML = "Barang di toko";
+        $("#produkTokoPlace").hide();
+        $("#historyToko").css("display", "flex");
+        $(".header-toko-text").html("History Toko");
+      } else {
+        e.target.innerHTML = "History Toko";
+        $("#historyToko").hide();
+        $("#produkTokoPlace").css("display", "flex");
+        $(".header-toko-text").html("Barang Di Toko");
+      }
     }
   });
 
@@ -767,7 +781,7 @@ function showTokoDash(idToko) {
           }
         }
 
-        let deskripsiTokoNya = res.data[0].deskripsi.replace("/n", "</br>");
+        let deskripsiTokoNya = nl2br(res.data[0].deskripsi);
         showTokoProduk(idToko, myToko);
         let handlerToko = /* html */ `
         <div class="ProfileImgToko d-flex justify-content-center align-items-center">
@@ -840,11 +854,17 @@ function showTokoDash(idToko) {
             <div class="col-md-3 mb-3">
                 <button class="btn w-100 btn-info" id="btn-edit-toko">Edit Toko</button>
             </div>
+            <div class="col-md-3 mb-3">
+                <button class="btn w-100 btn-warning" id="btn-history-toko">History Toko</button>
+            </div>
             <div class="col-md-3">
                 <a href="/toko/add" class="btn w-100 btn-success">Tambah produk</a>
             </div>
           </div>
           `;
+
+          // * get history toko
+          getHistoryToko(res.data[0].id_toko);
         }
 
         $("#kontent-toko").html(handlerToko);
@@ -897,12 +917,21 @@ function updateToko(idToko) {
     success: (res) => {
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
-      console.log(res);
-      Toast.fire({
-        icon: "success",
-        title: "Update Toko Sukses",
-      });
-      showTokoDash(idToko);
+      if (res.status != null) {
+        if (res.status == "Token is Expired") {
+          localStorage.removeItem("token");
+          localStorage.removeItem("auth_session");
+          document.location.href = "/login";
+        }
+      }
+
+      if (res.success) {
+        Toast.fire({
+          icon: "success",
+          title: "Update Toko Sukses",
+        });
+        showTokoDash(idToko);
+      }
     },
     error: (err) => {
       const error = err.responseJSON;
@@ -1050,14 +1079,23 @@ function deleteProduk(id_produk, id_toko) {
     contentType: false,
     processData: false,
     success: (res) => {
-      console.log(res);
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
-      Toast.fire({
-        icon: "success",
-        title: "Sukses Hapus Produk",
-      });
-      showTokoProduk(id_toko, true);
+      if (res.status != null) {
+        if (res.status == "Token is Expired") {
+          localStorage.removeItem("token");
+          localStorage.removeItem("auth_session");
+          document.location.href = "/login";
+        }
+      }
+
+      if (res.success) {
+        Toast.fire({
+          icon: "success",
+          title: "Sukses Hapus Produk",
+        });
+        showTokoProduk(id_toko, true);
+      }
     },
     error: (res) => {
       console.log(res);
@@ -1184,26 +1222,36 @@ function uploadProduk() {
     success: (res) => {
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
-      Swal.fire({
-        title: "<strong>Add Product Successful</strong>",
-        icon: "success",
-        html:
-          "Success Add Product, " +
-          '<a href="/toko/' +
-          $("#id_toko").val() +
-          ">See Product now</a> ",
-        showCloseButton: false,
-        showCancelButton: false,
-        allowOutsideClick: false,
-        focusConfirm: true,
-        confirmButtonText:
-          '<a href="/toko/' +
-          $("#id_toko").val() +
-          '" style="color:inherit;text-decoration:none">See Product Now</a>',
-        confirmButtonAriaLabel: "Thumbs up, great!",
-        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
-        cancelButtonAriaLabel: "Thumbs down",
-      });
+      if (res.status != null) {
+        if (res.status == "Token is Expired") {
+          localStorage.removeItem("token");
+          localStorage.removeItem("auth_session");
+          document.location.href = "/login";
+        }
+      }
+
+      if (res.success) {
+        Swal.fire({
+          title: "<strong>Add Product Successful</strong>",
+          icon: "success",
+          html:
+            "Success Add Product, " +
+            '<a href="/toko/' +
+            $("#id_toko").val() +
+            ">See Product now</a> ",
+          showCloseButton: false,
+          showCancelButton: false,
+          allowOutsideClick: false,
+          focusConfirm: true,
+          confirmButtonText:
+            '<a href="/toko/' +
+            $("#id_toko").val() +
+            '" style="color:inherit;text-decoration:none">See Product Now</a>',
+          confirmButtonAriaLabel: "Thumbs up, great!",
+          cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+          cancelButtonAriaLabel: "Thumbs down",
+        });
+      }
     },
     error: (err) => {
       $(".blankLoad").hide();
@@ -1438,6 +1486,14 @@ function updateProduk() {
     success: (res) => {
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
+      if (res.status != null) {
+        if (res.status == "Token is Expired") {
+          localStorage.removeItem("token");
+          localStorage.removeItem("auth_session");
+          document.location.href = "/login";
+        }
+      }
+
       Swal.fire({
         title: "<strong>Update Product Successful</strong>",
         icon: "success",
@@ -1478,6 +1534,7 @@ function checkout(idToko, harga, nama_barang, user_beli) {
   $(".blankLoad").css("display", "flex");
   document.body.style.overflowY = "hidden";
   // * cek apakah user boleh beli atau tidak
+
   const id_user = auth.id_user;
   const user_beli_split = user_beli.split(",");
   if (user_beli_split.indexOf(id_user.toString()) == -1) {
@@ -1544,14 +1601,24 @@ function checkout(idToko, harga, nama_barang, user_beli) {
       success: (res) => {
         $(".blankLoad").hide();
         document.body.style.overflowY = "auto";
-        Toast.fire({
-          icon: "success",
-          title: "Sukses Memesan Produk, selesaikan pembayaran",
-        });
-        let strWindowFeatures =
-          "location=yes,height=650,width=520,scrollbars=yes,status=yes";
-        let URL = res.redirect_url;
-        window.open(URL, "_blank", strWindowFeatures);
+        if (res.status != null) {
+          if (res.status == "Token is Expired") {
+            localStorage.removeItem("token");
+            localStorage.removeItem("auth_session");
+            document.location.href = "/login";
+          }
+        }
+
+        if (res.success) {
+          Toast.fire({
+            icon: "success",
+            title: "Sukses Memesan Produk, selesaikan pembayaran",
+          });
+          let strWindowFeatures =
+            "location=yes,height=650,width=520,scrollbars=yes,status=yes";
+          let URL = res.redirect_url;
+          window.open(URL, "_blank", strWindowFeatures);
+        }
       },
       error: (err) => {
         $(".blankLoad").hide();
@@ -1675,5 +1742,55 @@ function errorHistory(message) {
   </div>
   `;
 
+  return handler;
+}
+
+function nl2br(str, is_xhtml) {
+  if (typeof str === "undefined" || str === null) {
+    return "";
+  }
+  var breakTag =
+    is_xhtml || typeof is_xhtml === "undefined" ? "<br />" : "<br>";
+  return (str + "").replace(
+    /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g,
+    "$1" + breakTag + "$2"
+  );
+}
+
+function getHistoryToko(id_toko) {
+  $.ajax({
+    url: `${BASE_URL_SERVER}/checkout/toko/${id_toko}`,
+    type: "GET",
+    dataType: "JSON",
+    error: function () {},
+    success: function (result) {
+      if (result.success) {
+        let handler = ``;
+        result.data.map((res, i) => {
+          handler += handlerTokoCheckout(res, i + 1);
+        });
+        $(".checkoutTable").html(handler);
+      }
+      $("#tableCheckout").DataTable({
+        responsive: true,
+        autoWidth: false,
+        scrollCollapse: true,
+      });
+    },
+  });
+}
+
+function handlerTokoCheckout(data, no) {
+  const format = new FormatMoney();
+  let handler = /* html */ `
+    <tr>
+        <td class="text-center">${no}</td>
+        <td>${data.first_name} ${data.last_name}</td>
+        <td>${data.order_id}</td>
+        <td>${format.toRupiah(data.harga)} </td>
+        <td>+62 ${data.phone}</td>
+        <td>${data.tanggal}</td>
+    </tr>
+    `;
   return handler;
 }

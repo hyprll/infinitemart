@@ -13,6 +13,10 @@
   <!-- owl carausel -->
   <link rel="stylesheet" href="{{asset("css/owl.carousel.min.css")}}">
   <link rel="stylesheet" href="{{asset("css/owl.theme.default.min.css")}}">
+
+  <!-- data table -->
+  <link rel="stylesheet" href="{{asset("css/DataTable/dataTables.bootstrap4.min.css")}}">
+  <link rel="stylesheet" href="{{asset("css/DataTable/responsive.bootstrap4.min.css")}}">
 </head>
 
 <body>
@@ -37,6 +41,13 @@
 <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 <script src="{{asset("Js/owl.carousel.min.js")}}"></script>
 <script src="{{asset("Js/FormatMoney.js")}}"></script>
+<!-- DataTables -->
+<script src="{{asset("js/DataTable/jquery.dataTables.min.js")}}"></script>
+<script src="{{asset("js/DataTable/dataTables.bootstrap4.min.js")}}"></script>
+<script src="{{asset("js/DataTable/dataTables.responsive.min.js")}}"></script>
+<script src="{{asset("js/DataTable/responsive.bootstrap4.min.js")}}"></script>
+
+
 <script src="{{asset("Js/App.js")}}"></script>
 <script src="{{asset("Js/Home.js")}}"></script>
 <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous" async defer></script>

@@ -222,7 +222,7 @@ h6 {
   margin-left: -20px;
   margin-top: -0.5px;
   width: 56.5rem;
-  height: 31.5rem;
+  min-height: 31.5rem;
   border-top: transparent;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
