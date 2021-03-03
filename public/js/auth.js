@@ -3,11 +3,13 @@ let country = [];
 const auth = JSON.parse(localStorage.getItem("auth_session"));
 const token = localStorage.getItem("token");
 
-console.log(auth);
-console.log(token);
 $(function () {
   // * Javasript for section register
   if ($("#registerAccount").length > 0) {
+    if (auth != null) {
+      window.location.href = BASE_URL;
+    }
+
     $("#registerAccount").on("submit", function (e) {
       e.preventDefault();
       if (!validateRegister()) {
@@ -127,6 +129,10 @@ $(function () {
   }
   // * Javascript for section login
   else if ($("#form-login").length > 0) {
+    if (auth != null) {
+      window.location.href = BASE_URL;
+    }
+    
     $("#form-login").on("submit", function (e) {
       e.preventDefault();
       if (validateLogin()) {
@@ -175,6 +181,9 @@ $(function () {
       document.location.href = "/login";
     }
 
+    // cek toko
+    cekToko(auth.id_user);
+
     $("#form-seller").on("submit", function (e) {
       e.preventDefault();
       if (validateSeller()) {
@@ -208,7 +217,7 @@ $(function () {
           success: (res) => {
             $(".blankLoad").hide();
             console.log(res);
-            document.location.href = "/toko/" + res.id_toko;
+            document.location.href = "/toko/" + res.data.id_toko;
           },
           error: (err) => {
             const error = err.responseJSON;
@@ -435,4 +444,21 @@ function justRequiredAndMin(input, min) {
   }
 
   return turn;
+}
+
+function cekToko(id_user) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/cektoko/" + id_user + "?id_user=" + id_user,
+    type: "GET",
+    success: (res) => {
+      if (res.success) {
+        if (res.message == "Data found.") {
+          document.location.href = BASE_URL + "/toko/" + res.data[0].id_toko;
+        }
+      }
+    },
+    error: (err) => {
+      console.log(err);
+    },
+  });
 }

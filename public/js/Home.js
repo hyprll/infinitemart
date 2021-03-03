@@ -1609,7 +1609,7 @@ function checkout(idToko, harga, nama_barang, user_beli) {
           }
         }
 
-        if (res.success) {
+        if (res.code == 1) {
           Toast.fire({
             icon: "success",
             title: "Sukses Memesan Produk, selesaikan pembayaran",
@@ -1762,7 +1762,18 @@ function getHistoryToko(id_toko) {
     url: `${BASE_URL_SERVER}/checkout/toko/${id_toko}`,
     type: "GET",
     dataType: "JSON",
-    error: function () {},
+    error: function (err) {
+      let handler = /* html */ `
+        <div class="col-12 my-5">
+            <div class="row justify-content-center">
+                <img src="/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
+                <h2 class="text-center">No history yet</h2>
+            </div>
+        </div>
+        `;
+
+      $("#historyToko").html(handler);
+    },
     success: function (result) {
       if (result.success) {
         let handler = ``;

@@ -35,15 +35,6 @@ use App\Http\Controllers\ApiTokoController;
 // });
 Route::get("/profile", [ProfileController::class, "index"])->name("profile");
 Route::get("/history", [ProfileController::class, "history"])->name("history");
-Route::post("/logout", [AuthController::class, "logout"])->name("logout");
-
-Route::group(["prefix" => "toko", "middleware" => ["auth.q", "hasStore"]], function () {
-    Route::post("/updateToko", [HomeController::class, "updateToko"])->name("updateToko");
-    Route::post('/add', [ProdukController::class, "tambahProdukProses"])->name("tambahProdukProses");
-    Route::post('/edit', [ProdukController::class, "editProdukProses"])->name("editProdukProses");
-    Route::post('/delete', [ProdukController::class, "delete_produk"]);
-});
-
 
 Route::get("/seller", [AuthController::class, "seller"])->name("seller");
 Route::get('/', [HomeController::class, "index"])->name("home");
@@ -54,9 +45,7 @@ Route::get('toko/edit/{id_produk}', [ProdukController::class, "edit"]);
 
 Route::group(["middleware" => ["not_auth.q"]], function () {
     Route::get("/login", [AuthController::class, "login"])->name("login");
-    Route::post("/login", [AuthController::class, "login_proses"])->name("login_proses");
     Route::get("/register", [AuthController::class, "register"])->name("register");
-    Route::post("/register", [AuthController::class, "regist_proses"])->name("regist_proses");
 });
 
 

@@ -31,7 +31,7 @@
                                     </span>
                                 </div>
                                 <div class="row mt-3">
-                                    <form action="{{route("login_proses")}}" method="POST" id="form-login">
+                                    <form action="" method="POST" id="form-login">
                                         @csrf
                                         <div class="row">
                                             <div class="inputValue">
