@@ -87,13 +87,9 @@
           <i class="material-icons barIcon">menu</i>
         </div>
         <div class="profilAdmin d-flex">
-          <div class="leftProfile d-flex align-items-center">
-            <i class="material-icons notifIcon">notifications</i>
-            <i class="material-icons copyIcon">content_copy</i>
-          </div>
           <div class="MoreProfile">
             <div class="clickValueProfile d-flex">
-              <img src="{{'img'}}/Produk/gelasPink.png" class="rounded-circle clickBtnProfile" alt="">
+              <img src="{{'img'}}/Profile/Anca.jpg" class="rounded-circle clickBtnProfile" alt="">
               <p class="clickBtnProfile">Admin</p>
             </div>
 
@@ -117,18 +113,6 @@
 
       @yield("content")
 
-      <div class="FooterAdmin d-flex align-items-center justify-content-between mt-5">
-        <div class="leftFooter d-flex">
-          <a class="nav-link">Tentang Kami</a>
-          <a class="nav-link">Licensi</a>
-        </div>
-        <div class="rightFooter">Copyright &copy;
-          <script>
-            document.write(new Date().getFullYear());
-          </script> Infinite Mart. Seluruh hak cipta.
-        </div>
-
-      </div>
 
       <div class="bgBlue-dasbord"></div>
 
