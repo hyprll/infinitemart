@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Mar 2021 pada 07.55
+-- Waktu pembuatan: 04 Mar 2021 pada 13.25
 -- Versi server: 10.4.17-MariaDB
--- Versi PHP: 8.0.0
+-- Versi PHP: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -60,7 +60,9 @@ INSERT INTO `checkout` (`id_checkout`, `order_id`, `id_produk`, `id_toko`, `id_u
 (13, 1128682414, 16, 7, 11, '2021-03-01 14:29:25', 'tes', 5, 950000, '1', 'Trafalgar', 'Law', 'jonggol', 'depok', '12231', '1209891801', 'JPN', '9d761d51-1c9c-4f0b-b5fc-7ad82ffbf084', '2021-03-01 00:29:26', '2021-03-01 00:29:26'),
 (14, 1845881839, 18, 14, 5, '2021-03-02 14:01:13', 'yang kuning', 1, 10000000, '1', 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', '12131', '213123124', 'IDN', 'dd5132fc-3b56-4c1d-bbb2-f78e6141d4c6', '2021-03-02 00:01:14', '2021-03-02 00:01:14'),
 (15, 172644873, 10, 7, 5, '2021-03-02 14:21:14', 'tes', 2, 500000, '1', 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', '12131', '213123124', 'IDN', '697e3cb6-1182-4beb-a62e-2f9041b3b528', '2021-03-02 00:21:14', '2021-03-02 00:21:14'),
-(16, 1135143015, 24, 7, 5, '2021-03-02 19:16:14', 'tes', 1, 14500000, '1', 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', '12131', '213123124', 'IDN', '8acff106-abee-446b-a2e7-b1a4220af7ac', '2021-03-02 05:16:15', '2021-03-02 05:16:15');
+(16, 1135143015, 24, 7, 5, '2021-03-02 19:16:14', 'tes', 1, 14500000, '1', 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', '12131', '213123124', 'IDN', '8acff106-abee-446b-a2e7-b1a4220af7ac', '2021-03-02 05:16:15', '2021-03-02 05:16:15'),
+(21, 792148520, 28, 17, 18, '2021-03-03 20:45:24', 'Bisa terbang titanya', 3, 200000, '1', 'pancaran', 'ratna', 'jatijajar', 'depok', '3423', '244332', 'IDN', '5a2e3172-9670-469c-9a13-7244aa7857a0', '2021-03-03 06:45:25', '2021-03-03 06:45:25'),
+(22, 774329155, 10, 7, 5, '2021-03-04 13:02:55', 'Biru bang', 1, 500000, '1', 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', '12131', '213123124', 'IDN', '31f4bfe7-d593-49ab-9fdc-f07b8c76282b', '2021-03-03 23:02:57', '2021-03-03 23:02:57');
 
 -- --------------------------------------------------------
 
@@ -98,8 +100,13 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga`, `gambar`, `id_toko`, 
 (23, 'gitar listrik kece', 950000, 'produk-1614687251.png', 7, '5,10,14', 'produk_lain-1614687251.jpg', '2021-03-02 05:13:16', '2021-03-02 05:14:11'),
 (24, 'Macbook 15 pro', 14500000, 'produk-1614687498.png', 7, '10,11,14', 'produk_lain-1614687355.jpg', '2021-03-02 05:15:55', '2021-03-02 23:21:35'),
 (25, 'iphone 12', 14000000, 'produk-1614752696.png', 7, '11,14,10', 'produk_lain-1614752696.png', '2021-03-02 23:24:56', '2021-03-02 23:24:56'),
-(26, 'kursi biru', 500000, 'produk-1614754004.png', 17, '5,11,10,14', 'produk_lain-1614754004.png', '2021-03-02 23:46:44', '2021-03-02 23:46:44'),
-(27, 'kursi lagi', 500000, 'produk-1614754082.png', 17, '5,11,10,14', 'produk_lain-1614754082.png', '2021-03-02 23:48:02', '2021-03-02 23:48:02');
+(27, 'Kursi di lapisin emas', 500000, 'produk-1614754082.png', 17, '5,11,10,14', 'produk_lain-1614754082.png', '2021-03-02 23:48:02', '2021-03-03 06:44:18'),
+(28, 'Jaw Titan', 200000, 'produk-1614778974.jpg', 17, '10,14,5,11,18', 'produk_lain-1614778974.jpg', '2021-03-03 06:42:54', '2021-03-03 06:42:54'),
+(30, 'Perahu', 1000000, 'produk-1614839973.jpg', 18, '21', 'produk_lain-1614839973.jpg', '2021-03-03 23:39:33', '2021-03-03 23:39:33'),
+(31, 'Perahu', 1000000, 'produk-1614839982.jpg', 18, '21', 'produk_lain-1614839982.jpg', '2021-03-03 23:39:42', '2021-03-03 23:39:42'),
+(32, 'ANIME ANCA', 1000, 'produk-1614840055.jpg', 18, '21', 'produk_lain-1614840055.jpg', '2021-03-03 23:40:55', '2021-03-03 23:40:55'),
+(33, 'Erennn', 1000000, 'produk-1614840202.jpg', 18, '18', 'produk_lain-1614840202.jpg', '2021-03-03 23:43:22', '2021-03-03 23:43:22'),
+(34, 'pancaran', 2000, 'produk-1614840641.jpg', 19, '11,5,18,22,10,14,21', 'produk_lain-1614840641.jpg', '2021-03-03 23:50:41', '2021-03-03 23:50:41');
 
 -- --------------------------------------------------------
 
@@ -126,7 +133,9 @@ INSERT INTO `toko` (`id_toko`, `nama_toko`, `deskripsi`, `id_user`, `logo`, `bac
 (1, 'toko c', 'update toko', 1, 'logo-1611733278.png', 'background-1611733278.png', '2021-01-26 17:14:49', '2021-01-27 07:41:19'),
 (7, 'Corazon Store', 'The heart pirates\nLorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem itaque reiciendis numquam, iste sunt, nostrum molestias vero culpa saepe illo velit ab esse porro, incidunt facilis tenetur. Molestias, reiciendis recusandae.', 5, 'logo-1614352446.jpg', 'background-1614352056.jpg', '2021-02-15 07:33:43', '2021-03-02 21:20:18'),
 (14, 'heart pirates', 'the heart of the ocean', 11, 'logo-1614576281.png', 'background-1614576281.jpg', '2021-02-28 22:24:41', '2021-02-28 22:24:41'),
-(17, 'Pancaran Furniture', 'Pancaran hyper', 18, 'logo-1614753775.png', 'background-1614753775.png', '2021-03-02 23:42:55', '2021-03-02 23:42:55');
+(17, 'Pancaran Furniture', 'Pancaran hyper', 18, 'logo-1614753775.png', 'background-1614837390.jpg', '2021-03-02 23:42:55', '2021-03-03 22:56:30'),
+(18, 'tes123456', 'tes\ntes', 21, 'logo-1614839875.jpg', 'background-1614839875.jpg', '2021-03-03 23:37:55', '2021-03-03 23:37:55'),
+(19, 'jajajaj', 'anda beli kami senang', 22, 'logo-1614840584.jpg', 'background-1614840584.jpg', '2021-03-03 23:49:44', '2021-03-03 23:49:44');
 
 -- --------------------------------------------------------
 
@@ -164,7 +173,11 @@ INSERT INTO `users` (`id_user`, `username`, `email`, `password`, `role`, `first_
 (11, 'trafalgar', 'opera@gmail.com', '$2y$10$6ZkS1VpRbYHw8hvnbYtgF.PWGLK9uLXqjnm0IbuQExOJEJBTqCe4K', 2, 'Trafalgar', 'Law', 'jonggol', 'depok', 12231, 'JPN', 1209891801, '2021-02-22 03:17:18.000000', '2021-02-22 03:17:18.000000'),
 (14, 'kkyy13', 'kiki123@gmail.com', '$2y$10$fegBufAjNVYuekCQfmhEzOrq3kfKIsGby4l7mXSiQ9EKA6ifMQLfi', 2, 'Rizki', 'Ramadhan', 'jonggol', 'depok', 21321321, 'AUS', 879798798, '2021-02-24 14:09:36.000000', '2021-02-24 14:09:36.000000'),
 (17, 'admin123', 'admin123@gmail.com', '$2y$10$sL1p3MQExEUmx1PIM23qm.sfe4G1ukn2qy.nKXLTwcpKGO3dYt5.O', 1, 'Admin', 'Rizki', 'cilodong', 'depok', 32121, 'IDN', 123113221, '2021-03-02 00:29:54.000000', '2021-03-02 00:29:54.000000'),
-(18, 'pancaran', 'anca@gmail.com', '$2y$10$eHhzaxSyk24ABS3nJeRUHuYE57T8vHvu6hEdomeLczMCHlaSKcNNu', 2, 'pancaran', 'ratna', 'jatijajar', 'depok', 3423, 'IDN', 244332, '2021-03-02 23:38:01.000000', '2021-03-02 23:38:01.000000');
+(18, 'pancaran', 'anca@gmail.com', '$2y$10$eHhzaxSyk24ABS3nJeRUHuYE57T8vHvu6hEdomeLczMCHlaSKcNNu', 2, 'pancaran', 'ratna', 'jatijajar', 'depok', 3423, 'IDN', 244332, '2021-03-02 23:38:01.000000', '2021-03-02 23:38:01.000000'),
+(20, 'raqwan', 'raqwan@gmail.com', '$2y$10$pkrBRnbKk2ZtZRlhOQ.3ZurtJegR8APV9DUhRLMvziZZYZzpR4sKC', 1, 'raqwan', 'Ratna', 'banjaran', 'Depok', 23498, 'AUS', 3274238, '2021-03-03 05:52:41.000000', '2021-03-03 05:52:41.000000'),
+(21, 'andika123', 'andikasp787@gmail.com', '$2y$10$/9M1EVn5emtMReWTqkpbhOg5Oo1NGllts/xQerrWG8SbqTGoqBhpO', 2, 'muhamad', 'dika', 'Cilangkap', 'jakarta', 72567, 'IDN', 8571124, '2021-03-03 23:33:12.000000', '2021-03-03 23:33:12.000000'),
+(22, 'hatori', 'gaminghouse@gmail.com', '$2y$10$gzU6O5Nt5iZivKAgXMKZnObiwOTP0E6z38cTO/iB8Ychj30pgyLXi', 2, 'rasyid', 'ridho', 'proklamasi24', 'bogor', 23454, 'IDN', 853150, '2021-03-03 23:47:33.000000', '2021-03-03 23:47:33.000000'),
+(23, 'tsubasa', 'wkwk@gmail.com', '$2y$10$Ke.yqVug.WnfAPdQFvCm2ONZMZ0oV8JCeDeT1bSuVG8onDHz6Ygca', 2, 'tsubasa', 'ozora', 'jl.manchester 32', 'bogor', 16961, 'IDN', 896654321, '2021-03-03 23:58:55.000000', '2021-03-03 23:58:55.000000');
 
 --
 -- Indexes for dumped tables
@@ -202,25 +215,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id_checkout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_checkout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `toko`
 --
 ALTER TABLE `toko`
-  MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -12,7 +12,7 @@
     <div class="cardTableData mt-4">
         <div class="container">
             <div class="headerTable">
-                <h5 class="mt-2">Tabel Produk</h5>
+                <h5 class="mt-2">Tabel User</h5>
             </div>
         </div>
         <div id="contentTable">
