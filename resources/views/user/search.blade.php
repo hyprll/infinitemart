@@ -1,6 +1,6 @@
 @extends('template.User')
 
-@section('title', "Home Sweet Home")
+@section('title', "Home | InfiniteMart")
 
 @section('content')
 

@@ -11,7 +11,8 @@ class HomeController extends Controller
         $data = [
             "token" => null,
             "session" => null,
-            "css" => "home.css"
+            "css" => "home.css",
+            "middleware" => "user"
         ];
 
         return view("user/home", $data);
@@ -23,7 +24,8 @@ class HomeController extends Controller
             "token" => null,
             "session" => null,
             "css" => "dashboard.css",
-            "idToko" => $id
+            "idToko" => $id,
+            "middleware" => "user"
         ];
 
         return view("user/toko", $data);

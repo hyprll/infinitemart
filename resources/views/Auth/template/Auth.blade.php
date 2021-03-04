@@ -2,6 +2,32 @@
 <html lang="en">
 
 <head>
+    <script type="text/javascript">
+        const auth = JSON.parse(localStorage.getItem("auth_session"));
+        const token = localStorage.getItem("token");
+    </script>
+    @if (isset($middleware))
+
+    @if ($middleware == "auth")
+    <script type="text/javascript">
+        if (auth == null) {
+            window.location.href = "/login";
+        }else {
+            if (auth.role != 2) {
+                window.location.href = "/dashboard";
+            } 
+        }
+    </script>
+    @endif
+    @if ($middleware == "not_auth")
+    <script type="text/javascript">
+        if (auth != null) {
+            window.location.href = "/";
+        } 
+    </script>
+    @endif
+
+    @endif
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />

@@ -1,6 +1,6 @@
 @extends('auth/template/Auth')
 
-@section("title", "Seller")
+@section("title", "Seller | InfiniteMart")
 
 @section('content')
 <div class="sellerContainer">

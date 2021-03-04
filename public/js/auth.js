@@ -1,15 +1,9 @@
 // alert("ok");
 let country = [];
-const auth = JSON.parse(localStorage.getItem("auth_session"));
-const token = localStorage.getItem("token");
 
 $(function () {
   // * Javasript for section register
   if ($("#registerAccount").length > 0) {
-    if (auth != null) {
-      window.location.href = BASE_URL;
-    }
-
     $("#registerAccount").on("submit", function (e) {
       e.preventDefault();
       if (!validateRegister()) {
@@ -129,10 +123,6 @@ $(function () {
   }
   // * Javascript for section login
   else if ($("#form-login").length > 0) {
-    if (auth != null) {
-      window.location.href = BASE_URL;
-    }
-    
     $("#form-login").on("submit", function (e) {
       e.preventDefault();
       if (validateLogin()) {
@@ -159,7 +149,7 @@ $(function () {
               );
               localStorage.setItem("token", response.token.original.token);
               if (response.data.role == 1) {
-                document.location.href = "/dashbord";
+                document.location.href = "/dashboard";
               } else {
                 document.location.href = "/";
               }
@@ -167,7 +157,19 @@ $(function () {
           },
           error: function (xhr, status) {
             const data = xhr.responseJSON;
-            $("#error_something").html(data.error);
+            if (data.error == "invalid_credentials") {
+              Toast.fire({
+                icon: "error",
+                title: "Username atau password salah",
+              });
+              $("#error_something").html("Username atau password salah");
+            } else {
+              $("#error_something").html(data.error);
+              Toast.fire({
+                icon: "error",
+                title: data.error,
+              });
+            }
           },
         });
       }
@@ -175,12 +177,6 @@ $(function () {
   }
   // * Javascript for section seller
   else if ($("#form-seller").length > 0) {
-    const auth = JSON.parse(localStorage.getItem("auth_session"));
-    const token = localStorage.getItem("token");
-    if (auth == null) {
-      document.location.href = "/login";
-    }
-
     // cek toko
     cekToko(auth.id_user);
 

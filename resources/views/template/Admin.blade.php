@@ -2,6 +2,26 @@
 <html lang="en">
 
 <head>
+  <script type="text/javascript">
+    const auth = JSON.parse(localStorage.getItem("auth_session"));
+    const token = localStorage.getItem("token");
+  </script>
+  @if (isset($middleware))
+
+  @if ($middleware == "admin")
+  <script type="text/javascript">
+    if (auth == null) {
+    window.location.href = "/login";
+    } else {
+      if (auth.role != 1) {
+        window.location.href = "/";
+      } 
+    }
+  </script>
+  @endif
+
+  @endif
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -18,7 +38,11 @@
   <link rel="icon" href="{{asset('img')}}/logo_transparent.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
   <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+
+  <!-- data table -->
+  <link rel="stylesheet" href="{{asset("css/DataTable/dataTables.bootstrap4.min.css")}}">
+  <link rel="stylesheet" href="{{asset("css/DataTable/responsive.bootstrap4.min.css")}}">
+
   <title>@yield("title")</title>
 </head>
 
@@ -39,7 +63,7 @@
 
           <ul class="sideNav-link <?php echo($CekStatus == "Dasbord") ? 'activeBG' : ''  ?>">
             <li>
-              <a class="nav-link <?php echo($CekStatus == "Dasbord") ? 'activeColor' : ''  ?>" href="/dashbord">
+              <a class="nav-link <?php echo($CekStatus == "Dasbord") ? 'activeColor' : ''  ?>" href="/dashboard">
                 <i class="material-icons <?php echo($CekStatus == "Dasbord") ? '' : 'dasbordIcon' ?>">dashboard</i>
                 <p>Dashboard</p>
               </a>
@@ -124,27 +148,18 @@
     integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
   </script>
 
-  <script src="{{asset('js')}}/Table/dataTables.bootstrap4.min.js"></script>
-  <script src="{{asset('js')}}/Table/dataTables.responsive.min.js"></script>
-  <script src="{{asset('js')}}/Table/jquery.dataTables.min.js"></script>
-  <script src="{{asset('js')}}/Table/responsive.bootstrap4.min.js"></script>
+
+  <!-- DataTables -->
+  <script src="{{asset("js/DataTable/jquery.dataTables.min.js")}}"></script>
+  <script src="{{asset("js/DataTable/dataTables.bootstrap4.min.js")}}"></script>
+  <script src="{{asset("js/DataTable/dataTables.responsive.min.js")}}"></script>
+  <script src="{{asset("js/DataTable/responsive.bootstrap4.min.js")}}"></script>
 
   <script src="{{asset('js')}}/apexcharts.min.js"></script>
   <script src="{{asset('js')}}/sweetalert2.all.min.js"></script>
   <script src="{{asset('js')}}/NavbarAdmin.js"></script>
   <script src="{{asset('js')}}/App.js"></script>
   <script src="{{asset('js')}}/FormatMoney.js"></script>
-  <script>
-    const auth = JSON.parse(localStorage.getItem("auth_session"));
-    const token = localStorage.getItem("token");
-    if (auth != null) {
-      if (auth.role == 2) {
-        document.location.href = "/";
-      }
-    }else {
-      document.location.href = "/";
-    }
-  </script>
   <script src="{{asset('js')}}/{{$JS}}"></script>
 </body>
 

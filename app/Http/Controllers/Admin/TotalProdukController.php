@@ -13,7 +13,8 @@ class TotalProdukController extends Controller
             "JS" => "TotalProduk.js",
             "token" => null,
             "session" => null,
-            "CekStatus" => "Product"
+            "CekStatus" => "Product",
+            "middleware" => "admin"
         ];
 
         return view("Admin/TotalProduk", $data);

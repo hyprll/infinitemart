@@ -30,7 +30,18 @@ $.ajax({
   url: `${BASE_URL_SERVER}/checkout/all`,
   type: "GET",
   dataType: "JSON",
-  error: function () {},
+  error: function () {
+    $("#tableDashboard").DataTable({
+      responsive: true,
+      autoWidth: false,
+      scrollCollapse: true,
+      paging: true,
+      lengthChange: false,
+      searching: true,
+      ordering: true,
+      info: true,
+    });
+  },
   success: function (result) {
     const getTotalProduk = result.data.length;
     TotalCheckout.innerHTML = getTotalProduk;
@@ -39,6 +50,16 @@ $.ajax({
       handler += handlerCheckout(res, i + 1);
     });
     $(".checkoutTable").html(handler);
+    $("#tableDashboard").DataTable({
+      responsive: true,
+      autoWidth: false,
+      scrollCollapse: true,
+      paging: true,
+      lengthChange: false,
+      searching: true,
+      ordering: true,
+      info: true,
+    });
   },
 });
 

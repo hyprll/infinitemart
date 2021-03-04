@@ -13,7 +13,8 @@ class ProdukController extends Controller
             "token" => null,
             "session" => null,
             "css" => "detail.css",
-            "idProduk" => $id
+            "idProduk" => $id,
+            "middleware" => "user"
         ];
 
         return view("user.detail", $data);
@@ -24,7 +25,8 @@ class ProdukController extends Controller
         $data = [
             "token" => null,
             "session" => null,
-            "css" => "tambahProduk.css"
+            "css" => "tambahProduk.css",
+            "middleware" => "auth"
         ];
 
         return view("user/tambahProduk", $data);
@@ -36,7 +38,8 @@ class ProdukController extends Controller
             "token" => null,
             "session" => null,
             "css" => "tambahProduk.css",
-            "id_produk" => $id_produk
+            "id_produk" => $id_produk,
+            "middleware" => "auth"
         ];
 
         return view("user/updateProduk", $data);

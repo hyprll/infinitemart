@@ -1,8 +1,6 @@
 const harga = Array.from(document.querySelectorAll(".stuff-fare"));
 const formatter = new FormatMoney();
 
-const auth = JSON.parse(localStorage.getItem("auth_session"));
-const token = localStorage.getItem("token");
 let btnAuth = "";
 if (auth == null) {
   btnAuth = `
@@ -37,10 +35,6 @@ document.body.addEventListener("click", function (e) {
 
 // * javascript for Section Profile
 if ($("#biodata").length > 0) {
-  if (auth == null) {
-    document.location.href = "/login";
-  }
-
   $("#user-profil-name").html(`${auth.username}`);
 
   // * check if user has toko or no
@@ -198,7 +192,7 @@ if ($(".headerCarousel2").length > 0) {
   $(function () {
     $(".headerCarousel2").owlCarousel({
       center: false,
-      margin: 0,
+      margin: 10,
       loop: true,
       autoWidth: true,
       items: 3,

@@ -11,7 +11,8 @@ class ProfileController extends Controller
     {
         $data = [
             "css" => "profile.css",
-            "hasToko" => false
+            "hasToko" => false,
+            "middleware" => "auth"
         ];
 
         return view("user/profile", $data);
@@ -20,7 +21,8 @@ class ProfileController extends Controller
     public function history()
     {
         $data = [
-            "css" => "profile.css"
+            "css" => "profile.css",
+            "middleware" => "auth"
         ];
         return view("user/history", $data);
     }

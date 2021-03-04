@@ -13,7 +13,8 @@ class DasbordController extends Controller
             "JS" => "Dasbord.js",
             "token" => null,
             "session" => null,
-            "CekStatus" => "Dasbord"
+            "CekStatus" => "Dasbord",
+            "middleware" => "admin"
         ];
 
         return view("Admin/Dasbord", $data);

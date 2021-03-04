@@ -1,5 +1,5 @@
 @extends('template/Admin')
-@section("title", "Total User")
+@section("title", "Total User | InfiniteMart")
 
 @section('content')
 <div class="intoAdmin">

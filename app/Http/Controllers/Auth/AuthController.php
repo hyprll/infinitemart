@@ -11,21 +11,17 @@ class AuthController extends Controller
     public function login()
     {
         $data = [
-            "style" => "/css/LoginStyle.css"
+            "style" => "/css/LoginStyle.css",
+            "middleware" => "not_auth"
         ];
         return view("Auth/Login", $data);
-    }
-
-    public function logout()
-    {
-        session()->forget("auth_session");
-        return redirect("/login");
     }
 
     public function register()
     {
         $data = [
-            "style" => "/css/Register.css"
+            "style" => "/css/Register.css",
+            "middleware" => "not_auth"
         ];
         return view("Auth/Register", $data);
     }
@@ -33,7 +29,8 @@ class AuthController extends Controller
     public function seller()
     {
         $data = [
-            "style" => "/css/Seller.css"
+            "style" => "/css/Seller.css",
+            "middleware" => "auth"
         ];
         return view("Auth/Seller", $data);
     }

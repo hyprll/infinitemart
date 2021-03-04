@@ -13,7 +13,8 @@ class TotalUserController extends Controller
             "JS" => "TotalUser.js",
             "token" => null,
             "session" => null,
-            "CekStatus" => "DataUser"
+            "CekStatus" => "DataUser",
+            "middleware" => "admin"
         ];
 
         return view("Admin/TotalUser", $data);

@@ -13,7 +13,8 @@ class ProfileController extends Controller
             "JS" => "Profile.js",
             "token" => null,
             "session" => null,
-            "CekStatus" => "Profile"
+            "CekStatus" => "Profile",
+            "middleware" => "admin"
         ];
 
         return view("Admin/Profile", $data);

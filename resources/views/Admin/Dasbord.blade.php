@@ -1,5 +1,5 @@
 @extends('template/Admin')
-@section("title", "Dashbord")
+@section("title", "Dashboard | InfiniteMart")
 
 @section('content')
 <div class="infoTopDasbord mt-3">
@@ -98,7 +98,7 @@
             <h5>Data Checkout</h5>
         </div>
         <div class="contentEmploye mt-3">
-            <table border="0">
+            <table border="0" id="tableDashboard">
                 <thead>
                     <th class="text-center">No</th>
                     <th>Nama</th>
