@@ -56,6 +56,7 @@ Route::post("/api/login", [ApiAuthController::class, "login"])->name("apilogin")
 Route::post("/api/register", [ApiAuthController::class, "register"])->name("apiregister");
 Route::get("/api/cektoko/{id_user}", [ApiAuthController::class, "cektoko"])->name("apicektoko");
 Route::get("/api/allbuyer", [ApiAuthController::class, "allbuyer"])->name("apiallbuyer");
+Route::post("/api/user/update", [ApiAuthController::class, "update"])->name("apiupdateuser");
 
 Route::get("/api/toko/{id_toko}", [ApiTokoController::class, "tokobyid"])->name("apitokobyid");
 Route::get("/api/toko", [ApiTokoController::class, "tokoall"])->name("apitokoall");

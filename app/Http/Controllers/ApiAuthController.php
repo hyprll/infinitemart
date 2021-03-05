@@ -241,4 +241,67 @@ class ApiAuthController extends Controller
             'data' => $user
         ], 200);
     }
+
+    public function update(Request $request){
+        $input  = $request->only("username", "email", "first_name", "last_name", "address", "city", "postal_code", "country_code", "phone"); //Specify Request
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validation request.
+        |--------------------------------------------------------------------------
+        */
+        
+        $validation = Validator::make($input, [
+            'username' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required',
+            'country_code' => 'required',
+        ]);
+
+        $id_user = $request->input("id_user");
+        $email = $request->input("email");
+        $phone = $request->input("phone");
+        $username = $request->input("username");
+        $first_name = $request->input("first_name");
+        $last_name = $request->input("last_name");
+        $address = $request->input("address");
+        $city = $request->input("city");
+        $postal_code = $request->input("postal_code");
+        $country_code = $request->input("country_code");
+
+        $input = [
+            "email" => $email,
+            "phone" => $phone,
+            "username" => $username,
+            "first_name" => $first_name,
+            "last_name" => $last_name,
+            "address" => $address,
+            "city" => $city,
+            "postal_code" => $postal_code,
+            "country_code" => $country_code,
+        ];
+        
+        if ($validation->fails()) {
+            return response($validation->errors()->toJson(), 400);
+        }
+
+        $data = Users::where("id_user", $id_user)->update($input);
+
+        if ($data) {
+            $message = "Data successfully updated.";
+        } else {
+            $message = "Data failed updated.";
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $input,
+        ], 200);
+    }
 }
