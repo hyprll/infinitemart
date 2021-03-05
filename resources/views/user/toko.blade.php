@@ -1,14 +1,12 @@
 @extends('template.User')
 
-@section('title', "Toko Sweet | InfiniteMart")
+@section('title', "Toko | InfiniteMart")
 
 @section('content')
 
 <!-- * Header -->
 
 <div class="headerCarousel3 root">
-    {{-- <img src="http://localhost:8080/uploads/toko/{{$toko['background']}}" class="w-100 img-fluid"
-    id="background-img"> --}}
     <img class="w-100 img-fluid" id="background-img">
 </div>
 
@@ -29,11 +27,13 @@
     <div class="row" id="produkTokoPlace"></div>
     <div class="row" id="historyToko" style="display: none">
         <div class="container">
-            <table class="table table table-bordered table-striped table-hover table-responsive" id="tableCheckout" style="font-family: Roboto;font-weight:500 ">
+            <table class="table table table-bordered table-striped table-hover table-responsive" id="tableCheckout"
+                style="font-family: Roboto;font-weight:500 ">
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
+                        <th>Catatan</th>
                         <th>Order Id</th>
                         <th>Total</th>
                         <th>No telepon</th>

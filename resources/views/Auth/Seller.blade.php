@@ -31,7 +31,7 @@
                                     <label for="logoToko" class="form-label small">Logo Toko</label>
                                     <input class="form-control form-control-sm" id="logoToko" type="file" name="logo"
                                         accept="image/jpg,image/png,image/jpeg,image/gif">
-                                    <small class="validate">
+                                    <small class="validate validation-server">
                                         {{Session::get('logo_error_status')}}
                                     </small>
                                 </div>
@@ -40,8 +40,8 @@
                                     <label for="bgToko" class="form-label small">Background Toko</label>
                                     <input class="form-control form-control-sm" id="bgToko" type="file"
                                         name="background" accept="image/jpg,image/png,image/jpeg,image/gif">
-                                    <small class="validate">
-                                        {{Session::get('background_error_status')}}
+                                    <small class="validate validation-server">
+                                        
                                     </small>
                                 </div>
 
@@ -50,7 +50,7 @@
                                     <textarea name="deskripsi" style="resize:none" class="w-100 form-control"
                                         id="deskripsiToko"></textarea>
                                     <small class="validate">
-                                        {{Session::get('deskripsi_error_status')}}
+                                        
                                     </small>
                                 </div>
 

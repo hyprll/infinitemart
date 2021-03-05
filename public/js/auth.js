@@ -64,7 +64,6 @@ $(function () {
             $(".blankLoad").hide();
             document.body.style.overflowY = "auto";
             const data = xhr.responseJSON.errors;
-            console.log(xhr);
             if (data != undefined) {
               const keys = Object.keys(data);
               const validation = Array.from(
@@ -212,12 +211,29 @@ $(function () {
           processData: false,
           success: (res) => {
             $(".blankLoad").hide();
-            console.log(res);
             document.location.href = "/toko/" + res.data.id_toko;
           },
           error: (err) => {
+            $(".blankLoad").hide();
             const error = err.responseJSON;
             logout(err);
+            if (error != null) {
+              const keys = Object.keys(error);
+              const validation = Array.from(
+                document.querySelectorAll(".validation-server")
+              );
+              keys.map((key) => {
+                const value = eval("error." + key);
+                if (key == "logo") {
+                  validation[0].innerHTML = value[0];
+                } else if (key == "background") {
+                  validation[1].innerHTML = value[0];
+                } else {
+                  validation[0].innerHTML = "";
+                  validation[1].innerHTML = "";
+                }
+              });
+            }
           },
         });
       }

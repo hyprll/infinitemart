@@ -87,24 +87,8 @@
                     <div class="col-md-6">
                         <div class="inputValue d-flex flex-column mt-3">
                             <label for="" class="mb-2">User Di Izinkan</label>
+                            <small class="text-danger validation-other"></small>
                             <div class="row" id="permitted_user">
-                                {{-- <input type="hidden" name="checkUser" id="checkUser" class="form-control"> --}}
-                                {{-- @if ($user)
-                                @php($i=1)
-
-                                @foreach ($user as $key)
-                                <div class="col-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input checkIzinUser" name="izinUser{{$i}}"
-                                            type="checkbox" value="{{$key["id_user"]}}" id="izinUser{{$i}}">
-                                        <label class="form-check-label" for="izinUser{{$i}}">
-                                            {{$key['username']}}
-                                        </label>
-                                    </div>
-                                </div>
-                                @php($i++)
-                                @endforeach
-                                @endif --}}
                                 <small class="text-danger">
                                     {{Session::get('user_beli_error_status')}}
                                 </small>

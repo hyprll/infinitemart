@@ -823,10 +823,12 @@ function showTokoDash(idToko) {
                     <div class="row px-3 mb-3">
                         <label for="">Ubah Logo</label>
                         <input class="form-control" type="file" id="logo" name="logo">
+                        <small class="text-danger validation-server"></small>
                     </div>
                     <div class="row px-3 mb-3">
                         <label for="">Ubah Background</label>
                         <input class="form-control" type="file" id="background" name="background">
+                        <small class="text-danger validation-server"></small>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -920,6 +922,11 @@ function updateToko(idToko) {
       }
 
       if (res.success) {
+        const validation = Array.from(
+          document.querySelectorAll(".validation-server")
+        );
+        validation[0].innerHTML = "";
+        validation[1].innerHTML = "";
         Toast.fire({
           icon: "success",
           title: "Update Toko Sukses",
@@ -929,18 +936,32 @@ function updateToko(idToko) {
     },
     error: (err) => {
       const error = err.responseJSON;
-      console.log(error);
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
       Toast.fire({
         icon: "error",
         title: "Update Toko Error",
       });
-      let errorMsg = "An error while decoding token.";
       if (error.message == "Provided token is expired.") {
         localStorage.removeItem("token");
         localStorage.removeItem("auth_session");
         document.location.href = "/login";
+      } else {
+        const keys = Object.keys(error);
+        const validation = Array.from(
+          document.querySelectorAll(".validation-server")
+        );
+        keys.map((key) => {
+          const value = eval("error." + key);
+          if (key == "background") {
+            validation[0].innerHTML = value[0];
+          } else if (key == "logo") {
+            validation[1].innerHTML = value[0];
+          } else {
+            validation[0].innerHTML = "";
+            validation[1].innerHTML = "";
+          }
+        });
       }
     },
   });
@@ -1256,6 +1277,30 @@ function uploadProduk() {
         title: "Error Upload Produk",
       });
       logout(err);
+      const error = err.responseJSON;
+      if (error != null) {
+        const keys = Object.keys(error);
+        const validation = Array.from(document.querySelectorAll(".validation"));
+        const validation_other = document.querySelector(".validation-other");
+        keys.map((key) => {
+          const value = eval("error." + key);
+          if (key == "gambar") {
+            validation[0].innerHTML = value[0];
+          } else if (key == "gambar_lain") {
+            validation[1].innerHTML = value[0];
+          } else if (key == "nama_produk") {
+            validation[2].innerHTML = value[0];
+          } else if (key == "harga") {
+            validation[3].innerHTML = value[0];
+          } else if (key == "user_beli") {
+            validation_other.innerHTML = value[0];
+          } else {
+            validation[0].innerHTML = "";
+            validation[1].innerHTML = "";
+            validation_other.innerHTML = "";
+          }
+        });
+      }
     },
   });
 }
@@ -1302,7 +1347,7 @@ function updateTokoDash() {
         let handler = /* html */ `
           <div class="cardTambahProduk">
             <div class="headerTambahProduk mt-3">
-                <h5>Tambah Produk</h5>
+                <h5>Edit Produk</h5>
             </div>
             <div class="contentTambahProduk">
                 <p class="mt-3">Upload Gambar Produk</p>
@@ -1317,7 +1362,7 @@ function updateTokoDash() {
                                 <label for="main_img" class="text-center" style="cursor: pointer">Gambar Utama</label>
                                 <input type="file" name="main_img" class="d-none" id="main_img"
                                     accept="image/jpg,image/png,image/jpeg"><br>
-                                <small class="text-danger"></small>
+                                <small class="text-danger validation-update"></small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -1330,7 +1375,7 @@ function updateTokoDash() {
                                     Lainnya</label>
                                 <input type="file" name="other_img" class="d-none" id="other_img"
                                     accept="image/jpg,image/png,image/jpeg"><br>
-                                <small class="text-danger"></small>
+                                <small class="text-danger validation-update"></small>
                             </div>
                         </div>
                     </div>
@@ -1355,7 +1400,7 @@ function updateTokoDash() {
                                     <label for="" class="mb-2">Nama Produk</label>
                                     <input type="text" class="form-control" id="NamaProduk" name="NamaProduk" placeholder="Nama Produk"
                                         value="${res.data[0].nama_produk}">
-                                    <small class="validation text-danger"></small>
+                                    <small class="validation-update text-danger"></small>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1368,7 +1413,7 @@ function updateTokoDash() {
                                             onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
                                             value="${res.data[0].harga}">
                                     </div>
-                                    <small class="validation text-danger"></small>
+                                    <small class="validation-update text-danger"></small>
                                 </div>
                             </div>
                         </div>
@@ -1397,6 +1442,7 @@ function get_user_permitted_update(user_permitted, before) {
             <div class="col-md-6">
             <div class="inputValue d-flex flex-column mt-3">
             <label for="" class="mb-2">User Di Izinkan</label>
+            <small class="text-danger validation-other"></small>
             <div class="row">
             <input type="hidden" name="checkUser" id="checkUser" class="form-control"
             value="${user_permitted}">`;
@@ -1512,12 +1558,37 @@ function updateProduk() {
     error: (err) => {
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
-      console.log(err);
       Toast.fire({
         icon: "error",
         title: "Error Update Produk",
       });
       logout(err);
+      const error = err.responseJSON;
+      if (error != null) {
+        const keys = Object.keys(error);
+        const validation = Array.from(
+          document.querySelectorAll(".validation-update")
+        );
+        const validation_other = document.querySelector(".validation-other");
+        keys.map((key) => {
+          const value = eval("error." + key);
+          if (key == "gambar") {
+            validation[0].innerHTML = value[0];
+          } else if (key == "gambar_lain") {
+            validation[1].innerHTML = value[0];
+          } else if (key == "nama_produk") {
+            validation[2].innerHTML = value[0];
+          } else if (key == "harga") {
+            validation[3].innerHTML = value[0];
+          } else if (key == "user_beli") {
+            validation_other.innerHTML = value[0];
+          } else {
+            validation[0].innerHTML = "";
+            validation[1].innerHTML = "";
+            validation_other.innerHTML = "";
+          }
+        });
+      }
     },
   });
 }
@@ -1622,8 +1693,8 @@ function checkout(idToko, harga, nama_barang, user_beli) {
           title: "Error Pesan Produk",
         });
         const error = err.responseJSON;
-        console.log(err.responseText);
-        console.log(error);
+        console.error(err.responseText);
+        console.error(error);
       },
     });
   }
@@ -1791,6 +1862,7 @@ function handlerTokoCheckout(data, no) {
     <tr>
         <td class="text-center">${no}</td>
         <td>${data.first_name} ${data.last_name}</td>
+        <td>${data.deskripsi}</td>
         <td>${data.order_id}</td>
         <td>${format.toRupiah(data.harga)} </td>
         <td>+62 ${data.phone}</td>
