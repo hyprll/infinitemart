@@ -35,8 +35,6 @@ document.body.addEventListener("click", function (e) {
 
 // * javascript for Section Profile
 if ($("#biodata").length > 0) {
-  $("#user-profil-name").html(`${auth.username}`);
-
   // * check if user has toko or no
   let hasToko = false;
   let idToko = 0;
@@ -79,36 +77,15 @@ if ($("#biodata").length > 0) {
     },
   });
 
-  let handler = /* html */ `
-      <h6>Username</h6>
-      <label name="username" class="username">
-          ${auth.username}
-      </label>
-      <h3>Nama Depan</h3>
-      <label name="username" class="username">
-          ${auth.first_name}
-      </label>
-      <h3>Nama Belakang</h3>
-      <label name="username" class="username">
-          ${auth.last_name}
-      </label>
-      <h3>alamat Email</h3>
-      <label name="username" class="username">
-          ${auth.email}
-      </label>
-      <h3>No.Telepon</h3>
-      <label name="username" class="username">
-          +62 ${auth.phone}
-      </label>
-  `;
-
-  $("#biodata").html(handler);
+  showProfile();
 
   document.body.addEventListener("click", function (e) {
     if (e.target.getAttribute("id") == "logoutBtn") {
       localStorage.removeItem("token");
       localStorage.removeItem("auth_session");
       document.location.href = "/login";
+    } else if (e.target.getAttribute("id") == "btn-update-profile") {
+      updateProfile();
     }
   });
 }
@@ -484,6 +461,171 @@ if (btn_delete.length != 0) {
       });
     });
   });
+}
+
+// * function for update profile
+function updateProfile() {
+  let form = new FormData();
+  form.append("username", $("#username").val());
+  form.append("email", auth.email);
+  form.append("first_name", $("#first-name").val());
+  form.append("last_name", $("#last-name").val());
+  form.append("phone", $("#phone").val());
+  form.append("id_user", auth.id_user);
+  form.append("country_code", auth.country_code);
+  form.append("postal_code", $("#postal_code").val());
+  form.append("address", $("#alamat").val());
+  form.append("city", auth.city);
+
+  $.ajax({
+    url: BASE_URL_SERVER + "/user/update",
+    type: "POST",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+      Authorization: "Bearer " + token,
+    },
+    method: "POST",
+    data: form,
+    dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function (res) {
+      if (res.success) {
+        Toast.fire({
+          icon: "success",
+          title: "Update Profile Sukses",
+        });
+        // * reset session
+        localStorage.removeItem("auth_session");
+        localStorage.setItem("auth_session", JSON.stringify(res.data));
+        auth = JSON.parse(localStorage.getItem("auth_session"));
+
+        showProfile();
+      }
+    },
+    error: (err) => {
+      Toast.fire({
+        icon: "error",
+        title: "Update Profile Error",
+      });
+      const error = err.responseJSON;
+      if (error != null) {
+        const keys = Object.keys(error);
+        const validation = Array.from(
+          document.querySelectorAll(".validation-server-profile")
+        );
+        keys.map((key) => {
+          const value = eval("error." + key);
+          if (key == "first_name") {
+            $("#first-name").addClass("is-invalid");
+            validation[1].innerHTML = value[0];
+          } else if (key == "last_name") {
+            $("#last-name").addClass("is-invalid");
+            validation[2].innerHTML = value[0];
+          } else if (key == "postal_code") {
+            $("#postal_code").addClass("is-invalid");
+            validation[3].innerHTML = value[0];
+          } else if (key == "username") {
+            $("#username").addClass("is-invalid");
+            validation[0].innerHTML = value[0];
+          } else if (key == "phone") {
+            $("#phone").addClass("is-invalid");
+            validation[4].innerHTML = value[0];
+          } else if (key == "address") {
+            $("#alamat").addClass("is-invalid");
+            validation[5].innerHTML = value[0];
+          } else {
+            $("#alamat").removeClass("is-invalid");
+            $("#phone").removeClass("is-invalid");
+            $("#postal_code").removeClass("is-invalid");
+            $("#username").removeClass("is-invalid");
+            $("#last-name").removeClass("is-invalid");
+            $("#first-name").removeClass("is-invalid");
+            validation[0].innerHTML = "";
+            validation[1].innerHTML = "";
+            validation[2].innerHTML = "";
+            validation[3].innerHTML = "";
+            validation[4].innerHTML = "";
+            validation[5].innerHTML = "";
+          }
+        });
+      }
+    },
+  });
+}
+
+// * function for showProfil
+function showProfile() {
+  $("#user-profil-name").html(`${auth.username}`);
+  let handler = /* html */ `
+      <div class="row px-3 mb-3" style="width:550px">
+        <div class="col-md-4">
+          <span class="fw-bold">Username</span>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="username" class="form-control" value="${auth.username}"/>
+          <small class="validation-server-profile text-danger"></small>
+        </div>
+      </div>
+      <div class="row px-3 mb-3" style="width:550px">
+        <div class="col-md-4">
+          <span class="fw-bold">Nama Depan</span>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="first-name" class="form-control" value="${auth.first_name}"/>
+          <small class="validation-server-profile text-danger"></small>
+        </div>
+      </div>
+      <div class="row px-3 mb-3" style="width:550px">
+        <div class="col-md-4">
+          <span class="fw-bold">Nama Belakang</span>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="last-name" class="form-control" value="${auth.last_name}"/>
+          <small class="validation-server-profile text-danger"></small>
+        </div>
+      </div>
+      <div class="row px-3 mb-3" style="width:550px">
+        <div class="col-md-4">
+          <span class="fw-bold">Postal Code</span>
+        </div>
+        <div class="col-md-8">
+          <input type="text" id="postal_code" class="form-control" value="${auth.postal_code}"/>
+          <small class="validation-server-profile text-danger"></small>
+        </div>
+      </div>
+      <div class="row px-3 mb-3" style="width:550px">
+        <div class="col-md-4">
+          <span class="fw-bold">No. Telepon</span>
+        </div>
+        <div class="col-md-8">
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">+62</span>
+            <input type="text" id="phone" class="form-control" value="${auth.phone}">
+          </div>
+          <small class="validation-server-profile text-danger"></small>
+        </div>
+      </div>
+
+      <div class="row px-3 mb-3" style="width:550px">
+        <div class="col-md-4">
+          <span class="fw-bold">Alamat</span>
+        </div>
+        <div class="col-md-8">
+          <textarea id="alamat" class="form-control">${auth.address}</textarea>
+          <small class="validation-server-profile text-danger"></small>
+        </div>
+      </div>
+
+      <div class="row px-3 justify-content-end" style="width:550px">
+        <div class="col-md-8">
+          <button class="btn-outline-success btn" id="btn-update-profile">Update Profile</button>
+        </div>
+      </div>
+  `;
+
+  $("#biodata").html(handler);
 }
 
 // * javascript function for validate payment

@@ -291,9 +291,10 @@ class ApiAuthController extends Controller
         }
 
         $data = Users::where("id_user", $id_user)->update($input);
-
+        $user = [];
         if ($data) {
             $message = "Data successfully updated.";
+            $user = Users::where("id_user", $id_user)->first();
         } else {
             $message = "Data failed updated.";
         }
@@ -301,7 +302,7 @@ class ApiAuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => $message,
-            'data' => $input,
+            'data' => $user,
         ], 200);
     }
 }

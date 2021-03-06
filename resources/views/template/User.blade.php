@@ -3,7 +3,7 @@
 
 <head>
   <script type="text/javascript">
-    const auth = JSON.parse(localStorage.getItem("auth_session"));
+    let auth = JSON.parse(localStorage.getItem("auth_session"));
     const token = localStorage.getItem("token");
   </script>
 
