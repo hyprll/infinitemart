@@ -9,7 +9,8 @@ class OurTeamController extends Controller
     public function index(Request $request)
     {
         $data = [
-            "css" => "OurTeam.css"
+            "css" => "OurTeam.css",
+            "OurTeam" => "Halaman Team"
         ];
         return view("user/OurTeam", $data);
     }

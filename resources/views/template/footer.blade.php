@@ -16,6 +16,13 @@
                     <input type="text" class="form-control form-footer" placeholder="search">
                     <i class="fa fa-arrow-right footer-icon-search"></i>
                 </div>
+                <div class="OurTeam-footer mt-3 d-flex justify-content-center">
+                @if ($css == "OurTeam.css")
+                <a href="/" class="nav-link text-white">Kembali</a>
+                @else
+                <a href="/OurTeam" class="nav-link text-white">Our Team</a>
+                @endif
+                </div>
             </div>
             <div class="col-md-4 right-footer">
                 <div class="wrap-right-footer">
