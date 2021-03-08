@@ -62,7 +62,8 @@
                             <div class="col-12">
                                 <div class="inputValue d-flex flex-column mt-3">
                                     <label for="" class="mb-2">Nama Produk</label>
-                                    <input type="text" class="form-control" name="NamaProduk" placeholder="Nama Produk" id="NamaProduk">
+                                    <input type="text" class="form-control" name="NamaProduk" placeholder="Nama Produk"
+                                        id="NamaProduk">
                                     <small class="validation text-danger">
                                         {{Session::get('nama_produk_error_status')}}
                                     </small>
@@ -74,7 +75,8 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Rp</span>
                                         <input type="text" class="form-control" placeholder="Harga Produk"
-                                            name="hargaProduk" id="hargaProduk" aria-label="Username" aria-describedby="basic-addon1"
+                                            name="hargaProduk" id="hargaProduk" aria-label="Username"
+                                            aria-describedby="basic-addon1"
                                             onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                                     </div>
                                     <small class="validation text-danger">
@@ -87,23 +89,58 @@
                     <div class="col-md-6">
                         <div class="inputValue d-flex flex-column mt-3">
                             <label for="" class="mb-2">User Di Izinkan</label>
+                            <input type="hidden" class="form-control" name="user_permit" id="user_permit">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="user_permitted"
+                                            id="user_permitted1" checked value="1">
+                                        <label class="form-check-label" for="user_permitted1">
+                                            Semua User
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="user_permitted"
+                                            id="user_permitted2" value="2">
+                                        <label class="form-check-label" for="user_permitted2">
+                                            Pilih User
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                             <small class="text-danger validation-other"></small>
-                            <div class="row" id="permitted_user">
-                                <small class="text-danger">
-                                    {{Session::get('user_beli_error_status')}}
-                                </small>
+                            <div class="row mt-3 section-search-user">
+                                <div class="col-12">
+                                    <div class="input-group mb-3">
+                                        <input type="email" class="form-control" placeholder="Cari user dengan email"
+                                            aria-describedby="btn-search-user" id="searchUser">
+                                        <button class="btn btn-primary" type="button" id="btn-search-user"
+                                            style="min-width: 40px">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-12 overflow-auto" style="max-height: 200px">
+                                    <span>List Users</span>
+                                    <ul class="list-group mt-2" id="listUsers">
+
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="d-flex mt-3">
-                            <button type="submit" class="btn btn-primary" style="width: 15vw;"
-                                id="btn-upload-produk">Upload</button>
-                        </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex mt-3">
+                        <button type="submit" class="btn btn-primary" style="width: 15vw;"
+                            id="btn-upload-produk">Upload</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </form>
 
