@@ -2013,3 +2013,14 @@ function handlerTokoCheckout(data, no) {
     `;
   return handler;
 }
+
+// OurTeam
+
+// $(".WrapperOwl").owlCarousel({
+//   margin: 10,
+//   loop: true,
+//   autoWidth: true,
+//   items: 4,
+//   autoplay: true,
+//   URLhashListener: true,
+// });

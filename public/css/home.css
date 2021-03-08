@@ -2,406 +2,406 @@
 @import url("navbar.css");
 
 body {
-  overflow-x: hidden;
-  font-family: var(--fontFamily);
+    overflow-x: hidden;
+    font-family: var(--fontFamily);
 }
 
 .headerCarousel {
-  width: 100%;
-  height: 400px;
-  background: var(--bgWelcome);
-  border-radius: 10px;
-  display: flex;
+    width: 100%;
+    height: 400px;
+    background: var(--bgWelcome);
+    border-radius: 10px;
+    display: flex;
 }
 
 .carausel-img {
-  width: 98%;
-  margin-left: -2%;
-  height: 400px;
-  display: block;
-  border-radius: 10px;
-  width: 100%;
-  transition: 0.5s;
+    width: 98%;
+    margin-left: -2%;
+    height: 400px;
+    display: block;
+    border-radius: 10px;
+    width: 100%;
+    transition: 0.5s;
 }
 
 .slider {
-  width: 20px;
-  transition: 0.5s;
-  height: 20px;
-  border-radius: 10px;
-  opacity: 0.6;
-  background: grey;
-  margin: 0 5px;
-  cursor: pointer;
+    width: 20px;
+    transition: 0.5s;
+    height: 20px;
+    border-radius: 10px;
+    opacity: 0.6;
+    background: grey;
+    margin: 0 5px;
+    cursor: pointer;
 }
 
 .slider.active {
-  width: 80px;
+    width: 80px;
 }
 
 .cardInfoSale {
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .cardGift {
-  width: 100%;
-  height: 30vh;
-  display: flex;
-  align-items: center;
-  background: var(--bgGift);
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    background: var(--bgGift);
 }
 
 .flashSale {
-  width: 100vw;
-  background: var(--bgWelcome);
+    width: 100vw;
+    background: var(--bgWelcome);
 }
 
 .header-flashsale {
-  height: auto;
-  width: 100%;
-  display: flex;
-  align-items: center;
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .timeHour-Flash,
 .timeMinute-Flash,
 .timeSecond-Flash {
-  width: 2.5vw;
-  height: 5vh;
-  background: #fff;
-  margin: 0 10px;
+    width: 2.5vw;
+    height: 5vh;
+    background: #fff;
+    margin: 0 10px;
 }
 
 .positionFlash-time {
-  margin-left: -80px;
+    margin-left: -80px;
 }
 .all-produk-pos {
-  margin-left: 80px;
-  align-items: center;
-  justify-content: end;
+    margin-left: 80px;
+    align-items: center;
+    justify-content: end;
 }
 
 .cardInfo-Barang {
-  width: 100%;
-  background: #fff;
-  border-radius: 15px;
-  padding: 10px;
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    padding: 10px;
 }
 
 .topCard-Barang img {
-  width: 10vw;
-  height: 30vh;
+    width: 10vw;
+    height: 30vh;
 }
 
 .setDiskon-Flash span:nth-child(1) {
-  text-decoration: line-through;
-  color: #c4c4c4;
-  opacity: 0.7;
+    text-decoration: line-through;
+    color: #c4c4c4;
+    opacity: 0.7;
 }
 
 .setDiskon-Flash span {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 .lineSucces-Flash {
-  position: relative;
-  width: 10vw;
-  height: 3px;
-  border-radius: 10px;
-  background: #c4c4c4;
-  opacity: 0.5;
+    position: relative;
+    width: 10vw;
+    height: 3px;
+    border-radius: 10px;
+    background: #c4c4c4;
+    opacity: 0.5;
 }
 
 .lineSucces-Flash:after {
-  content: "";
-  width: 75%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  border-radius: 10px;
-  top: 0;
-  background: #0dd409;
+    content: "";
+    width: 75%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    border-radius: 10px;
+    top: 0;
+    background: #0dd409;
 }
 
 .editPosisi-btn {
-  width: 100%;
-  position: absolute;
-  margin-top: -13rem;
+    width: 100%;
+    position: absolute;
+    margin-top: -13rem;
 }
 
 .btnSlide-Left,
 .btnSlide-Right {
-  top: 50%;
-  cursor: pointer;
+    top: 50%;
+    cursor: pointer;
 }
 
 .btnSlide-Left {
-  margin-left: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 .btnSlide-Right {
-  margin-right: 0.2rem;
+    margin-right: 0.2rem;
 }
 
 .StokTersedia {
-  font-size: 13px;
-  color: #c4c4c4;
+    font-size: 13px;
+    color: #c4c4c4;
 }
 
 .cardFlex-Three {
-  width: 100%;
-  height: 20vh;
-  border-radius: 15px;
-  background: #004970;
+    width: 100%;
+    height: 20vh;
+    border-radius: 15px;
+    background: #004970;
 }
 
 .cardInfo-Location {
-  width: 100%;
-  background: #fff;
-  border-radius: 15px;
-  height: 25vh;
-  align-items: center;
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    height: 25vh;
+    align-items: center;
 }
 
 .cardInfo-Location img {
-  width: 20vw;
-  height: 35vh;
+    width: 20vw;
+    height: 35vh;
 }
 
 .sellerCard-Barang {
-  width: 100%;
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
 }
 
 .topImg-seller img {
-  width: 100%;
+    width: 100%;
 }
 
 .btnSelengkapnya img {
-  width: 12.5px;
-  height: 12.5px;
+    width: 12.5px;
+    height: 12.5px;
 }
 
 .btn-Selengkapnya {
-  width: 250px;
-  height: 50px;
-  padding: 10px;
-  background: #0e538c;
+    width: 250px;
+    height: 50px;
+    padding: 10px;
+    background: #0e538c;
 }
 
 /* * Phone */
 @media (min-width: 0px) and (max-width: 765px) {
-  body {
-    overflow-x: hidden;
-    font-family: var(--fontFamily);
-  }
+    body {
+        overflow-x: hidden;
+        font-family: var(--fontFamily);
+    }
 
-  .blank {
-    display: none;
-  }
+    .blank {
+        display: none;
+    }
 
-  .collapse-navbar-home {
-    display: block;
-    width: 85%;
-    margin-right: -100rem;
-    overflow-y: auto;
-    background-color: #fff;
-    height: 100vh;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 102;
-  }
+    .collapse-navbar-home {
+        display: block;
+        width: 85%;
+        margin-right: -100rem;
+        overflow-y: auto;
+        background-color: #fff;
+        height: 100vh;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 102;
+    }
 
-  .navbar-home {
-    width: 100%;
-    height: 70px;
-  }
+    .navbar-home {
+        width: 100%;
+        height: 70px;
+    }
 
-  .wrap-navbar-login {
-    display: none;
-  }
+    .wrap-navbar-login {
+        display: none;
+    }
 
-  .collapse-nav-home {
-    width: 80%;
-  }
+    .collapse-nav-home {
+        width: 80%;
+    }
 
-  .wrap-navbar-collapse {
-    display: block;
-    width: 20%;
-  }
+    .wrap-navbar-collapse {
+        display: block;
+        width: 20%;
+    }
 
-  .category {
-    display: none;
-  }
+    .category {
+        display: none;
+    }
 
-  .slider {
-    width: 30px;
-    height: 30px;
-  }
+    .slider {
+        width: 30px;
+        height: 30px;
+    }
 
-  .cardGift {
-    display: flex;
-    align-items: center;
-  }
+    .cardGift {
+        display: flex;
+        align-items: center;
+    }
 
-  .cardGift img {
-    width: 150px;
-    height: 150px;
-  }
+    .cardGift img {
+        width: 150px;
+        height: 150px;
+    }
 
-  .leftSide-Flash .h3 {
-    width: 100%;
-    color: #fff;
-    background-color: #61c0ee;
-  }
+    .leftSide-Flash .h3 {
+        width: 100%;
+        color: #fff;
+        background-color: #61c0ee;
+    }
 
-  .timeHour-Flash,
-  .timeMinute-Flash,
-  .timeSecond-Flash {
-    width: 10vw;
-    height: 5vh;
-    background: #fff;
-    margin: 0 10px;
-  }
+    .timeHour-Flash,
+    .timeMinute-Flash,
+    .timeSecond-Flash {
+        width: 10vw;
+        height: 5vh;
+        background: #fff;
+        margin: 0 10px;
+    }
 
-  .positionFlash-time {
-    margin-top: 10px;
-    margin-left: 0px;
-    width: 100%;
-  }
+    .positionFlash-time {
+        margin-top: 10px;
+        margin-left: 0px;
+        width: 100%;
+    }
 
-  .all-produk-pos {
-    margin-top: 10px;
-    margin-left: 0px;
-    align-items: center;
-    justify-content: start;
-  }
+    .all-produk-pos {
+        margin-top: 10px;
+        margin-left: 0px;
+        align-items: center;
+        justify-content: start;
+    }
 
-  .topCard-Barang img {
-    width: 50vw;
-    height: 40vh;
-  }
+    .topCard-Barang img {
+        width: 50vw;
+        height: 40vh;
+    }
 
-  .cardInfo-Location img {
-    width: 50vw;
-    height: 35vh;
-  }
+    .cardInfo-Location img {
+        width: 50vw;
+        height: 35vh;
+    }
 
-  .headerCarousel {
-    height: 25vh;
-  }
+    .headerCarousel {
+        height: 25vh;
+    }
 
-  .carausel-img {
-    width: 92vw;
-    height: 25vh;
-    position: relative;
-  }
+    .carausel-img {
+        width: 92vw;
+        height: 25vh;
+        position: relative;
+    }
 }
 
 /* * Desktop 1 */
 @media (min-width: 1280px) and (max-width: 1439px) {
-  .carausel-img {
-    width: 1240px;
-    position: relative;
-  }
+    .carausel-img {
+        width: 1240px;
+        position: relative;
+    }
 }
 
 /* * Desktop 1 */
 @media (min-width: 1440px) {
-  .carausel-img {
-    width: 1300px;
-    position: relative;
-  }
+    .carausel-img {
+        width: 1300px;
+        position: relative;
+    }
 }
 
 /* * Tab1 */
 @media (min-width: 768px) and (max-width: 1024px) and (min-height: 1024px) {
-  body {
-    overflow-x: hidden;
-    font-family: var(--fontFamily);
-  }
+    body {
+        overflow-x: hidden;
+        font-family: var(--fontFamily);
+    }
 
-  .navbar-home {
-    width: 100%;
-    height: 70px;
-  }
+    .navbar-home {
+        width: 100%;
+        height: 70px;
+    }
 
-  .wrap-navbar-login {
-    display: none;
-  }
+    .wrap-navbar-login {
+        display: none;
+    }
 
-  .collapse-nav-home {
-    width: 80%;
-  }
+    .collapse-nav-home {
+        width: 80%;
+    }
 
-  .wrap-navbar-collapse {
-    display: block;
-    width: 20%;
-  }
+    .wrap-navbar-collapse {
+        display: block;
+        width: 20%;
+    }
 
-  .category {
-    display: none;
-  }
+    .category {
+        display: none;
+    }
 
-  .headerCarousel {
-    height: 25vh;
-  }
+    .headerCarousel {
+        height: 25vh;
+    }
 
-  .slider {
-    width: 30px;
-    height: 30px;
-  }
+    .slider {
+        width: 30px;
+        height: 30px;
+    }
 
-  .cardGift {
-    width: 100%;
-    height: 20vh;
-    display: flex;
-    align-items: center;
-    background: var(--bgGift);
-  }
+    .cardGift {
+        width: 100%;
+        height: 20vh;
+        display: flex;
+        align-items: center;
+        background: var(--bgGift);
+    }
 
-  .timeHour-Flash,
-  .timeMinute-Flash,
-  .timeSecond-Flash {
-    width: 5vw;
-    height: 5vh;
-  }
+    .timeHour-Flash,
+    .timeMinute-Flash,
+    .timeSecond-Flash {
+        width: 5vw;
+        height: 5vh;
+    }
 
-  .positionFlash-time {
-    margin-left: 0px;
-  }
-  .all-produk-pos {
-    margin-left: 0px;
-  }
+    .positionFlash-time {
+        margin-left: 0px;
+    }
+    .all-produk-pos {
+        margin-left: 0px;
+    }
 
-  .topCard-Barang img {
-    width: 25vw;
-    height: 20vh;
-  }
+    .topCard-Barang img {
+        width: 25vw;
+        height: 20vh;
+    }
 
-  .cardFlex-Three {
-    height: 10vh;
-  }
+    .cardFlex-Three {
+        height: 10vh;
+    }
 
-  .cardInfo-Location {
-    width: 100%;
-    height: 15vh;
-  }
+    .cardInfo-Location {
+        width: 100%;
+        height: 15vh;
+    }
 
-  .cardInfo-Location img {
-    width: 15vw;
-    height: 20vh;
-  }
+    .cardInfo-Location img {
+        width: 15vw;
+        height: 20vh;
+    }
 
-  .carausel-img {
-    width: 92vw;
-    height: 25vh;
-    position: relative;
-  }
+    .carausel-img {
+        width: 92vw;
+        height: 25vh;
+        position: relative;
+    }
 }
