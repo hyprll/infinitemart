@@ -97,20 +97,22 @@
         <div class="headerEmploye">
             <h5>Data Checkout</h5>
         </div>
-        <div class="contentEmploye mt-3">
-            <table border="0" id="tableDashboard">
-                <thead>
-                    <th class="text-center">No</th>
-                    <th>Nama</th>
-                    <th>Order Id</th>
-                    <th>Total</th>
-                    <th>No telepon</th>
-                    <th>Tanggal</th>
-                </thead>
-                <tbody class="checkoutTable">
-
-                </tbody>
-            </table>
+        <div class="contentEmploye mt-3 pb-3">
+            <div class="container">
+                <table border="0" id="TableOrder">
+                    <thead>
+                        <th class="text-center">No</th>
+                        <th>Nama</th>
+                        <th>Order Id</th>
+                        <th>Total</th>
+                        <th>No telepon</th>
+                        <th>Tanggal</th>
+                    </thead>
+                    <tbody class="checkoutTable">
+    
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

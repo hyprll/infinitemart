@@ -31,7 +31,7 @@ $.ajax({
   type: "GET",
   dataType: "JSON",
   error: function () {
-    $("#tableDashboard").DataTable({
+    $("#TableOrder").DataTable({
       responsive: true,
       autoWidth: false,
       scrollCollapse: true,
@@ -50,7 +50,7 @@ $.ajax({
       handler += handlerCheckout(res, i + 1);
     });
     $(".checkoutTable").html(handler);
-    $("#tableDashboard").DataTable({
+    $("#TableOrder").DataTable({
       responsive: true,
       autoWidth: false,
       scrollCollapse: true,

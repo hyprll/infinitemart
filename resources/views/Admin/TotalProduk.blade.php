@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="col-md-12">
-    <div class="cardTableData mt-4">
+    <div class="cardTableData my-4">
         <div class="container">
             <div class="headerTable">
                 <h5 class="mt-2">Tabel Produk</h5>

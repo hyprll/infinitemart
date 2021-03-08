@@ -24,25 +24,8 @@
                 </div>
             </div>
             <div class="container">
-                <div class="col-md-12 mb-2 d-flex justify-content-between">
-                    <p>Username</p>
-                    <p class="usernameProfile"></p>
-                </div>
-                <div class="col-md-12 mb-2 d-flex justify-content-between">
-                    <p>Nama Depan</p>
-                    <p class="namaDepanProfile"></p>
-                </div>
-                <div class="col-md-12 mb-2 d-flex justify-content-between">
-                    <p>Nama Belakang</p>
-                    <p class="namaBelakangProfile">Ramadhan</p>
-                </div>
-                <div class="col-md-12  mb-2 d-flex justify-content-between">
-                    <p>Alamat Email</p>
-                    <p class="emailProfile">rizky@gmail.com</p>
-                </div>
-                <div class="col-md-12 mb-2 d-flex justify-content-between">
-                    <p>No. Telepon</p>
-                    <p class="phoneProfile">+62 1209891809</p>
+                <div id="biodata">
+                    
                 </div>
             </div>
         </div>
