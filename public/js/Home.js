@@ -1,5 +1,6 @@
 const harga = Array.from(document.querySelectorAll(".stuff-fare"));
 const formatter = new FormatMoney();
+let allUser = "";
 
 let btnAuth = "";
 if (auth == null) {
@@ -188,6 +189,22 @@ if ($("#btn-upload-produk").length > 0) {
   }
   getPermittedUser(auth, token);
 
+  $("input[type=radio][name=user_permitted]").change(function () {
+    if (this.value == 1) {
+      $("#user_permit").val(allUser);
+      $(".section-search-user").hide();
+    } else if (this.value == 2) {
+      $("#user_permit").val("");
+      $(".section-search-user").css("display", "flex");
+    }
+  });
+
+  $("#btn-search-user").click(function () {
+    let handler = handlerList($("#searchUser").val());
+    $("#searchUser").val("");
+    $("#listUsers").append(handler);
+  });
+
   $("#btn-upload-produk").on("click", function (e) {
     const validation = Array.from(document.querySelectorAll(".validation"));
     let sukses = false;
@@ -215,6 +232,13 @@ if ($("#btn-upload-produk").length > 0) {
 
     if (sukses) {
       uploadProduk();
+    }
+  });
+
+  document.body.addEventListener("click", function (e) {
+    if (e.target.classList.contains("btn-delete-user")) {
+      const list = e.target.parentNode.parentNode.parentNode;
+      list.remove();
     }
   });
 
@@ -354,6 +378,29 @@ if ($("#headTambahProdukContent").length > 0) {
       document.querySelector("#checkUser").value = izinUser;
     }
   });
+
+  $("input[type=radio][name=user_permitted]").change(function () {
+    if (this.value == 1) {
+      $("#user_permit").val(allUser);
+      $(".section-search-user").hide();
+    } else if (this.value == 2) {
+      $("#user_permit").val("");
+      $(".section-search-user").css("display", "flex");
+    }
+  });
+
+  $("#btn-search-user").click(function () {
+    let handler = handlerList($("#searchUser").val());
+    $("#searchUser").val("");
+    $("#listUsers").append(handler);
+  });
+
+  document.body.addEventListener("click", function (e) {
+    if (e.target.classList.contains("btn-delete-user")) {
+      const list = e.target.parentNode.parentNode.parentNode;
+      list.remove();
+    }
+  });
 }
 
 // * javascript for section detail
@@ -461,6 +508,26 @@ if (btn_delete.length != 0) {
       });
     });
   });
+}
+
+// * function for handlerList
+function handlerList(email) {
+  let handler = /* html */ `
+  <li class="list-group-item">
+    <div class="row justify-content-between">
+        <div class="col d-flex align-items-center">
+            <span>${email}</span>
+        </div>
+        <div class="col d-flex align-items-center justify-content-end">
+            <button class="btn btn-danger btn-delete-user" type="button">
+                hapus
+            </button>
+        </div>
+    </div>
+  </li>
+  `;
+
+  return handler;
 }
 
 // * function for update profile
@@ -1302,29 +1369,17 @@ function getPermittedUser(auth) {
     type: "GET",
     success: (res) => {
       if (res.success) {
-        let handler = "";
-        handler += /*html*/ `
-          <input type="hidden" name="checkUser" id="checkUser" class="form-control">
-        `;
+        let val = "";
         res.data.map((result, i) => {
-          handler += /*html */ `
-            <div class="col-6">
-                <div class="form-check">
-                    <input class="form-check-input checkIzinUser" name="izinUser${
-                      i + 1
-                    }}"
-                        type="checkbox" value="${result.id_user}" id="izinUser${
-            i + 1
-          }}">
-                    <label class="form-check-label" for="izinUser${i + 1}}">
-                        ${result.username}
-                    </label>
-                </div>
-            </div>
-            `;
+          if (i == 0) {
+            val += result.id_user;
+          } else {
+            val += "," + result.id_user;
+          }
         });
 
-        $("#permitted_user").html(handler);
+        $("#user_permit").val(val);
+        allUser = val;
       }
     },
     error: (err) => {
@@ -1486,82 +1541,21 @@ function updateTokoDash() {
     method: "GET",
     success: (res) => {
       if (res.success) {
-        let handler = /* html */ `
-          <div class="cardTambahProduk">
-            <div class="headerTambahProduk mt-3">
-                <h5>Edit Produk</h5>
-            </div>
-            <div class="contentTambahProduk">
-                <p class="mt-3">Upload Gambar Produk</p>
-                <div class="imgFlex">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="cardImgFlex d-flex justify-content-center align-items-center">
-                                <img src=" ${BASE_URL}/uploads/produk/${res.data[0].gambar}"
-                                    class="img-fluid user-select-none" id="main_img_preview" style="width: 50%">
-                            </div>
-                            <div class="footerCardImg mt-2 text-center">
-                                <label for="main_img" class="text-center" style="cursor: pointer">Gambar Utama</label>
-                                <input type="file" name="main_img" class="d-none" id="main_img"
-                                    accept="image/jpg,image/png,image/jpeg"><br>
-                                <small class="text-danger validation-update"></small>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cardImgFlex d-flex justify-content-center align-items-center">
-                                <img src=" ${BASE_URL}/uploads/produk/${res.data[0].gambar_lain}"
-                                    class="img-fluid user-select-none" id="other_img_preview" style="width: 50%">
-                            </div>
-                            <div class="footerCardImg mt-2 text-center">
-                                <label for="other_img" class="text-center" style="cursor: pointer">Gambar
-                                    Lainnya</label>
-                                <input type="file" name="other_img" class="d-none" id="other_img"
-                                    accept="image/jpg,image/png,image/jpeg"><br>
-                                <small class="text-danger validation-update"></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-          `;
-        $("#headTambahProdukContent").html(handler);
-        let handler2 = /*html */ `
-        <div class="cardDetailProduk mt-4">
-            <div class="headerDetailProduk mt-3">
-                <h5>Detail Produk</h5>
-                <input type="hidden" class="form-control" name="img_main_old" placeholder="Nama Produk" id="img_main_old" value="${res.data[0].gambar}">
-                <input type="hidden" class="form-control" name="img_other_old" placeholder="Nama Produk" id="img_other_old" value="${res.data[0].gambar_lain}">
-            </div>
-            <div class="contentDetailProduk">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="inputValue d-flex flex-column mt-3">
-                                    <label for="" class="mb-2">Nama Produk</label>
-                                    <input type="text" class="form-control" id="NamaProduk" name="NamaProduk" placeholder="Nama Produk"
-                                        value="${res.data[0].nama_produk}">
-                                    <small class="validation-update text-danger"></small>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="inputValue d-flex flex-column mt-3">
-                                    <label for="" class="mb-2">Harga Produk</label>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">Rp</span>
-                                        <input type="text" class="form-control" placeholder="Harga Produk" id="hargaProduk"
-                                            name="hargaProduk" aria-label="Username" aria-describedby="basic-addon1"
-                                            onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
-                                            value="${res.data[0].harga}">
-                                    </div>
-                                    <small class="validation-update text-danger"></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
+        $("#main_img_preview").attr(
+          "src",
+          `${BASE_URL}/uploads/produk/${res.data[0].gambar}`
+        );
+        $("#other_img_preview").attr(
+          "src",
+          `${BASE_URL}/uploads/produk/${res.data[0].gambar_lain}`
+        );
 
-        get_user_permitted_update(res.data[0].user_beli, handler2);
+        $("#img_main_old").val(res.data[0].gambar);
+        $("#img_other_old").val(res.data[0].gambar_lain);
+        $("#NamaProduk").val(res.data[0].nama_produk);
+        $("#hargaProduk").val(res.data[0].harga);
+
+        // get_user_permitted_update(res.data[0].user_beli, handler2);
       }
     },
     error: (res) => {
@@ -1585,6 +1579,7 @@ function get_user_permitted_update(user_permitted, before) {
             <div class="inputValue d-flex flex-column mt-3">
             <label for="" class="mb-2">User Di Izinkan</label>
             <small class="text-danger validation-other"></small>
+            ${handlerPermitted()}
             <div class="row">
             <input type="hidden" name="checkUser" id="checkUser" class="form-control"
             value="${user_permitted}">`;
@@ -1614,7 +1609,7 @@ function get_user_permitted_update(user_permitted, before) {
 
         let handlerAll = before + handler;
 
-        $("#contentTambahProduk").html(handlerAll);
+        // $("#contentTambahProduk").html(handlerAll);
       }
     },
     error: (err) => {
@@ -1622,6 +1617,52 @@ function get_user_permitted_update(user_permitted, before) {
       console.log(err);
     },
   });
+
+  function handlerPermitted() {
+    let handler = /* html */ `
+        <div class="row">
+          <div class="col-md-6">
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="user_permitted"
+                      id="user_permitted1" checked value="1">
+                  <label class="form-check-label" for="user_permitted1">
+                      Semua User
+                  </label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="user_permitted"
+                      id="user_permitted2" value="2">
+                  <label class="form-check-label" for="user_permitted2">
+                      Pilih User
+                  </label>
+              </div>
+          </div>
+      </div>
+      <small class="text-danger validation-other"></small>
+      <div class="row mt-3 section-search-user">
+          <div class="col-12">
+              <div class="input-group mb-3">
+                  <input type="email" class="form-control" placeholder="Cari user dengan email"
+                      aria-describedby="btn-search-user" id="searchUser">
+                  <button class="btn btn-primary" type="button" id="btn-search-user"
+                      style="min-width: 40px">
+                      <i class="fa fa-search"></i>
+                  </button>
+              </div>
+          </div>
+          <div class="col-12 overflow-auto" style="max-height: 200px">
+              <span>List Users</span>
+              <ul class="list-group mt-2" id="listUsers">
+
+              </ul>
+          </div>
+      </div>
+    `;
+
+    return handler;
+  }
 }
 
 // * function for update produk
