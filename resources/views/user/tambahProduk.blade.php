@@ -89,7 +89,7 @@
                     <div class="col-md-6">
                         <div class="inputValue d-flex flex-column mt-3">
                             <label for="" class="mb-2">User Di Izinkan</label>
-                            <input type="text" class="form-control" name="user_permit" id="user_permit">
+                            <input type="hidden" class="form-control" name="user_permit" id="user_permit">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-check">

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Mar 2021 pada 13.25
+-- Waktu pembuatan: 09 Mar 2021 pada 06.20
 -- Versi server: 10.4.17-MariaDB
--- Versi PHP: 8.0.1
+-- Versi PHP: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -106,7 +106,8 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga`, `gambar`, `id_toko`, 
 (31, 'Perahu', 1000000, 'produk-1614839982.jpg', 18, '21', 'produk_lain-1614839982.jpg', '2021-03-03 23:39:42', '2021-03-03 23:39:42'),
 (32, 'ANIME ANCA', 1000, 'produk-1614840055.jpg', 18, '21', 'produk_lain-1614840055.jpg', '2021-03-03 23:40:55', '2021-03-03 23:40:55'),
 (33, 'Erennn', 1000000, 'produk-1614840202.jpg', 18, '18', 'produk_lain-1614840202.jpg', '2021-03-03 23:43:22', '2021-03-03 23:43:22'),
-(34, 'pancaran', 2000, 'produk-1614840641.jpg', 19, '11,5,18,22,10,14,21', 'produk_lain-1614840641.jpg', '2021-03-03 23:50:41', '2021-03-03 23:50:41');
+(34, 'pancaran', 2000, 'produk-1614840641.jpg', 19, '11,5,18,22,10,14,21', 'produk_lain-1614840641.jpg', '2021-03-03 23:50:41', '2021-03-03 23:50:41'),
+(35, 'icon wa grup', 140000000, 'produk-1615265390.png', 17, '5,10,11,14,18,21,22,23', 'produk_lain-1615265390.png', '2021-03-08 21:49:50', '2021-03-08 21:49:50');
 
 -- --------------------------------------------------------
 
@@ -153,9 +154,9 @@ CREATE TABLE `users` (
   `last_name` varchar(50) NOT NULL,
   `address` text NOT NULL,
   `city` varchar(50) NOT NULL,
-  `postal_code` int(11) NOT NULL,
+  `postal_code` varchar(11) NOT NULL,
   `country_code` varchar(50) NOT NULL,
-  `phone` int(20) NOT NULL,
+  `phone` varchar(20) NOT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -165,19 +166,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `username`, `email`, `password`, `role`, `first_name`, `last_name`, `address`, `city`, `postal_code`, `country_code`, `phone`, `created_at`, `updated_at`) VALUES
-(1, 'admin1', 'admin@admin.com', '$2y$10$z9xQ4Gl01bzHrBzOLwHkQOQzXthonpiEwnvUjN4d6Fzo154ssPIRK', 1, '', '', '', '', 0, '', 1234567890, '2021-01-26 09:40:55.000000', '2021-01-26 09:40:55.000000'),
-(2, 'admin2', 'admin2@admin.com', '$2y$10$nstX/s7otJUWEwcW5NjPaenSvMafnAgKqGwEPqFY7/YrMwwBtmZ8G', 1, '', '', '', '', 0, '', 1234567890, '2021-01-26 18:33:28.000000', '2021-01-26 18:33:28.000000'),
-(4, 'admin4', 'admin3@admin.com', '$2y$10$IMojkgDkzWkVotFm7fsEeu.WM2iIb.pcilJMGJlslkShGG0qLMxFO', 1, 'admin3', 'adm', 'cilodong', 'depok', 16414, 'IDN', 1234567890, '2021-01-28 04:29:31.000000', '2021-01-28 04:29:31.000000'),
-(5, 'ricky123', 'ricky@gmail.com', '$2y$10$WsVCFY8LT8vYY1TMbTjPgOheMknZgrYS.9B0nj93UUg5/pKaWo0gO', 2, 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', 12131, 'IDN', 213123124, '2021-02-03 16:03:27.000000', '2021-02-03 16:03:27.000000'),
-(10, 'sven', 'farazrizki13@gmail.com', '$2y$10$vMmXRUVOErWk2xT4lUnNROV5B5MRqyu5gXubkFwgYunGhiVD1JH8u', 2, 'koki', 'ramadhan', 'lkjhlk', 'kiki', 98089, 'IDN', 979087, '2021-02-12 04:26:53.000000', '2021-02-12 04:26:53.000000'),
-(11, 'trafalgar', 'opera@gmail.com', '$2y$10$6ZkS1VpRbYHw8hvnbYtgF.PWGLK9uLXqjnm0IbuQExOJEJBTqCe4K', 2, 'Trafalgar', 'Law', 'jonggol', 'depok', 12231, 'JPN', 1209891801, '2021-02-22 03:17:18.000000', '2021-02-22 03:17:18.000000'),
-(14, 'kkyy13', 'kiki123@gmail.com', '$2y$10$fegBufAjNVYuekCQfmhEzOrq3kfKIsGby4l7mXSiQ9EKA6ifMQLfi', 2, 'Rizki', 'Ramadhan', 'jonggol', 'depok', 21321321, 'AUS', 879798798, '2021-02-24 14:09:36.000000', '2021-02-24 14:09:36.000000'),
-(17, 'admin123', 'admin123@gmail.com', '$2y$10$sL1p3MQExEUmx1PIM23qm.sfe4G1ukn2qy.nKXLTwcpKGO3dYt5.O', 1, 'Admin', 'Rizki', 'cilodong', 'depok', 32121, 'IDN', 123113221, '2021-03-02 00:29:54.000000', '2021-03-02 00:29:54.000000'),
-(18, 'pancaran', 'anca@gmail.com', '$2y$10$eHhzaxSyk24ABS3nJeRUHuYE57T8vHvu6hEdomeLczMCHlaSKcNNu', 2, 'pancaran', 'ratna', 'jatijajar', 'depok', 3423, 'IDN', 244332, '2021-03-02 23:38:01.000000', '2021-03-02 23:38:01.000000'),
-(20, 'raqwan', 'raqwan@gmail.com', '$2y$10$pkrBRnbKk2ZtZRlhOQ.3ZurtJegR8APV9DUhRLMvziZZYZzpR4sKC', 1, 'raqwan', 'Ratna', 'banjaran', 'Depok', 23498, 'AUS', 3274238, '2021-03-03 05:52:41.000000', '2021-03-03 05:52:41.000000'),
-(21, 'andika123', 'andikasp787@gmail.com', '$2y$10$/9M1EVn5emtMReWTqkpbhOg5Oo1NGllts/xQerrWG8SbqTGoqBhpO', 2, 'muhamad', 'dika', 'Cilangkap', 'jakarta', 72567, 'IDN', 8571124, '2021-03-03 23:33:12.000000', '2021-03-03 23:33:12.000000'),
-(22, 'hatori', 'gaminghouse@gmail.com', '$2y$10$gzU6O5Nt5iZivKAgXMKZnObiwOTP0E6z38cTO/iB8Ychj30pgyLXi', 2, 'rasyid', 'ridho', 'proklamasi24', 'bogor', 23454, 'IDN', 853150, '2021-03-03 23:47:33.000000', '2021-03-03 23:47:33.000000'),
-(23, 'tsubasa', 'wkwk@gmail.com', '$2y$10$Ke.yqVug.WnfAPdQFvCm2ONZMZ0oV8JCeDeT1bSuVG8onDHz6Ygca', 2, 'tsubasa', 'ozora', 'jl.manchester 32', 'bogor', 16961, 'IDN', 896654321, '2021-03-03 23:58:55.000000', '2021-03-03 23:58:55.000000');
+(1, 'admin1', 'admin@admin.com', '$2y$10$z9xQ4Gl01bzHrBzOLwHkQOQzXthonpiEwnvUjN4d6Fzo154ssPIRK', 1, '', '', '', '', '0', '', '1234567890', '2021-01-26 09:40:55.000000', '2021-01-26 09:40:55.000000'),
+(2, 'admin2', 'admin2@admin.com', '$2y$10$nstX/s7otJUWEwcW5NjPaenSvMafnAgKqGwEPqFY7/YrMwwBtmZ8G', 1, '', '', '', '', '0', '', '1234567890', '2021-01-26 18:33:28.000000', '2021-01-26 18:33:28.000000'),
+(4, 'admin4', 'admin3@admin.com', '$2y$10$IMojkgDkzWkVotFm7fsEeu.WM2iIb.pcilJMGJlslkShGG0qLMxFO', 1, 'admin3', 'adm', 'cilodong', 'depok', '16414', 'IDN', '1234567890', '2021-01-28 04:29:31.000000', '2021-01-28 04:29:31.000000'),
+(5, 'ricky123', 'ricky@gmail.com', '$2y$10$WsVCFY8LT8vYY1TMbTjPgOheMknZgrYS.9B0nj93UUg5/pKaWo0gO', 2, 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', '12131', 'IDN', '213123124', '2021-02-03 16:03:27.000000', '2021-02-03 16:03:27.000000'),
+(10, 'sven', 'farazrizki13@gmail.com', '$2y$10$vMmXRUVOErWk2xT4lUnNROV5B5MRqyu5gXubkFwgYunGhiVD1JH8u', 2, 'koki', 'ramadhan', 'lkjhlk', 'kiki', '98089', 'IDN', '979087', '2021-02-12 04:26:53.000000', '2021-02-12 04:26:53.000000'),
+(11, 'trafalgar', 'opera@gmail.com', '$2y$10$6ZkS1VpRbYHw8hvnbYtgF.PWGLK9uLXqjnm0IbuQExOJEJBTqCe4K', 2, 'Trafalgar', 'Law', 'jonggol', 'depok', '12231', 'JPN', '1209891801', '2021-02-22 03:17:18.000000', '2021-02-22 03:17:18.000000'),
+(14, 'kkyy13', 'kiki123@gmail.com', '$2y$10$fegBufAjNVYuekCQfmhEzOrq3kfKIsGby4l7mXSiQ9EKA6ifMQLfi', 2, 'Rizki', 'Ramadhan', 'jonggol', 'depok', '21321321', 'AUS', '879798798', '2021-02-24 14:09:36.000000', '2021-02-24 14:09:36.000000'),
+(17, 'admin', 'admin123@gmail.com', '$2y$10$sL1p3MQExEUmx1PIM23qm.sfe4G1ukn2qy.nKXLTwcpKGO3dYt5.O', 1, 'Admiral', 'sakazuki', 'cilodong', 'depok', '32121', 'IDN', '123113221', '2021-03-02 00:29:54.000000', '2021-03-08 21:26:40.000000'),
+(18, 'pancaran', 'anca@gmail.com', '$2y$10$eHhzaxSyk24ABS3nJeRUHuYE57T8vHvu6hEdomeLczMCHlaSKcNNu', 2, 'pancaran', 'ratna mustika', 'jatijajar', 'depok', '342332', 'IDN', '244332312212', '2021-03-02 23:38:01.000000', '2021-03-08 21:25:10.000000'),
+(20, 'raqwan', 'raqwan@gmail.com', '$2y$10$pkrBRnbKk2ZtZRlhOQ.3ZurtJegR8APV9DUhRLMvziZZYZzpR4sKC', 1, 'raqwan', 'Ratna', 'banjaran', 'Depok', '23498', 'AUS', '3274238', '2021-03-03 05:52:41.000000', '2021-03-03 05:52:41.000000'),
+(21, 'andika123', 'andikasp787@gmail.com', '$2y$10$/9M1EVn5emtMReWTqkpbhOg5Oo1NGllts/xQerrWG8SbqTGoqBhpO', 2, 'muhamad', 'dika', 'Cilangkap', 'jakarta', '72567', 'IDN', '8571124', '2021-03-03 23:33:12.000000', '2021-03-03 23:33:12.000000'),
+(22, 'hatori', 'gaminghouse@gmail.com', '$2y$10$gzU6O5Nt5iZivKAgXMKZnObiwOTP0E6z38cTO/iB8Ychj30pgyLXi', 2, 'rasyid', 'ridho', 'proklamasi24', 'bogor', '23454', 'IDN', '853150', '2021-03-03 23:47:33.000000', '2021-03-03 23:47:33.000000'),
+(23, 'tsubasa', 'wkwk@gmail.com', '$2y$10$Ke.yqVug.WnfAPdQFvCm2ONZMZ0oV8JCeDeT1bSuVG8onDHz6Ygca', 2, 'tsubasa', 'ozora', 'jl.manchester 32', 'bogor', '16961', 'IDN', '896654321', '2021-03-03 23:58:55.000000', '2021-03-03 23:58:55.000000');
 
 --
 -- Indexes for dumped tables
@@ -221,7 +222,7 @@ ALTER TABLE `checkout`
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT untuk tabel `toko`

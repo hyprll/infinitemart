@@ -89,12 +89,13 @@
                     <div class="col-md-6">
                         <div class="inputValue d-flex flex-column mt-3">
                             <label for="" class="mb-2">User Di Izinkan</label>
+                            <input type="text" class="form-control" name="user_permit" id="user_permit">
                             <small class="text-danger validation-other"></small>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="user_permitted"
-                                            id="user_permitted1" checked value="1">
+                                            id="user_permitted1" value="1">
                                         <label class="form-check-label" for="user_permitted1">
                                             Semua User
                                         </label>
