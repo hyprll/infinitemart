@@ -305,4 +305,22 @@ class ApiAuthController extends Controller
             'data' => $user,
         ], 200);
     }
+
+    public function finduser(Request $request)
+    {
+        $carian = $request->username;
+        $find = Users::select('id_user', 'username', 'email')->distinct()->where('username', 'like',"%".$carian."%")->orderby('username', 'ASC')->get();
+        if ($find->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => "Data not found."
+            ], 400);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Data found.",
+            'data' => $find
+        ], 200);
+    }
 }
