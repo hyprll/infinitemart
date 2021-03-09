@@ -187,6 +187,8 @@ if ($("#btn-upload-produk").length > 0) {
   if (auth == null) {
     document.location.href = "/login";
   }
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
   getPermittedUser(auth, token);
 
   $("input[type=radio][name=user_permitted]").change(function () {
@@ -288,6 +290,8 @@ if ($("#btn-upload-produk").length > 0) {
 
 // * Javascript for section update produk
 if ($("#headTambahProdukContent").length > 0) {
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
   updateTokoDash();
 
   document.body.addEventListener("click", function (e) {
@@ -1338,23 +1342,13 @@ function deleteProduk(id_produk, id_toko) {
 function getPermittedUser(auth) {
   // * cek toko
   $.ajax({
-    url: BASE_URL_SERVER + "/toko",
+    url: BASE_URL_SERVER + "/cektoko/" + auth.id_user,
     type: "GET",
     success: (res) => {
-      if (res.success) {
-        let idToko = 0;
-        let status = false;
-        res.data.map((result) => {
-          if (result.id_user == auth.id_user) {
-            idToko = result.id_toko;
-            status = true;
-          }
-        });
-        if (status) {
-          $("#id_toko").val(idToko);
-        } else {
-          document.location.href = "/";
-        }
+      if (!res.success) {
+        window.location.href = "/";
+      } else {
+        $("#id_toko").val(res.data[0].id_toko);
       }
     },
     error: (err) => {
@@ -1380,6 +1374,8 @@ function getPermittedUser(auth) {
 
         $("#user_permit").val(val);
         allUser = val;
+        $(".blankLoad").css("display", "none");
+        document.body.style.overflowY = "auto";
       }
     },
     error: (err) => {
@@ -1393,25 +1389,12 @@ function uploadProduk() {
   let main_img = document.getElementById("main_img").files[0];
   let other_img = document.getElementById("other_img").files[0];
 
-  let checkuser = $("#checkUser").val();
-  let user_permitted = "";
-  let split1 = checkuser.split(",");
-  split1.map((s, i) => {
-    if (i != split1.length - 1) {
-      if (i == split1.length - 2) {
-        user_permitted += s;
-      } else {
-        user_permitted += s + ",";
-      }
-    }
-  });
-
   let form = new FormData();
   form.append("gambar", main_img);
   form.append("gambar_lain", other_img);
   form.append("nama_produk", $("#NamaProduk").val());
   form.append("harga", $("#hargaProduk").val());
-  form.append("user_beli", user_permitted);
+  form.append("user_beli", $("#user_permit").val());
   form.append("id_toko", $("#id_toko").val());
 
   $(".blankLoad").show();
@@ -1506,23 +1489,13 @@ function uploadProduk() {
 function updateTokoDash() {
   // * cek toko
   $.ajax({
-    url: BASE_URL_SERVER + "/toko",
+    url: BASE_URL_SERVER + "/cektoko/" + auth.id_user,
     type: "GET",
     success: (res) => {
-      if (res.success) {
-        let idToko = 0;
-        let status = false;
-        res.data.map((result) => {
-          if (result.id_user == auth.id_user) {
-            idToko = result.id_toko;
-            status = true;
-          }
-        });
-        if (status) {
-          $("#id_toko").val(idToko);
-        } else {
-          document.location.href = "/";
-        }
+      if (!res.success) {
+        window.location.href = "/";
+      } else {
+        getProduk(res.data[0].id_toko);
       }
     },
     error: (err) => {
@@ -1535,35 +1508,49 @@ function updateTokoDash() {
     document.location.href = BASE_URL + "/login";
   }
 
-  const id_produk = $("#id_produk").val();
-  $.ajax({
-    url: BASE_URL_SERVER + "/produk/" + id_produk,
-    method: "GET",
-    success: (res) => {
-      if (res.success) {
-        $("#main_img_preview").attr(
-          "src",
-          `${BASE_URL}/uploads/produk/${res.data[0].gambar}`
-        );
-        $("#other_img_preview").attr(
-          "src",
-          `${BASE_URL}/uploads/produk/${res.data[0].gambar_lain}`
-        );
+  function getProduk(my_toko) {
+    const id_produk = $("#id_produk").val();
+    $.ajax({
+      url: BASE_URL_SERVER + "/produk/" + id_produk,
+      method: "GET",
+      success: (res) => {
+        if (res.success) {
+          if (res.data[0].id_toko != my_toko) {
+            window.location.href = BASE_URL + "/toko/" + my_toko;
+          }
+          $(".blankLoad").css("display", "none");
+          document.body.style.overflowY = "auto";
 
-        $("#img_main_old").val(res.data[0].gambar);
-        $("#img_other_old").val(res.data[0].gambar_lain);
-        $("#NamaProduk").val(res.data[0].nama_produk);
-        $("#hargaProduk").val(res.data[0].harga);
+          $("#main_img_preview").attr(
+            "src",
+            `${BASE_URL}/uploads/produk/${res.data[0].gambar}`
+          );
+          $("#other_img_preview").attr(
+            "src",
+            `${BASE_URL}/uploads/produk/${res.data[0].gambar_lain}`
+          );
 
-        // get_user_permitted_update(res.data[0].user_beli, handler2);
-      }
-    },
-    error: (res) => {
-      alert("error");
-      console.log(res);
-      logout(res);
-    },
-  });
+          $("#img_main_old").val(res.data[0].gambar);
+          $("#img_other_old").val(res.data[0].gambar_lain);
+          $("#NamaProduk").val(res.data[0].nama_produk);
+          $("#hargaProduk").val(res.data[0].harga);
+
+          // get_user_permitted_update(res.data[0].user_beli, handler2);
+        } else {
+          window.location.href = BASE_URL + "/toko/" + my_toko;
+        }
+      },
+      error: (res) => {
+        logout(res);
+
+        if (res.responseJSON != null) {
+          if (!res.responseJSON.success) {
+            window.location.href = BASE_URL + "/toko/" + my_toko;
+          }
+        }
+      },
+    });
+  }
 }
 
 // * function for show update produk content

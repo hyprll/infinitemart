@@ -36,7 +36,7 @@
                 <div class="card right-area-bottom">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-4" id="biodata"></div>
+                            <div class="col-4" id="biodata" style="z-index: 8"></div>
                             <div class="col-8">
                                 <div class="card right-area">
                                     <div class="card-body">
