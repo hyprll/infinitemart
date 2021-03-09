@@ -12,7 +12,7 @@
     <div class="container">
         <div class="col-md-12">
             <div class="flexWrapper">
-                <div class="WrapperOwl d-flex owl-carousel owl-theme">
+                <div class="WrapperOwl d-flex owl-carousel">
                     <div class="col-md-4">
                         <div class="cardOurTeam">
                             <div class="ImgOurTeam d-flex justify-content-center">
