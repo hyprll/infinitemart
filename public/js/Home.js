@@ -1,6 +1,7 @@
 const harga = Array.from(document.querySelectorAll(".stuff-fare"));
 const formatter = new FormatMoney();
 let allUser = "";
+let userPilihan = "";
 
 let btnAuth = "";
 if (auth == null) {
@@ -187,6 +188,8 @@ if ($("#btn-upload-produk").length > 0) {
   if (auth == null) {
     document.location.href = "/login";
   }
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
   getPermittedUser(auth, token);
 
   $("input[type=radio][name=user_permitted]").change(function () {
@@ -288,6 +291,8 @@ if ($("#btn-upload-produk").length > 0) {
 
 // * Javascript for section update produk
 if ($("#headTambahProdukContent").length > 0) {
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
   updateTokoDash();
 
   document.body.addEventListener("click", function (e) {
@@ -384,7 +389,7 @@ if ($("#headTambahProdukContent").length > 0) {
       $("#user_permit").val(allUser);
       $(".section-search-user").hide();
     } else if (this.value == 2) {
-      $("#user_permit").val("");
+      $("#user_permit").val(userPilihan);
       $(".section-search-user").css("display", "flex");
     }
   });
@@ -477,6 +482,18 @@ if ($("#img-produk").length > 0) {
         alert("error");
       }
     }
+  });
+}
+
+// * javascript for section our team
+if ($("#ourTeam").length > 0) {
+  $(".WrapperOwl").owlCarousel({
+    margin: 20,
+    loop: true,
+    autoWidth: true,
+    items: 4,
+    autoplay: true,
+    autoplayTimeout: 5000,
   });
 }
 
@@ -1338,23 +1355,13 @@ function deleteProduk(id_produk, id_toko) {
 function getPermittedUser(auth) {
   // * cek toko
   $.ajax({
-    url: BASE_URL_SERVER + "/toko",
+    url: BASE_URL_SERVER + "/cektoko/" + auth.id_user,
     type: "GET",
     success: (res) => {
-      if (res.success) {
-        let idToko = 0;
-        let status = false;
-        res.data.map((result) => {
-          if (result.id_user == auth.id_user) {
-            idToko = result.id_toko;
-            status = true;
-          }
-        });
-        if (status) {
-          $("#id_toko").val(idToko);
-        } else {
-          document.location.href = "/";
-        }
+      if (!res.success) {
+        window.location.href = "/";
+      } else {
+        $("#id_toko").val(res.data[0].id_toko);
       }
     },
     error: (err) => {
@@ -1380,6 +1387,8 @@ function getPermittedUser(auth) {
 
         $("#user_permit").val(val);
         allUser = val;
+        $(".blankLoad").css("display", "none");
+        document.body.style.overflowY = "auto";
       }
     },
     error: (err) => {
@@ -1393,25 +1402,12 @@ function uploadProduk() {
   let main_img = document.getElementById("main_img").files[0];
   let other_img = document.getElementById("other_img").files[0];
 
-  let checkuser = $("#checkUser").val();
-  let user_permitted = "";
-  let split1 = checkuser.split(",");
-  split1.map((s, i) => {
-    if (i != split1.length - 1) {
-      if (i == split1.length - 2) {
-        user_permitted += s;
-      } else {
-        user_permitted += s + ",";
-      }
-    }
-  });
-
   let form = new FormData();
   form.append("gambar", main_img);
   form.append("gambar_lain", other_img);
   form.append("nama_produk", $("#NamaProduk").val());
   form.append("harga", $("#hargaProduk").val());
-  form.append("user_beli", user_permitted);
+  form.append("user_beli", $("#user_permit").val());
   form.append("id_toko", $("#id_toko").val());
 
   $(".blankLoad").show();
@@ -1506,23 +1502,13 @@ function uploadProduk() {
 function updateTokoDash() {
   // * cek toko
   $.ajax({
-    url: BASE_URL_SERVER + "/toko",
+    url: BASE_URL_SERVER + "/cektoko/" + auth.id_user,
     type: "GET",
     success: (res) => {
-      if (res.success) {
-        let idToko = 0;
-        let status = false;
-        res.data.map((result) => {
-          if (result.id_user == auth.id_user) {
-            idToko = result.id_toko;
-            status = true;
-          }
-        });
-        if (status) {
-          $("#id_toko").val(idToko);
-        } else {
-          document.location.href = "/";
-        }
+      if (!res.success) {
+        window.location.href = "/";
+      } else {
+        getProduk(res.data[0].id_toko);
       }
     },
     error: (err) => {
@@ -1535,35 +1521,90 @@ function updateTokoDash() {
     document.location.href = BASE_URL + "/login";
   }
 
-  const id_produk = $("#id_produk").val();
-  $.ajax({
-    url: BASE_URL_SERVER + "/produk/" + id_produk,
-    method: "GET",
-    success: (res) => {
-      if (res.success) {
-        $("#main_img_preview").attr(
-          "src",
-          `${BASE_URL}/uploads/produk/${res.data[0].gambar}`
-        );
-        $("#other_img_preview").attr(
-          "src",
-          `${BASE_URL}/uploads/produk/${res.data[0].gambar_lain}`
-        );
+  function getProduk(my_toko) {
+    const id_produk = $("#id_produk").val();
+    $.ajax({
+      url: BASE_URL_SERVER + "/produk/" + id_produk,
+      method: "GET",
+      success: (res) => {
+        if (res.success) {
+          if (res.data[0].id_toko != my_toko) {
+            window.location.href = BASE_URL + "/toko/" + my_toko;
+          }
 
-        $("#img_main_old").val(res.data[0].gambar);
-        $("#img_other_old").val(res.data[0].gambar_lain);
-        $("#NamaProduk").val(res.data[0].nama_produk);
-        $("#hargaProduk").val(res.data[0].harga);
+          $("#id_toko").val(my_toko);
 
-        // get_user_permitted_update(res.data[0].user_beli, handler2);
-      }
-    },
-    error: (res) => {
-      alert("error");
-      console.log(res);
-      logout(res);
-    },
-  });
+          checkPermitted(res.data[0].user_beli);
+
+          $("#main_img_preview").attr(
+            "src",
+            `${BASE_URL}/uploads/produk/${res.data[0].gambar}`
+          );
+          $("#other_img_preview").attr(
+            "src",
+            `${BASE_URL}/uploads/produk/${res.data[0].gambar_lain}`
+          );
+
+          $("#img_main_old").val(res.data[0].gambar);
+          $("#img_other_old").val(res.data[0].gambar_lain);
+          $("#NamaProduk").val(res.data[0].nama_produk);
+          $("#hargaProduk").val(res.data[0].harga);
+
+          // get_user_permitted_update(res.data[0].user_beli, handler2);
+        } else {
+          window.location.href = BASE_URL + "/toko/" + my_toko;
+        }
+      },
+      error: (res) => {
+        logout(res);
+
+        if (res.responseJSON != null) {
+          if (!res.responseJSON.success) {
+            window.location.href = BASE_URL + "/toko/" + my_toko;
+          }
+        }
+      },
+    });
+  }
+
+  function checkPermitted(produk_beli) {
+    $.ajax({
+      url: BASE_URL_SERVER + "/allbuyer",
+      type: "GET",
+      success: (res) => {
+        if (res.success) {
+          let val = "";
+          res.data.map((result, i) => {
+            if (i == 0) {
+              val += result.id_user;
+            } else {
+              val += "," + result.id_user;
+            }
+          });
+
+          if (val == produk_beli) {
+            $("#user_permit").val(val);
+            $("#user_permitted1").attr("checked", true);
+            allUser = val;
+            userPilihan = produk_beli;
+          } else {
+            $("#user_permit").val(produk_beli);
+            $("#user_permitted2").attr("checked", true);
+            allUser = val;
+            userPilihan = produk_beli;
+            $(".section-search-user").css("display", "flex");
+          }
+
+          $(".blankLoad").css("display", "none");
+          document.body.style.overflowY = "auto";
+        }
+      },
+      error: (err) => {
+        alert("error");
+        console.log(err);
+      },
+    });
+  }
 }
 
 // * function for show update produk content
@@ -1670,22 +1711,22 @@ function updateProduk() {
   let main_img = document.getElementById("main_img").files;
   let other_img = document.getElementById("other_img").files;
 
-  let checkuser = $("#checkUser").val();
+  // let checkuser = $("#checkUser").val();
 
   let form = new FormData();
-  if (main_img.length > 0) {
-    form.append("gambar", main_img[0]);
-  }
+  // if (main_img.length > 0) {
+  //   form.append("gambar", main_img[0]);
+  // }
 
-  if (other_img.length > 0) {
-    form.append("gambar_lain", other_img[0]);
-  }
+  // if (other_img.length > 0) {
+  //   form.append("gambar_lain", other_img[0]);
+  // }
 
   form.append("gambar_old", $("#img_main_old").val());
   form.append("gambar_lain_old", $("#img_other_old").val());
   form.append("nama_produk", $("#NamaProduk").val());
   form.append("harga", $("#hargaProduk").val());
-  form.append("user_beli", checkuser);
+  form.append("user_beli", $("#user_permit").val());
   form.append("id_toko", $("#id_toko").val());
   form.append("id_produk", $("#id_produk").val());
 
@@ -1714,29 +1755,50 @@ function updateProduk() {
           localStorage.removeItem("token");
           localStorage.removeItem("auth_session");
           document.location.href = "/login";
+        } else {
+          Swal.fire({
+            title: "<strong>Update Product Successful</strong>",
+            icon: "success",
+            html:
+              "Success Update Product, " +
+              '<a href="/toko/' +
+              $("#id_toko").val() +
+              ">See Product now</a> ",
+            showCloseButton: false,
+            showCancelButton: false,
+            allowOutsideClick: false,
+            focusConfirm: true,
+            confirmButtonText:
+              '<a href="/toko/' +
+              $("#id_toko").val() +
+              '" style="color:inherit;text-decoration:none">See Product Now</a>',
+            confirmButtonAriaLabel: "Thumbs up, great!",
+            cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+            cancelButtonAriaLabel: "Thumbs down",
+          });
         }
+      } else {
+        Swal.fire({
+          title: "<strong>Update Product Successful</strong>",
+          icon: "success",
+          html:
+            "Success Update Product, " +
+            '<a href="/toko/' +
+            $("#id_toko").val() +
+            ">See Product now</a> ",
+          showCloseButton: false,
+          showCancelButton: false,
+          allowOutsideClick: false,
+          focusConfirm: true,
+          confirmButtonText:
+            '<a href="/toko/' +
+            $("#id_toko").val() +
+            '" style="color:inherit;text-decoration:none">See Product Now</a>',
+          confirmButtonAriaLabel: "Thumbs up, great!",
+          cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+          cancelButtonAriaLabel: "Thumbs down",
+        });
       }
-
-      Swal.fire({
-        title: "<strong>Update Product Successful</strong>",
-        icon: "success",
-        html:
-          "Success Update Product, " +
-          '<a href="/toko/' +
-          $("#id_toko").val() +
-          ">See Product now</a> ",
-        showCloseButton: false,
-        showCancelButton: false,
-        allowOutsideClick: false,
-        focusConfirm: true,
-        confirmButtonText:
-          '<a href="/toko/' +
-          $("#id_toko").val() +
-          '" style="color:inherit;text-decoration:none">See Product Now</a>',
-        confirmButtonAriaLabel: "Thumbs up, great!",
-        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
-        cancelButtonAriaLabel: "Thumbs down",
-      });
     },
     error: (err) => {
       $(".blankLoad").hide();
