@@ -410,14 +410,28 @@ if ($("#headTambahProdukContent").length > 0) {
   });
 
   $("#btn-search-user").click(function () {
-    let handler = handlerList($("#searchUser").val());
+    findUser($("#searchUser").val());
     $("#searchUser").val("");
-    $("#listUsers").append(handler);
   });
 
   document.body.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-delete-user")) {
       const list = e.target.parentNode.parentNode.parentNode;
+      const id_user = e.target.dataset.iduser;
+      const index = userPilihanArray.indexOf(parseInt(id_user));
+      userPilihanArray.splice(index, 1);
+      let handler = "";
+      if (userPilihanArray.length > 0) {
+        userPilihanArray.map((user, i) => {
+          if (i == 0) {
+            handler += user;
+          } else {
+            handler += "," + user;
+          }
+        });
+      }
+      userPilihan = handler;
+      $("#user_permit").val(handler);
       list.remove();
     }
   });
@@ -440,6 +454,10 @@ function findUser(email) {
           let handler = handlerList(res.data[0].email, id_user);
           $("#listUsers").append(handler);
           $("#user_permit").val(userPilihan);
+          Toast.fire({
+            icon: "success",
+            title: "Tambah Sukses",
+          });
         } else {
           Toast.fire({
             icon: "error",
@@ -1607,43 +1625,49 @@ function updateTokoDash() {
   }
 
   function checkPermitted(produk_beli) {
-    $.ajax({
-      url: BASE_URL_SERVER + "/allbuyer",
-      type: "GET",
-      success: (res) => {
-        if (res.success) {
-          let val = "";
-          res.data.map((result, i) => {
-            if (i == 0) {
-              val += result.id_user;
-            } else {
-              val += "," + result.id_user;
-            }
-          });
-
-          if (val == produk_beli) {
-            $("#user_permit").val(val);
-            $("#user_permitted1").attr("checked", true);
-            allUser = val;
-            userPilihan = produk_beli;
-          } else {
-            $("#user_permit").val(produk_beli);
-            $("#user_permitted2").attr("checked", true);
-            allUser = val;
-            userPilihan = produk_beli;
-            $(".section-search-user").css("display", "flex");
-          }
-
-          $(".blankLoad").css("display", "none");
-          document.body.style.overflowY = "auto";
-        }
-      },
-      error: (err) => {
-        alert("error");
-        console.log(err);
-      },
-    });
+    allUser = "all";
+    if (produk_beli == "all") {
+      $("#user_permit").val(allUser);
+      $("#user_permitted1").attr("checked", true);
+    } else {
+      userPilihan = produk_beli;
+      $("#user_permit").val(produk_beli);
+      $("#user_permitted2").attr("checked", true);
+      $(".section-search-user").css("display", "flex");
+      userPilihan.split(",").map(user => {
+        userPilihanArray = [...userPilihanArray, parseInt(user)];
+      })
+      getUsersList(userPilihan.split(","));
+    }
   }
+}
+
+// * function for get users list
+function getUsersList(users) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/allbuyer",
+    dataType: "json",
+    method: "GET",
+    success: function (res) {
+      if (res.success) {
+        const data = res.data;
+        data.map((result) => {
+          if (users.indexOf(result.id_user.toString()) != -1) {
+            let handler = handlerList(result.email, result.id_user);
+            $("#listUsers").append(handler);
+          }
+        });
+
+        $(".blankLoad").css("display", "none");
+        document.body.style.overflowY = "auto";
+      }
+    },
+    error: function (err) {
+      console.log(err);
+      $(".blankLoad").css("display", "none");
+      document.body.style.overflowY = "auto";
+    },
+  });
 }
 
 // * function for show update produk content
