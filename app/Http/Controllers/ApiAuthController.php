@@ -242,7 +242,8 @@ class ApiAuthController extends Controller
         ], 200);
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $input  = $request->only("username", "email", "first_name", "last_name", "address", "city", "postal_code", "country_code", "phone"); //Specify Request
 
         /*
@@ -250,7 +251,7 @@ class ApiAuthController extends Controller
         | Validation request.
         |--------------------------------------------------------------------------
         */
-        
+
         $validation = Validator::make($input, [
             'username' => 'required',
             'email' => 'required',
@@ -285,7 +286,7 @@ class ApiAuthController extends Controller
             "postal_code" => $postal_code,
             "country_code" => $country_code,
         ];
-        
+
         if ($validation->fails()) {
             return response($validation->errors()->toJson(), 400);
         }
@@ -309,7 +310,8 @@ class ApiAuthController extends Controller
     public function finduser(Request $request)
     {
         $carian = $request->email;
-        $find = Users::select('id_user', 'username', 'email')->distinct()->where('email', 'like',"%".$carian."%")->orderby('email', 'ASC')->get();
+        // $find = Users::select('id_user', 'username', 'email')->distinct()->where('email', 'like',"%".$carian."%")->orderby('email', 'ASC')->get();
+        $find = Users::select('id_user', 'username', 'email')->distinct()->where('email', '=', $carian)->orderby('email', 'ASC')->get();
         if ($find->isEmpty()) {
             return response()->json([
                 'success' => false,

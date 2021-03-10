@@ -2,6 +2,7 @@ const harga = Array.from(document.querySelectorAll(".stuff-fare"));
 const formatter = new FormatMoney();
 let allUser = "";
 let userPilihan = "";
+let userPilihanArray = [];
 
 let btnAuth = "";
 if (auth == null) {
@@ -197,15 +198,14 @@ if ($("#btn-upload-produk").length > 0) {
       $("#user_permit").val(allUser);
       $(".section-search-user").hide();
     } else if (this.value == 2) {
-      $("#user_permit").val("");
+      $("#user_permit").val(userPilihan);
       $(".section-search-user").css("display", "flex");
     }
   });
 
   $("#btn-search-user").click(function () {
-    let handler = handlerList($("#searchUser").val());
+    findUser($("#searchUser").val());
     $("#searchUser").val("");
-    $("#listUsers").append(handler);
   });
 
   $("#btn-upload-produk").on("click", function (e) {
@@ -241,6 +241,21 @@ if ($("#btn-upload-produk").length > 0) {
   document.body.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-delete-user")) {
       const list = e.target.parentNode.parentNode.parentNode;
+      const id_user = e.target.dataset.iduser;
+      const index = userPilihanArray.indexOf(parseInt(id_user));
+      userPilihanArray.splice(index, 1);
+      let handler = "";
+      if (userPilihanArray.length > 0) {
+        userPilihanArray.map((user, i) => {
+          if (i == 0) {
+            handler += user;
+          } else {
+            handler += "," + user;
+          }
+        });
+      }
+      userPilihan = handler;
+      $("#user_permit").val(handler);
       list.remove();
     }
   });
@@ -408,6 +423,45 @@ if ($("#headTambahProdukContent").length > 0) {
   });
 }
 
+// * javascript for finduser
+function findUser(email) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/finduser?email=" + email,
+    dataType: "json",
+    method: "GET",
+    success: function (res) {
+      if (res.success) {
+        const id_user = res.data[0].id_user;
+        const userPilihanLength = userPilihan.split("").length;
+        const cek = userPilihanArray.indexOf(id_user);
+        if (cek == -1) {
+          userPilihan += userPilihanLength > 0 ? "," + id_user : id_user;
+          userPilihanArray = [...userPilihanArray, id_user];
+          let handler = handlerList(res.data[0].email, id_user);
+          $("#listUsers").append(handler);
+          $("#user_permit").val(userPilihan);
+        } else {
+          Toast.fire({
+            icon: "error",
+            title: "Email Sudah di list",
+          });
+        }
+      }
+    },
+    error: (err) => {
+      const error = err.responseJSON;
+      if (error != null) {
+        if (!error.success) {
+          Toast.fire({
+            icon: "error",
+            title: "Email Not found",
+          });
+        }
+      }
+    },
+  });
+}
+
 // * javascript for section detail
 if ($("#img-produk").length > 0) {
   const produkId = document.querySelector("#idProduk").dataset.idproduk;
@@ -528,7 +582,7 @@ if (btn_delete.length != 0) {
 }
 
 // * function for handlerList
-function handlerList(email) {
+function handlerList(email, id_user) {
   let handler = /* html */ `
   <li class="list-group-item">
     <div class="row justify-content-between">
@@ -536,7 +590,7 @@ function handlerList(email) {
             <span>${email}</span>
         </div>
         <div class="col d-flex align-items-center justify-content-end">
-            <button class="btn btn-danger btn-delete-user" type="button">
+            <button class="btn btn-danger btn-delete-user" type="button" data-iduser="${id_user}">
                 hapus
             </button>
         </div>
@@ -645,6 +699,14 @@ function showProfile() {
   let handler = /* html */ `
       <div class="row px-3 mb-3" style="width:550px">
         <div class="col-md-4">
+          <span class="fw-bold">Alamat Email</span>
+        </div>
+        <div class="col-md-8">
+          ${auth.email}
+        </div>
+      </div>
+      <div class="row px-3 mb-3" style="width:550px">
+        <div class="col-md-4">
           <span class="fw-bold">Username</span>
         </div>
         <div class="col-md-8">
@@ -750,6 +812,8 @@ function validatePayment() {
 if ($("#background-img").length > 0) {
   const idToko = document.querySelector("#idToko").dataset.idtoko;
   showTokoDash(idToko);
+  // * get history toko
+  getHistoryToko(idToko);
 
   let history = false;
   document.body.addEventListener("click", function (e) {
@@ -1084,9 +1148,6 @@ function showTokoDash(idToko) {
             </div>
           </div>
           `;
-
-          // * get history toko
-          getHistoryToko(res.data[0].id_toko);
         }
 
         $("#kontent-toko").html(handlerToko);
@@ -1262,7 +1323,6 @@ function searchingNow(keyword) {
 
 // * function for search result produk
 function showSearchProduk(res) {
-  console.log(res);
   let handler = "";
   res.data.map((result) => {
     handler += /*html*/ `
@@ -1370,31 +1430,10 @@ function getPermittedUser(auth) {
       const error = err.responseJSON;
     },
   });
-
-  $.ajax({
-    url: BASE_URL_SERVER + "/allbuyer",
-    type: "GET",
-    success: (res) => {
-      if (res.success) {
-        let val = "";
-        res.data.map((result, i) => {
-          if (i == 0) {
-            val += result.id_user;
-          } else {
-            val += "," + result.id_user;
-          }
-        });
-
-        $("#user_permit").val(val);
-        allUser = val;
-        $(".blankLoad").css("display", "none");
-        document.body.style.overflowY = "auto";
-      }
-    },
-    error: (err) => {
-      console.log(err);
-    },
-  });
+  $("#user_permit").val("all");
+  allUser = "all";
+  $(".blankLoad").css("display", "none");
+  document.body.style.overflowY = "auto";
 }
 
 // * function for upload produk
@@ -2116,14 +2155,3 @@ function handlerTokoCheckout(data, no) {
     `;
   return handler;
 }
-
-// OurTeam
-
-// $(".WrapperOwl").owlCarousel({
-//   margin: 10,
-//   loop: true,
-//   autoWidth: true,
-//   items: 4,
-//   autoplay: true,
-//   URLhashListener: true,
-// });
