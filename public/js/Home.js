@@ -1634,9 +1634,9 @@ function updateTokoDash() {
       $("#user_permit").val(produk_beli);
       $("#user_permitted2").attr("checked", true);
       $(".section-search-user").css("display", "flex");
-      userPilihan.split(",").map(user => {
+      userPilihan.split(",").map((user) => {
         userPilihanArray = [...userPilihanArray, parseInt(user)];
-      })
+      });
       getUsersList(userPilihan.split(","));
     }
   }
@@ -1910,15 +1910,7 @@ function checkout(idToko, harga, nama_barang, user_beli) {
 
   const id_user = auth.id_user;
   const user_beli_split = user_beli.split(",");
-  if (user_beli_split.indexOf(id_user.toString()) == -1) {
-    $(".blankLoad").hide();
-    document.body.style.overflowY = "auto";
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Kamu tidak diizinkan membeli barang ini!",
-    });
-  } else {
+  if (user_beli == "all") {
     // * mulai transaksi
 
     let today = new Date();
@@ -2005,6 +1997,103 @@ function checkout(idToko, harga, nama_barang, user_beli) {
         console.error(error);
       },
     });
+  } else {
+    if (user_beli_split.indexOf(id_user.toString()) == -1) {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Kamu tidak diizinkan membeli barang ini!",
+      });
+    } else {
+      // * mulai transaksi
+
+      let today = new Date();
+
+      let date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1 < 10 ? "0" : "") +
+        (today.getMonth() + 1) +
+        "-" +
+        (today.getDate() + 1 < 10 ? "0" : "") +
+        today.getDate() +
+        " " +
+        today.getHours() +
+        ":" +
+        today.getMinutes() +
+        ":" +
+        today.getSeconds();
+
+      let form = new FormData();
+      form.append(
+        "id_produk",
+        document.querySelector("#idProduk").dataset.idproduk
+      );
+      form.append("id_user", auth.id_user);
+      form.append("id_toko", idToko);
+      form.append("tanggal", date);
+      form.append("deskripsi", $("#catatanInp").val());
+      form.append("total_barang", $("#kuantitas").val());
+      form.append("harga", harga);
+      form.append("status", 1);
+      form.append("first_name", auth.first_name);
+      form.append("last_name", auth.last_name);
+      form.append("address", auth.address);
+      form.append("city", auth.city);
+      form.append("postal_code", auth.postal_code);
+      form.append("phone", auth.phone);
+      form.append("country_code", auth.country_code);
+      form.append("barang", nama_barang);
+
+      $.ajax({
+        url: BASE_URL_SERVER + "/payment/midtrans",
+        headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          Authorization: "Bearer " + token,
+        },
+        data: form,
+        method: "POST",
+        dataType: "json",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (res) => {
+          $(".blankLoad").hide();
+          document.body.style.overflowY = "auto";
+          if (res.status != null) {
+            if (res.status == "Token is Expired") {
+              localStorage.removeItem("token");
+              localStorage.removeItem("auth_session");
+              document.location.href = "/login";
+            }
+          }
+
+          if (res.code == 1) {
+            Toast.fire({
+              icon: "success",
+              title: "Sukses Memesan Produk, selesaikan pembayaran",
+            });
+            let strWindowFeatures =
+              "location=yes,height=650,width=520,scrollbars=yes,status=yes";
+            let URL = res.redirect_url;
+            window.open(URL, "_blank", strWindowFeatures);
+          }
+        },
+        error: (err) => {
+          $(".blankLoad").hide();
+          document.body.style.overflowY = "auto";
+          Toast.fire({
+            icon: "error",
+            title: "Error Pesan Produk",
+          });
+          const error = err.responseJSON;
+          console.error(err.responseText);
+          console.error(error);
+        },
+      });
+    }
   }
 }
 
