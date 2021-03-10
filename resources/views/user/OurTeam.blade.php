@@ -58,7 +58,7 @@
                             <p class="text-center">As a front end Dev</p>
                             <p class="text-center" style="margin-bottom: 60px;">Membuat 60% Front End HTML dan CSS
                                 di halaman user, membuat register,
-                                membuat 100% Front End HTML dan CSS di halaman Admin, membuat 85% Front End
+                                membuat 100% Front End HTML dan CSS di halaman Admin, membuat 50% Front End
                                 Javascript di halaman Admin</p>
                             <div class="d-flex align-items-end justify-content-center position-absolute"
                                 style="bottom: 20px; left: 50%; transform: translateX(-50%);">
