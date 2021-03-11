@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Mar 2021 pada 09.32
+-- Waktu pembuatan: 11 Mar 2021 pada 05.58
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 8.0.0
 
@@ -63,7 +63,10 @@ INSERT INTO `checkout` (`id_checkout`, `order_id`, `id_produk`, `id_toko`, `id_u
 (16, 1135143015, 24, 7, 5, '2021-03-02 19:16:14', 'tes', 1, 14500000, '1', 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', '12131', '213123124', 'IDN', '8acff106-abee-446b-a2e7-b1a4220af7ac', '2021-03-02 05:16:15', '2021-03-02 05:16:15'),
 (21, 792148520, 28, 17, 18, '2021-03-03 20:45:24', 'Bisa terbang titanya', 3, 200000, '1', 'pancaran', 'ratna', 'jatijajar', 'depok', '3423', '244332', 'IDN', '5a2e3172-9670-469c-9a13-7244aa7857a0', '2021-03-03 06:45:25', '2021-03-03 06:45:25'),
 (22, 774329155, 10, 7, 5, '2021-03-04 13:02:55', 'Biru bang', 1, 500000, '1', 'Rizki', 'Ramadhan', 'Cilodong', 'Depok', '12131', '213123124', 'IDN', '31f4bfe7-d593-49ab-9fdc-f07b8c76282b', '2021-03-03 23:02:57', '2021-03-03 23:02:57'),
-(23, 530462155, 37, 17, 18, '2021-03-10 15:29:15', 'yang bagus', 1, 900000, '1', 'pancaran', 'ratna mustika', 'jatijajar', 'depok', '342332', '244332312212', 'IDN', '0e11e29d-580f-48ec-a4c1-83e1e48ef379', '2021-03-10 01:29:16', '2021-03-10 01:29:16');
+(23, 530462155, 37, 17, 18, '2021-03-10 15:29:15', 'yang bagus', 1, 900000, '1', 'pancaran', 'ratna mustika', 'jatijajar', 'depok', '342332', '244332312212', 'IDN', '0e11e29d-580f-48ec-a4c1-83e1e48ef379', '2021-03-10 01:29:16', '2021-03-10 01:29:16'),
+(24, 1363813044, 28, 17, 18, '2021-03-11 11:19:36', 'tes', 1, 2000000, '1', 'pancaran', 'ratna mustika', 'jatijajar', 'depok', '342332', '244332312212', 'IDN', '38e898d5-d10a-4371-b574-9ec9429049e1', '2021-03-10 21:19:40', '2021-03-10 21:19:40'),
+(25, 1001045976, 28, 17, 18, '2021-03-11 11:19:55', 'tes', 100, 2000000, '1', 'pancaran', 'ratna mustika', 'jatijajar', 'depok', '342332', '244332312212', 'IDN', 'ed6e9d4e-e4ec-4970-bd99-6f575f11135d', '2021-03-10 21:19:56', '2021-03-10 21:19:56'),
+(26, 2123034757, 35, 17, 18, '2021-03-11 11:23:54', 'tes', 10, 1400000000, '1', 'pancaran', 'ratna mustika', 'jatijajar', 'depok', '342332', '244332312212', 'IDN', 'f66a31d2-cf16-4913-8d79-f52152e5ccb3', '2021-03-10 21:23:56', '2021-03-10 21:23:56');
 
 -- --------------------------------------------------------
 
@@ -136,9 +139,10 @@ INSERT INTO `toko` (`id_toko`, `nama_toko`, `deskripsi`, `id_user`, `logo`, `bac
 (1, 'toko c', 'update toko', 1, 'logo-1611733278.png', 'background-1611733278.png', '2021-01-26 17:14:49', '2021-01-27 07:41:19'),
 (7, 'Corazon Store', 'The heart pirates\nLorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem itaque reiciendis numquam, iste sunt, nostrum molestias vero culpa saepe illo velit ab esse porro, incidunt facilis tenetur. Molestias, reiciendis recusandae.', 5, 'logo-1614352446.jpg', 'background-1614352056.jpg', '2021-02-15 07:33:43', '2021-03-02 21:20:18'),
 (14, 'heart pirates', 'the heart of the ocean', 11, 'logo-1614576281.png', 'background-1614576281.jpg', '2021-02-28 22:24:41', '2021-02-28 22:24:41'),
-(17, 'Pancaran Furniture', 'Pancaran hyper\nLorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur corrupti expedita, hic aliquam corporis perferendis quo ab nam maxime dolore dignissimos dolorum, necessitatibus, reiciendis in sed itaque eum accusamus illum!', 18, 'logo-1614753775.png', 'background-1615364576.jpg', '2021-03-02 23:42:55', '2021-03-10 01:22:56'),
+(17, 'Pancaran Furniture', 'Pancaran hyper\nLorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur corrupti expedita, hic aliquam corporis perferendis quo ab nam maxime dolore dignissimos dolorum, necessitatibus, reiciendis in sed itaque eum accusamus illum!', 18, 'logo-1614753775.png', 'background-1615364576.jpg', '2021-03-02 23:42:55', '2021-03-10 20:51:51'),
 (18, 'tes123456', 'tes\ntes', 21, 'logo-1614839875.jpg', 'background-1614839875.jpg', '2021-03-03 23:37:55', '2021-03-03 23:37:55'),
-(19, 'jajajaj', 'anda beli kami senang', 22, 'logo-1614840584.jpg', 'background-1614840584.jpg', '2021-03-03 23:49:44', '2021-03-03 23:49:44');
+(19, 'jajajaj', 'anda beli kami senang', 22, 'logo-1614840584.jpg', 'background-1614840584.jpg', '2021-03-03 23:49:44', '2021-03-03 23:49:44'),
+(20, 'Mugiwara Kaizokudan', 'Future pirates king', 24, 'logo-1615438660.png', 'background-1615438660.jpg', '2021-03-10 21:56:32', '2021-03-10 21:57:40');
 
 -- --------------------------------------------------------
 
@@ -176,11 +180,12 @@ INSERT INTO `users` (`id_user`, `username`, `email`, `password`, `role`, `first_
 (11, 'trafalgar', 'opera@gmail.com', '$2y$10$6ZkS1VpRbYHw8hvnbYtgF.PWGLK9uLXqjnm0IbuQExOJEJBTqCe4K', 2, 'Trafalgar', 'Law', 'jonggol', 'depok', '12231', 'JPN', '1209891801', '2021-02-22 03:17:18.000000', '2021-02-22 03:17:18.000000'),
 (14, 'kkyy13', 'kiki123@gmail.com', '$2y$10$fegBufAjNVYuekCQfmhEzOrq3kfKIsGby4l7mXSiQ9EKA6ifMQLfi', 2, 'Rizki', 'Ramadhan', 'jonggol', 'depok', '21321321', 'AUS', '879798798', '2021-02-24 14:09:36.000000', '2021-02-24 14:09:36.000000'),
 (17, 'admin', 'admin123@gmail.com', '$2y$10$sL1p3MQExEUmx1PIM23qm.sfe4G1ukn2qy.nKXLTwcpKGO3dYt5.O', 1, 'Admiral', 'sakazuki', 'cilodong', 'depok', '32121', 'IDN', '123113221', '2021-03-02 00:29:54.000000', '2021-03-08 21:26:40.000000'),
-(18, 'anca', 'anca@gmail.com', '$2y$10$eHhzaxSyk24ABS3nJeRUHuYE57T8vHvu6hEdomeLczMCHlaSKcNNu', 2, 'pancaran', 'ratna mustika', 'jatijajar', 'depok', '342332', 'IDN', '244332312212', '2021-03-02 23:38:01.000000', '2021-03-09 22:10:07.000000'),
+(18, 'anca', 'anca@gmail.com', '$2y$10$eHhzaxSyk24ABS3nJeRUHuYE57T8vHvu6hEdomeLczMCHlaSKcNNu', 2, 'pancaran', 'ratna mustika', 'jatijajar', 'depok', '342332', 'IDN', '244332312212', '2021-03-02 23:38:01.000000', '2021-03-10 20:51:16.000000'),
 (20, 'raqwan', 'raqwan@gmail.com', '$2y$10$pkrBRnbKk2ZtZRlhOQ.3ZurtJegR8APV9DUhRLMvziZZYZzpR4sKC', 1, 'raqwan', 'Ratna', 'banjaran', 'Depok', '23498', 'AUS', '3274238', '2021-03-03 05:52:41.000000', '2021-03-03 05:52:41.000000'),
 (21, 'andika123', 'andikasp787@gmail.com', '$2y$10$/9M1EVn5emtMReWTqkpbhOg5Oo1NGllts/xQerrWG8SbqTGoqBhpO', 2, 'muhamad', 'dika', 'Cilangkap', 'jakarta', '72567', 'IDN', '8571124', '2021-03-03 23:33:12.000000', '2021-03-03 23:33:12.000000'),
 (22, 'hatori', 'gaminghouse@gmail.com', '$2y$10$gzU6O5Nt5iZivKAgXMKZnObiwOTP0E6z38cTO/iB8Ychj30pgyLXi', 2, 'rasyid', 'ridho', 'proklamasi24', 'bogor', '23454', 'IDN', '853150', '2021-03-03 23:47:33.000000', '2021-03-03 23:47:33.000000'),
-(23, 'tsubasa', 'wkwk@gmail.com', '$2y$10$Ke.yqVug.WnfAPdQFvCm2ONZMZ0oV8JCeDeT1bSuVG8onDHz6Ygca', 2, 'tsubasa', 'ozora', 'jl.manchester 32', 'bogor', '16961', 'IDN', '896654321', '2021-03-03 23:58:55.000000', '2021-03-03 23:58:55.000000');
+(23, 'tsubasa', 'wkwk@gmail.com', '$2y$10$Ke.yqVug.WnfAPdQFvCm2ONZMZ0oV8JCeDeT1bSuVG8onDHz6Ygca', 2, 'tsubasa', 'ozora', 'jl.manchester 32', 'bogor', '16961', 'IDN', '896654321', '2021-03-03 23:58:55.000000', '2021-03-03 23:58:55.000000'),
+(24, 'opera', 'opera22@gmail.com', '$2y$10$7RHA89CizjTm2wX9GkB0eu99ae7B4WvVrIIxF6gTwZug79JY9iGeu', 2, 'Mugiwara No', 'Luffy', 'depok', 'depok', '323432', 'JPN', '324332432', '2021-03-10 21:52:58.000000', '2021-03-10 21:55:28.000000');
 
 --
 -- Indexes for dumped tables
@@ -218,25 +223,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id_checkout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_checkout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT untuk tabel `toko`
 --
 ALTER TABLE `toko`
-  MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

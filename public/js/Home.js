@@ -149,7 +149,7 @@ if ($("#history").length > 0) {
     type: "GET",
     success: function (res) {
       if (res.success) {
-        showHistory(res.data);
+        setHistory(res.data);
       }
     },
     error: (err) => {
@@ -1515,6 +1515,10 @@ function uploadProduk() {
           confirmButtonAriaLabel: "Thumbs up, great!",
           cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
           cancelButtonAriaLabel: "Thumbs down",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = BASE_URL + "/toko/" + $("#id_toko").val();
+          }
         });
       }
     },
@@ -1629,6 +1633,8 @@ function updateTokoDash() {
     if (produk_beli == "all") {
       $("#user_permit").val(allUser);
       $("#user_permitted1").attr("checked", true);
+      $(".blankLoad").css("display", "none");
+      document.body.style.overflowY = "auto";
     } else {
       userPilihan = produk_beli;
       $("#user_permit").val(produk_beli);
@@ -1657,10 +1663,9 @@ function getUsersList(users) {
             $("#listUsers").append(handler);
           }
         });
-
-        $(".blankLoad").css("display", "none");
-        document.body.style.overflowY = "auto";
       }
+      $(".blankLoad").css("display", "none");
+      document.body.style.overflowY = "auto";
     },
     error: function (err) {
       console.log(err);
@@ -1777,13 +1782,13 @@ function updateProduk() {
   // let checkuser = $("#checkUser").val();
 
   let form = new FormData();
-  // if (main_img.length > 0) {
-  //   form.append("gambar", main_img[0]);
-  // }
+  if (main_img.length > 0) {
+    form.append("gambar", main_img[0]);
+  }
 
-  // if (other_img.length > 0) {
-  //   form.append("gambar_lain", other_img[0]);
-  // }
+  if (other_img.length > 0) {
+    form.append("gambar_lain", other_img[0]);
+  }
 
   form.append("gambar_old", $("#img_main_old").val());
   form.append("gambar_lain_old", $("#img_other_old").val());
@@ -1838,6 +1843,10 @@ function updateProduk() {
             confirmButtonAriaLabel: "Thumbs up, great!",
             cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
             cancelButtonAriaLabel: "Thumbs down",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = BASE_URL + "/toko/" + $("#id_toko").val();
+            }
           });
         }
       } else {
@@ -1860,6 +1869,10 @@ function updateProduk() {
           confirmButtonAriaLabel: "Thumbs up, great!",
           cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
           cancelButtonAriaLabel: "Thumbs down",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = BASE_URL + "/toko/" + $("#id_toko").val();
+          }
         });
       }
     },
@@ -1993,8 +2006,7 @@ function checkout(idToko, harga, nama_barang, user_beli) {
           title: "Error Pesan Produk",
         });
         const error = err.responseJSON;
-        console.error(err.responseText);
-        console.error(error);
+        console.log(err.responseText);
       },
     });
   } else {
@@ -2097,64 +2109,28 @@ function checkout(idToko, harga, nama_barang, user_beli) {
   }
 }
 
-// * function for show history
-function showHistory(data) {
-  let dataProduk = [];
-  data.map((d) => {
-    $.ajax({
-      url: BASE_URL_SERVER + "/produk/" + d.id_produk,
-      type: "GET",
-      success: (res) => {
-        dataProduk = [...dataProduk, res.data];
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  });
-
-  setTimeout(() => {
-    if (dataProduk.length > 0) {
-      setHistory(data, dataProduk);
-    } else {
-      setTimeout(() => {
-        if (dataProduk.length > 0) {
-          setHistory(data, dataProduk);
-        } else {
-          $("#history").html(
-            errorHistory(
-              "Unable to connect,</br> check your internet connection"
-            )
-          );
-        }
-      }, 5000);
-    }
-  }, 3000);
-}
 
 // * function for show data history
-function setHistory(dataHistory, dataProduk) {
-  let i = 0;
+function setHistory(data) {
   let handler = `<div class="container">`;
-  dataHistory.map((data) => {
-    handler += setHistoryProduk(data, dataProduk[i][0]);
-    i++;
+  data.map((data) => {
+    handler += setHistoryProduk(data);
   });
   handler += "</div>";
   $("#history").html(handler);
 }
 
-function setHistoryProduk(data, produk) {
+function setHistoryProduk(data) {
   let handler = /* html */ `
   <div class="produk p-3 mb-3">
     <div class="row">
         <div class="col-md-3">
-            <img src="${BASE_URL}/uploads/produk/${produk.gambar}" alt=""
+            <img src="${BASE_URL}/uploads/produk/${data.gambar}" alt=""
                 class="img-fluid">
         </div>
         <div class="col-md-9">
             <div class="row mt-3">
-                <h4 class="h5">${produk.nama_produk}</h4>
+                <h4 class="h5">${data.nama_produk}</h4>
             </div>
             <div class="row">
                 <div class="col-md-6">
