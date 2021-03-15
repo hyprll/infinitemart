@@ -2,6 +2,7 @@ const harga = Array.from(document.querySelectorAll(".stuff-fare"));
 const formatter = new FormatMoney();
 let allUser = "";
 let userPilihan = "";
+let userPilihanArray = [];
 
 let btnAuth = "";
 if (auth == null) {
@@ -148,7 +149,7 @@ if ($("#history").length > 0) {
     type: "GET",
     success: function (res) {
       if (res.success) {
-        showHistory(res.data);
+        setHistory(res.data);
       }
     },
     error: (err) => {
@@ -197,15 +198,14 @@ if ($("#btn-upload-produk").length > 0) {
       $("#user_permit").val(allUser);
       $(".section-search-user").hide();
     } else if (this.value == 2) {
-      $("#user_permit").val("");
+      $("#user_permit").val(userPilihan);
       $(".section-search-user").css("display", "flex");
     }
   });
 
   $("#btn-search-user").click(function () {
-    let handler = handlerList($("#searchUser").val());
+    findUser($("#searchUser").val());
     $("#searchUser").val("");
-    $("#listUsers").append(handler);
   });
 
   $("#btn-upload-produk").on("click", function (e) {
@@ -241,6 +241,21 @@ if ($("#btn-upload-produk").length > 0) {
   document.body.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-delete-user")) {
       const list = e.target.parentNode.parentNode.parentNode;
+      const id_user = e.target.dataset.iduser;
+      const index = userPilihanArray.indexOf(parseInt(id_user));
+      userPilihanArray.splice(index, 1);
+      let handler = "";
+      if (userPilihanArray.length > 0) {
+        userPilihanArray.map((user, i) => {
+          if (i == 0) {
+            handler += user;
+          } else {
+            handler += "," + user;
+          }
+        });
+      }
+      userPilihan = handler;
+      $("#user_permit").val(handler);
       list.remove();
     }
   });
@@ -395,16 +410,73 @@ if ($("#headTambahProdukContent").length > 0) {
   });
 
   $("#btn-search-user").click(function () {
-    let handler = handlerList($("#searchUser").val());
+    findUser($("#searchUser").val());
     $("#searchUser").val("");
-    $("#listUsers").append(handler);
   });
 
   document.body.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-delete-user")) {
       const list = e.target.parentNode.parentNode.parentNode;
+      const id_user = e.target.dataset.iduser;
+      const index = userPilihanArray.indexOf(parseInt(id_user));
+      userPilihanArray.splice(index, 1);
+      let handler = "";
+      if (userPilihanArray.length > 0) {
+        userPilihanArray.map((user, i) => {
+          if (i == 0) {
+            handler += user;
+          } else {
+            handler += "," + user;
+          }
+        });
+      }
+      userPilihan = handler;
+      $("#user_permit").val(handler);
       list.remove();
     }
+  });
+}
+
+// * javascript for finduser
+function findUser(email) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/finduser?email=" + email,
+    dataType: "json",
+    method: "GET",
+    success: function (res) {
+      if (res.success) {
+        const id_user = res.data[0].id_user;
+        const userPilihanLength = userPilihan.split("").length;
+        const cek = userPilihanArray.indexOf(id_user);
+        if (cek == -1) {
+          userPilihan += userPilihanLength > 0 ? "," + id_user : id_user;
+          userPilihanArray = [...userPilihanArray, id_user];
+          let handler = handlerList(res.data[0].email, id_user);
+          $("#listUsers").append(handler);
+          $("#user_permit").val(userPilihan);
+          Toast.fire({
+            icon: "success",
+            title: "Tambah Sukses",
+          });
+        } else {
+          Toast.fire({
+            icon: "error",
+            title: "Email Sudah di list",
+          });
+        }
+      }
+    },
+    error: (err) => {
+      const error = err.responseJSON;
+      if (error != null) {
+        if (!error.success) {
+          Toast.fire({
+            icon: "error",
+            title: "Email Not found",
+          });
+        }
+      }
+    },
   });
 }
 
@@ -528,7 +600,7 @@ if (btn_delete.length != 0) {
 }
 
 // * function for handlerList
-function handlerList(email) {
+function handlerList(email, id_user) {
   let handler = /* html */ `
   <li class="list-group-item">
     <div class="row justify-content-between">
@@ -536,7 +608,7 @@ function handlerList(email) {
             <span>${email}</span>
         </div>
         <div class="col d-flex align-items-center justify-content-end">
-            <button class="btn btn-danger btn-delete-user" type="button">
+            <button class="btn btn-danger btn-delete-user" type="button" data-iduser="${id_user}">
                 hapus
             </button>
         </div>
@@ -645,6 +717,14 @@ function showProfile() {
   let handler = /* html */ `
       <div class="row px-3 mb-3" style="width:550px">
         <div class="col-md-4">
+          <span class="fw-bold">Alamat Email</span>
+        </div>
+        <div class="col-md-8">
+          ${auth.email}
+        </div>
+      </div>
+      <div class="row px-3 mb-3" style="width:550px">
+        <div class="col-md-4">
           <span class="fw-bold">Username</span>
         </div>
         <div class="col-md-8">
@@ -750,6 +830,8 @@ function validatePayment() {
 if ($("#background-img").length > 0) {
   const idToko = document.querySelector("#idToko").dataset.idtoko;
   showTokoDash(idToko);
+  // * get history toko
+  getHistoryToko(idToko);
 
   let history = false;
   document.body.addEventListener("click", function (e) {
@@ -1084,9 +1166,6 @@ function showTokoDash(idToko) {
             </div>
           </div>
           `;
-
-          // * get history toko
-          getHistoryToko(res.data[0].id_toko);
         }
 
         $("#kontent-toko").html(handlerToko);
@@ -1262,7 +1341,6 @@ function searchingNow(keyword) {
 
 // * function for search result produk
 function showSearchProduk(res) {
-  console.log(res);
   let handler = "";
   res.data.map((result) => {
     handler += /*html*/ `
@@ -1370,31 +1448,10 @@ function getPermittedUser(auth) {
       const error = err.responseJSON;
     },
   });
-
-  $.ajax({
-    url: BASE_URL_SERVER + "/allbuyer",
-    type: "GET",
-    success: (res) => {
-      if (res.success) {
-        let val = "";
-        res.data.map((result, i) => {
-          if (i == 0) {
-            val += result.id_user;
-          } else {
-            val += "," + result.id_user;
-          }
-        });
-
-        $("#user_permit").val(val);
-        allUser = val;
-        $(".blankLoad").css("display", "none");
-        document.body.style.overflowY = "auto";
-      }
-    },
-    error: (err) => {
-      console.log(err);
-    },
-  });
+  $("#user_permit").val("all");
+  allUser = "all";
+  $(".blankLoad").css("display", "none");
+  document.body.style.overflowY = "auto";
 }
 
 // * function for upload produk
@@ -1458,6 +1515,10 @@ function uploadProduk() {
           confirmButtonAriaLabel: "Thumbs up, great!",
           cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
           cancelButtonAriaLabel: "Thumbs down",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = BASE_URL + "/toko/" + $("#id_toko").val();
+          }
         });
       }
     },
@@ -1568,43 +1629,50 @@ function updateTokoDash() {
   }
 
   function checkPermitted(produk_beli) {
-    $.ajax({
-      url: BASE_URL_SERVER + "/allbuyer",
-      type: "GET",
-      success: (res) => {
-        if (res.success) {
-          let val = "";
-          res.data.map((result, i) => {
-            if (i == 0) {
-              val += result.id_user;
-            } else {
-              val += "," + result.id_user;
-            }
-          });
-
-          if (val == produk_beli) {
-            $("#user_permit").val(val);
-            $("#user_permitted1").attr("checked", true);
-            allUser = val;
-            userPilihan = produk_beli;
-          } else {
-            $("#user_permit").val(produk_beli);
-            $("#user_permitted2").attr("checked", true);
-            allUser = val;
-            userPilihan = produk_beli;
-            $(".section-search-user").css("display", "flex");
-          }
-
-          $(".blankLoad").css("display", "none");
-          document.body.style.overflowY = "auto";
-        }
-      },
-      error: (err) => {
-        alert("error");
-        console.log(err);
-      },
-    });
+    allUser = "all";
+    if (produk_beli == "all") {
+      $("#user_permit").val(allUser);
+      $("#user_permitted1").attr("checked", true);
+      $(".blankLoad").css("display", "none");
+      document.body.style.overflowY = "auto";
+    } else {
+      userPilihan = produk_beli;
+      $("#user_permit").val(produk_beli);
+      $("#user_permitted2").attr("checked", true);
+      $(".section-search-user").css("display", "flex");
+      userPilihan.split(",").map((user) => {
+        userPilihanArray = [...userPilihanArray, parseInt(user)];
+      });
+      getUsersList(userPilihan.split(","));
+    }
   }
+}
+
+// * function for get users list
+function getUsersList(users) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/allbuyer",
+    dataType: "json",
+    method: "GET",
+    success: function (res) {
+      if (res.success) {
+        const data = res.data;
+        data.map((result) => {
+          if (users.indexOf(result.id_user.toString()) != -1) {
+            let handler = handlerList(result.email, result.id_user);
+            $("#listUsers").append(handler);
+          }
+        });
+      }
+      $(".blankLoad").css("display", "none");
+      document.body.style.overflowY = "auto";
+    },
+    error: function (err) {
+      console.log(err);
+      $(".blankLoad").css("display", "none");
+      document.body.style.overflowY = "auto";
+    },
+  });
 }
 
 // * function for show update produk content
@@ -1714,13 +1782,13 @@ function updateProduk() {
   // let checkuser = $("#checkUser").val();
 
   let form = new FormData();
-  // if (main_img.length > 0) {
-  //   form.append("gambar", main_img[0]);
-  // }
+  if (main_img.length > 0) {
+    form.append("gambar", main_img[0]);
+  }
 
-  // if (other_img.length > 0) {
-  //   form.append("gambar_lain", other_img[0]);
-  // }
+  if (other_img.length > 0) {
+    form.append("gambar_lain", other_img[0]);
+  }
 
   form.append("gambar_old", $("#img_main_old").val());
   form.append("gambar_lain_old", $("#img_other_old").val());
@@ -1775,6 +1843,10 @@ function updateProduk() {
             confirmButtonAriaLabel: "Thumbs up, great!",
             cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
             cancelButtonAriaLabel: "Thumbs down",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = BASE_URL + "/toko/" + $("#id_toko").val();
+            }
           });
         }
       } else {
@@ -1797,6 +1869,10 @@ function updateProduk() {
           confirmButtonAriaLabel: "Thumbs up, great!",
           cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
           cancelButtonAriaLabel: "Thumbs down",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = BASE_URL + "/toko/" + $("#id_toko").val();
+          }
         });
       }
     },
@@ -1847,15 +1923,7 @@ function checkout(idToko, harga, nama_barang, user_beli) {
 
   const id_user = auth.id_user;
   const user_beli_split = user_beli.split(",");
-  if (user_beli_split.indexOf(id_user.toString()) == -1) {
-    $(".blankLoad").hide();
-    document.body.style.overflowY = "auto";
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Kamu tidak diizinkan membeli barang ini!",
-    });
-  } else {
+  if (user_beli == "all") {
     // * mulai transaksi
 
     let today = new Date();
@@ -1938,71 +2006,131 @@ function checkout(idToko, harga, nama_barang, user_beli) {
           title: "Error Pesan Produk",
         });
         const error = err.responseJSON;
-        console.error(err.responseText);
-        console.error(error);
+        console.log(err.responseText);
       },
     });
+  } else {
+    if (user_beli_split.indexOf(id_user.toString()) == -1) {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Kamu tidak diizinkan membeli barang ini!",
+      });
+    } else {
+      // * mulai transaksi
+
+      let today = new Date();
+
+      let date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1 < 10 ? "0" : "") +
+        (today.getMonth() + 1) +
+        "-" +
+        (today.getDate() + 1 < 10 ? "0" : "") +
+        today.getDate() +
+        " " +
+        today.getHours() +
+        ":" +
+        today.getMinutes() +
+        ":" +
+        today.getSeconds();
+
+      let form = new FormData();
+      form.append(
+        "id_produk",
+        document.querySelector("#idProduk").dataset.idproduk
+      );
+      form.append("id_user", auth.id_user);
+      form.append("id_toko", idToko);
+      form.append("tanggal", date);
+      form.append("deskripsi", $("#catatanInp").val());
+      form.append("total_barang", $("#kuantitas").val());
+      form.append("harga", harga);
+      form.append("status", 1);
+      form.append("first_name", auth.first_name);
+      form.append("last_name", auth.last_name);
+      form.append("address", auth.address);
+      form.append("city", auth.city);
+      form.append("postal_code", auth.postal_code);
+      form.append("phone", auth.phone);
+      form.append("country_code", auth.country_code);
+      form.append("barang", nama_barang);
+
+      $.ajax({
+        url: BASE_URL_SERVER + "/payment/midtrans",
+        headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          Authorization: "Bearer " + token,
+        },
+        data: form,
+        method: "POST",
+        dataType: "json",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (res) => {
+          $(".blankLoad").hide();
+          document.body.style.overflowY = "auto";
+          if (res.status != null) {
+            if (res.status == "Token is Expired") {
+              localStorage.removeItem("token");
+              localStorage.removeItem("auth_session");
+              document.location.href = "/login";
+            }
+          }
+
+          if (res.code == 1) {
+            Toast.fire({
+              icon: "success",
+              title: "Sukses Memesan Produk, selesaikan pembayaran",
+            });
+            let strWindowFeatures =
+              "location=yes,height=650,width=520,scrollbars=yes,status=yes";
+            let URL = res.redirect_url;
+            window.open(URL, "_blank", strWindowFeatures);
+          }
+        },
+        error: (err) => {
+          $(".blankLoad").hide();
+          document.body.style.overflowY = "auto";
+          Toast.fire({
+            icon: "error",
+            title: "Error Pesan Produk",
+          });
+          const error = err.responseJSON;
+          console.error(err.responseText);
+          console.error(error);
+        },
+      });
+    }
   }
 }
 
-// * function for show history
-function showHistory(data) {
-  let dataProduk = [];
-  data.map((d) => {
-    $.ajax({
-      url: BASE_URL_SERVER + "/produk/" + d.id_produk,
-      type: "GET",
-      success: (res) => {
-        dataProduk = [...dataProduk, res.data];
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  });
-
-  setTimeout(() => {
-    if (dataProduk.length > 0) {
-      setHistory(data, dataProduk);
-    } else {
-      setTimeout(() => {
-        if (dataProduk.length > 0) {
-          setHistory(data, dataProduk);
-        } else {
-          $("#history").html(
-            errorHistory(
-              "Unable to connect,</br> check your internet connection"
-            )
-          );
-        }
-      }, 5000);
-    }
-  }, 3000);
-}
 
 // * function for show data history
-function setHistory(dataHistory, dataProduk) {
-  let i = 0;
+function setHistory(data) {
   let handler = `<div class="container">`;
-  dataHistory.map((data) => {
-    handler += setHistoryProduk(data, dataProduk[i][0]);
-    i++;
+  data.map((data) => {
+    handler += setHistoryProduk(data);
   });
   handler += "</div>";
   $("#history").html(handler);
 }
 
-function setHistoryProduk(data, produk) {
+function setHistoryProduk(data) {
   let handler = /* html */ `
   <div class="produk p-3 mb-3">
     <div class="row">
         <div class="col-md-3">
-            <img src="${BASE_URL}/uploads/produk/${produk.gambar}" alt=""
+            <img src="${BASE_URL}/uploads/produk/${data.gambar}" alt=""
                 class="img-fluid">
         </div>
         <div class="col-md-9">
             <div class="row mt-3">
-                <h4 class="h5">${produk.nama_produk}</h4>
+                <h4 class="h5">${data.nama_produk}</h4>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -2116,14 +2244,3 @@ function handlerTokoCheckout(data, no) {
     `;
   return handler;
 }
-
-// OurTeam
-
-// $(".WrapperOwl").owlCarousel({
-//   margin: 10,
-//   loop: true,
-//   autoWidth: true,
-//   items: 4,
-//   autoplay: true,
-//   URLhashListener: true,
-// });

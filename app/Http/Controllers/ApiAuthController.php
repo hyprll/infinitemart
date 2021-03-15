@@ -309,7 +309,7 @@ class ApiAuthController extends Controller
     public function finduser(Request $request)
     {
         $carian = $request->phone;
-        $find = Users::select('id_user', 'username', 'email', 'phone')->distinct()->where('phone', 'like',"%".$carian."%")->orderby('phone', 'ASC')->get();
+        $find = Users::select('id_user', 'username', 'email', 'phone')->distinct()->where('phone', 'like',"%".$carian."%")->orderby('email', 'ASC')->get();
         if ($find->isEmpty()) {
             return response()->json([
                 'success' => false,

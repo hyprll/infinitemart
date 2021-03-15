@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Checkout;
 use Validator;
 use Illuminate\Support\Facades\Hash;
@@ -11,14 +12,13 @@ use App\Http\Controllers\Controller;
 
 class ApiCheckoutController extends Controller
 {
-     /**
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        
     }
 
     public function checkoutbyid($id_checkout)
@@ -59,7 +59,10 @@ class ApiCheckoutController extends Controller
 
     public function checkoutbyiduser($id_user)
     {
-        $checkout = Checkout::where("id_user", $id_user)->get();
+        $checkout = Checkout::where("checkout.id_user", $id_user)
+            ->join("produk", "produk.id_produk", "=", "checkout.id_produk")
+            ->select("checkout.*", "produk.nama_produk", "produk.gambar")
+            ->get();
 
         if ($checkout->isEmpty()) {
             return response()->json([
@@ -112,7 +115,8 @@ class ApiCheckoutController extends Controller
         ], 200);
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $input  = $request->only("id_produk", "id_user", "id_toko", "tanggal", "deskripsi", "total", "status", "jenis_pembayaran"); //Specify Request
 
         $validation = Validator::make($input, [
