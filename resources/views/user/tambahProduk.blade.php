@@ -114,7 +114,7 @@
                             <div class="row mt-3 section-search-user">
                                 <div class="col-12">
                                     <div class="input-group mb-3">
-                                        <input type="email" class="form-control" placeholder="Cari user dengan email"
+                                        <input type="text" class="form-control" placeholder="Cari user dengan nomor telepon"
                                             aria-describedby="btn-search-user" id="searchUser">
                                         <button class="btn btn-primary" type="button" id="btn-search-user"
                                             style="min-width: 40px">

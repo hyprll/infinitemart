@@ -41,7 +41,8 @@
                         <div class="contentOurTeam mt-2">
                             <h5 class="text-center">Gilang</h5>
                             <p class="text-center">As a Back end Dev</p>
-                            <p class="text-center" style="margin-bottom: 60px;">Membuat 100% Api dengan di backend dengan laravel</p>
+                            <p class="text-center" style="margin-bottom: 60px;">Membuat 100% Api dengan di backend
+                                dengan laravel</p>
                             <div class="d-flex align-items-end justify-content-center position-absolute"
                                 style="bottom: 20px; left: 50%; transform: translateX(-50%);">
                                 <p class="text-center">@langpp</p>
@@ -169,10 +170,27 @@
                         <div class="contentOurTeam mt-2">
                             <h5 class="text-center">Muhammad Rasyid R</h5>
                             <p class="text-center">As a UI/UX design</p>
-                            <p class="text-center" style="margin-bottom: 60px;">Membuat banner</p>
+                            <p class="text-center" style="margin-bottom: 60px;">Membuat banner Dan Memuat Halaman Login
+                            </p>
                             <div class="d-flex align-items-end justify-content-center position-absolute"
                                 style="bottom: 20px; left: 50%; transform: translateX(-50%);">
                                 <p class="text-center">@mrasyido_</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardOurTeam my-3">
+                        <div class="ImgOurTeam d-flex justify-content-center">
+                            <img class="rounded-circle" src="{{asset('img')}}/Profile_AboutUs/Ridwan.jpg" alt=""
+                                style="width: 150px;height:150px">
+                        </div>
+                        <div class="contentOurTeam mt-2">
+                            <h5 class="text-center">Muhammad Ridwan</h5>
+                            <p class="text-center">As a front end Dev</p>
+                            <p class="text-center" style="margin-bottom: 60px;">Membuat Histori
+                            </p>
+                            <div class="d-flex align-items-end justify-content-center position-absolute"
+                                style="bottom: 20px; left: 50%; transform: translateX(-50%);">
+                                <p class="text-center">@mrid.wa.nnn_</p>
                             </div>
                         </div>
                     </div>

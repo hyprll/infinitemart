@@ -438,9 +438,9 @@ if ($("#headTambahProdukContent").length > 0) {
 }
 
 // * javascript for finduser
-function findUser(email) {
+function findUser(phone) {
   $.ajax({
-    url: BASE_URL_SERVER + "/finduser?email=" + email,
+    url: BASE_URL_SERVER + "/finduser?phone=" + phone,
     dataType: "json",
     method: "GET",
     success: function (res) {
@@ -451,7 +451,12 @@ function findUser(email) {
         if (cek == -1) {
           userPilihan += userPilihanLength > 0 ? "," + id_user : id_user;
           userPilihanArray = [...userPilihanArray, id_user];
-          let handler = handlerList(res.data[0].email, id_user);
+          let handler = handlerList(
+            res.data[0].email,
+            id_user,
+            res.data[0].username,
+            res.data[0].phone
+          );
           $("#listUsers").append(handler);
           $("#user_permit").val(userPilihan);
           Toast.fire({
@@ -461,7 +466,7 @@ function findUser(email) {
         } else {
           Toast.fire({
             icon: "error",
-            title: "Email Sudah di list",
+            title: "Nomor Telepon Sudah di list",
           });
         }
       }
@@ -472,7 +477,7 @@ function findUser(email) {
         if (!error.success) {
           Toast.fire({
             icon: "error",
-            title: "Email Not found",
+            title: "Nomor Telepon tidak ditemukan",
           });
         }
       }
@@ -600,12 +605,12 @@ if (btn_delete.length != 0) {
 }
 
 // * function for handlerList
-function handlerList(email, id_user) {
+function handlerList(email, id_user, nama, phone) {
   let handler = /* html */ `
   <li class="list-group-item">
     <div class="row justify-content-between">
         <div class="col d-flex align-items-center">
-            <span>${email}</span>
+            <span>${nama} (${phone}) - ${email}</span>
         </div>
         <div class="col d-flex align-items-center justify-content-end">
             <button class="btn btn-danger btn-delete-user" type="button" data-iduser="${id_user}">
@@ -1659,7 +1664,12 @@ function getUsersList(users) {
         const data = res.data;
         data.map((result) => {
           if (users.indexOf(result.id_user.toString()) != -1) {
-            let handler = handlerList(result.email, result.id_user);
+            let handler = handlerList(
+              result.email,
+              result.id_user,
+              result.username,
+              result.phone
+            );
             $("#listUsers").append(handler);
           }
         });
@@ -2108,7 +2118,6 @@ function checkout(idToko, harga, nama_barang, user_beli) {
     }
   }
 }
-
 
 // * function for show data history
 function setHistory(data) {
