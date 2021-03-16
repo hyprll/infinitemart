@@ -485,6 +485,8 @@ if ($("#img-produk").length > 0) {
   });
 }
 
+const test22 = document.querySelector("#ourteam");
+
 // * javascript for section our team
 if ($("#ourTeam").length > 0) {
   $(".WrapperOwl").owlCarousel({
