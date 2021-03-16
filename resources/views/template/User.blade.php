@@ -40,6 +40,7 @@
   <link rel='stylesheet' href='{{asset("css/bootstrap.min.css")}}'>
   <link rel="icon" href="{{asset("img/logo_transparent.png")}}">
   <link rel="stylesheet" href="{{asset("css/".$css)}}">
+  <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 
   <!-- owl carausel -->
   <link rel="stylesheet" href="{{asset("css/owl.carousel.min.css")}}">

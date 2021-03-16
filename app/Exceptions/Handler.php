@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -36,5 +37,17 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($this->isHttpException($e)) {
+            $code = $e->getStatusCode();
+
+            if ($code == '404') {
+                return response()->view('NotFound/404');
+            }
+        }
+        return parent::render($request, $e);
     }
 }

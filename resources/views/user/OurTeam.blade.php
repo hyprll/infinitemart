@@ -58,7 +58,7 @@
                             <h5 class="text-center">M.Raqwan.Khautar</h5>
                             <p class="text-center">As a front end Dev</p>
                             <p class="text-center" style="margin-bottom: 60px;">Membuat 60% Front End HTML dan CSS
-                                di halaman user, membuat register,
+                                di halaman user, membuat register, membuat halaman not found
                                 membuat 100% Front End HTML dan CSS di halaman Admin, membuat 50% Front End
                                 Javascript di halaman Admin</p>
                             <div class="d-flex align-items-end justify-content-center position-absolute"

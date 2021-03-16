@@ -18,7 +18,7 @@
                                     placeholder="Laper Pengen Seblak" name="keyword" autocomplete="off" id="keywordSearch"
                                     value="{{isset($keyword) ? $keyword : ""}}">
                                 <button class="btn mx-2" type="submit">
-                                    <img src="{{asset("img/icon/ikon-search-btn.png")}}" alt="">
+                                    <i class="fas fa-search" style="transform: rotate(90deg); font-size: 25px; color: white;"></i>
                                 </button>
                             </div>
                         </form>
