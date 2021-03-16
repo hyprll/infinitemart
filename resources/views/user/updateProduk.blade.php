@@ -89,7 +89,7 @@
                     <div class="col-md-6">
                         <div class="inputValue d-flex flex-column mt-3">
                             <label for="" class="mb-2">User Di Izinkan</label>
-                            <input type="text" class="form-control" name="user_permit" id="user_permit">
+                            <input type="hidden" class="form-control d-none" name="user_permit" id="user_permit">
                             <small class="text-danger validation-other"></small>
                             <div class="row">
                                 <div class="col-md-6">
@@ -115,7 +115,7 @@
                             <div class="row mt-3 section-search-user">
                                 <div class="col-12">
                                     <div class="input-group mb-3">
-                                        <input type="email" class="form-control" placeholder="Cari user dengan email"
+                                        <input type="email" class="form-control" placeholder="Cari user dengan nomor telepon"
                                             aria-describedby="btn-search-user" id="searchUser">
                                         <button class="btn btn-primary" type="button" id="btn-search-user"
                                             style="min-width: 40px">
