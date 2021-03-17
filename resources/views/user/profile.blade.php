@@ -1,4 +1,4 @@
-@extends('template.user')
+@extends('template.User')
 
 @section('title', "My Profile | InfiniteMart")
 

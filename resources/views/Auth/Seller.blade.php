@@ -1,4 +1,4 @@
-@extends('auth/template/Auth')
+@extends('Auth/template/Auth')
 
 @section("title", "Seller | InfiniteMart")
 
