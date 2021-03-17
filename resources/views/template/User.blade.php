@@ -12,10 +12,10 @@
   @if ($middleware == "auth")
   <script type="text/javascript">
     if (auth == null) {
-            window.location.href = "/login";
+            window.location.href = "http://127.0.0.1:8000/login";
         }else {
             if (auth.role != 2) {
-                window.location.href = "/dashboard";
+              window.location.href = "http://127.0.0.1:8000/dashboard";
             } 
         }
   </script>
