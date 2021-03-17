@@ -37,23 +37,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>@yield('title')</title>
-  <link rel='stylesheet' href='{{asset("css/bootstrap.min.css")}}'>
-  <link rel="icon" href="{{asset("img/logo_transparent.png")}}">
-  <link rel="stylesheet" href="{{asset("css/".$css)}}">
+  <link rel='stylesheet' href='{{url("/")}}/public/css/bootstrap.min.css'>
+  <link rel="icon" href="{{url("/")}}/public/img/logo_transparent.png">
+  <link rel="stylesheet" href="{{url("/")}}/public/css/{{$css}}">
   <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 
   <!-- owl carausel -->
-  <link rel="stylesheet" href="{{asset("css/owl.carousel.min.css")}}">
-  <link rel="stylesheet" href="{{asset("css/owl.theme.default.min.css")}}">
+  <link rel="stylesheet" href="{{url("/")}}/public/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="{{url("/")}}/public/css/owl.theme.default.min.css">
 
   <!-- data table -->
-  <link rel="stylesheet" href="{{asset("css/DataTable/dataTables.bootstrap4.min.css")}}">
-  <link rel="stylesheet" href="{{asset("css/DataTable/responsive.bootstrap4.min.css")}}">
+  <link rel="stylesheet" href="{{url("/")}}/public/css/DataTable/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="{{url("/")}}/public/css/DataTable/responsive.bootstrap4.min.css">
 </head>
 
 <body>
   <div class="blankLoad">
-    <img src="{{asset("img/gif/roll1.gif")}}" alt="" width="100px">
+    <img src="{{url("/")}}/public/img/gif/roll1.gif" alt="" width="100px">
   </div>
 
   @include('template.navbar')
@@ -65,23 +65,23 @@
   @include('template.footer')
 
 </body>
-<script src="{{asset("Js/popper.min.js")}}" async defer></script>
-<script src="{{asset("Js/bootstrap.min.js")}}" async defer></script>
+<script src="{{url("/")}}/public/Js/popper.min.js" async defer></script>
+<script src="{{url("/")}}/public/Js/bootstrap.min.js" async defer></script>
 <script src="https://code.iconify.design/1/1.0.6/iconify.min.js" async defer></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
-<script src="{{asset("Js/owl.carousel.min.js")}}"></script>
-<script src="{{asset("Js/FormatMoney.js")}}"></script>
+<script src="{{url("/")}}/public/Js/owl.carousel.min.js"></script>
+<script src="{{url("/")}}/public/Js/FormatMoney.js"></script>
 <!-- DataTables -->
-<script src="{{asset("js/DataTable/jquery.dataTables.min.js")}}"></script>
-<script src="{{asset("js/DataTable/dataTables.bootstrap4.min.js")}}"></script>
-<script src="{{asset("js/DataTable/dataTables.responsive.min.js")}}"></script>
-<script src="{{asset("js/DataTable/responsive.bootstrap4.min.js")}}"></script>
+<script src="{{url("/")}}/public/js/DataTable/jquery.dataTables.min.js"></script>
+<script src="{{url("/")}}/public/js/DataTable/dataTables.bootstrap4.min.js"></script>
+<script src="{{url("/")}}/public/js/DataTable/dataTables.responsive.min.js"></script>
+<script src="{{url("/")}}/public/js/DataTable/responsive.bootstrap4.min.js"></script>
 
 
-<script src="{{asset("Js/App.js")}}"></script>
-<script src="{{asset("Js/Home.js")}}"></script>
+<script src="{{url("/")}}/public/Js/App.js"></script>
+<script src="{{url("/")}}/public/Js/Home.js"></script>
 <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous" async defer></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>

@@ -7,12 +7,12 @@ let userPilihanArray = [];
 let btnAuth = "";
 if (auth == null) {
   btnAuth = `
-      <a href="/login"" class="btn btn-login">Login</a>&nbsp;&nbsp;
-      <a href="/register" class="btn btn-signup">Sign up</a>
+      <a href="${BASE_URL}/login"" class="btn btn-login">Login</a>&nbsp;&nbsp;
+      <a href="${BASE_URL}/register" class="btn btn-signup">Sign up</a>
       `;
 } else {
   btnAuth = `
-      <a href="/profile" class="btn btn-signup">Profile</a>
+      <a href="${BASE_URL}/profile" class="btn btn-signup">Profile</a>
       `;
 }
 
@@ -54,16 +54,16 @@ if ($("#biodata").length > 0) {
 
           let handlerCardMenu = /* html */ `
             <i class="fas fa-user user-left"></i>
-            <a href="/profile" class="profile-card-left" type="button">My Profile</a>
+            <a href="${BASE_URL}/profile" class="profile-card-left" type="button">My Profile</a>
             ${
               hasToko
                 ? `<i class="fas fa-store-alt store-left"></i>
-            <a href="toko/${idToko}" class="store-card-left" type="button">Toko Saya</a>`
+            <a href="${BASE_URL}/toko/${idToko}" class="store-card-left" type="button">Toko Saya</a>`
                 : `<i class="fas fa-store-alt store-left"></i>
-            <a href="/seller" class="store-card-left" type="button">Buat Toko</a>`
+            <a href="${BASE_URL}/seller" class="store-card-left" type="button">Buat Toko</a>`
             }
             <i class="fas fa-history history-left"></i>
-            <a href="/history" class="history-card-left" type="button">History</a>
+            <a href="${BASE_URL}/history" class="history-card-left" type="button">History</a>
 
             <i class="fas fa-sign-in-alt logout-left"></i>
             <label for="label-left" class="logout-card-left" type="button" id="logoutBtn">
@@ -86,7 +86,7 @@ if ($("#biodata").length > 0) {
     if (e.target.getAttribute("id") == "logoutBtn") {
       localStorage.removeItem("token");
       localStorage.removeItem("auth_session");
-      document.location.href = "/login";
+      document.location.href = BASE_URL + "/login";
     } else if (e.target.getAttribute("id") == "btn-update-profile") {
       updateProfile();
     }
@@ -96,7 +96,7 @@ if ($("#biodata").length > 0) {
 // * javascript for section history
 if ($("#history").length > 0) {
   if (auth == null) {
-    document.location.href = "/login";
+    document.location.href = BASE_URL + "/login";
   }
 
   $("#user-profil-name").html(`${auth.username}`);
@@ -117,16 +117,16 @@ if ($("#history").length > 0) {
 
           let handlerCardMenu = /* html */ `
             <i class="fas fa-user user-left"></i>
-            <a href="/profile" class="profile-card-left" type="button">My Profile</a>
+            <a href="${BASE_URL}/profile" class="profile-card-left" type="button">My Profile</a>
             ${
               hasToko
                 ? `<i class="fas fa-store-alt store-left"></i>
-            <a href="toko/${idToko}" class="store-card-left" type="button">Toko Saya</a>`
+            <a href="${BASE_URL}/toko/${idToko}" class="store-card-left" type="button">Toko Saya</a>`
                 : `<i class="fas fa-store-alt store-left"></i>
-            <a href="/seller" class="store-card-left" type="button">Buat Toko</a>`
+            <a href="${BASE_URL}/seller" class="store-card-left" type="button">Buat Toko</a>`
             }
             <i class="fas fa-history history-left"></i>
-            <a href="/history" class="history-card-left" type="button">History</a>
+            <a href="${BASE_URL}/history" class="history-card-left" type="button">History</a>
 
             <i class="fas fa-sign-in-alt logout-left"></i>
             <label for="label-left" class="logout-card-left" type="button" id="logoutBtn">
@@ -162,7 +162,7 @@ if ($("#history").length > 0) {
     if (e.target.getAttribute("id") == "logoutBtn") {
       localStorage.removeItem("token");
       localStorage.removeItem("auth_session");
-      document.location.href = "/login";
+      document.location.href = BASE_URL + "/login";
     }
   });
 }
@@ -187,7 +187,7 @@ if ($(".headerCarousel2").length > 0) {
 // * Javascript for section add produk
 if ($("#btn-upload-produk").length > 0) {
   if (auth == null) {
-    document.location.href = "/login";
+    document.location.href = BASE_URL + "/login";
   }
   $(".blankLoad").css("display", "flex");
   document.body.style.overflowY = "hidden";
@@ -501,11 +501,11 @@ if ($("#img-produk").length > 0) {
       if (res.success) {
         $("#img-produk").attr(
           "src",
-          BASE_URL + `/uploads/produk/${res.data[0].gambar}`
+          BASE_URL_FILE + `/uploads/produk/${res.data[0].gambar}`
         );
         $("#img-produk-lainnya").attr(
           "src",
-          BASE_URL + `/uploads/produk/${res.data[0].gambar_lain}`
+          BASE_URL_FILE + `/uploads/produk/${res.data[0].gambar_lain}`
         );
         $("#produkName").html(res.data[0].nama_produk);
         $("#produkFare").html(formatter.toRupiah(res.data[0].harga));
@@ -521,7 +521,7 @@ if ($("#img-produk").length > 0) {
             if (res.success) {
               $("#logoToko").attr(
                 "src",
-                BASE_URL + `/uploads/toko/${res.data[0].logo}`
+                BASE_URL_FILE + `/uploads/toko/${res.data[0].logo}`
               );
               $("#tokoName").attr("href", `/toko/${res.data[0].id_toko}`);
               $("#tokoName").html(res.data[0].nama_toko);
@@ -944,11 +944,12 @@ function showTokoProduk(idToko, myStore = false) {
           handler += /* html */ `
           <div class="col-md-3">
             <div class="sellerCard-Barang mb-4 pb-3">
-              <a href="/detail/${
+              <a href="${BASE_URL}/detail/${
                 result.id_produk
               }" style="text-decoration: none;color:inherit;">
                   <div class="topImg-seller d-flex justify-content-center">
-                      <img src=" ${BASE_URL}/uploads/produk/${result.gambar} "
+                      <img 
+                      src="${BASE_URL_FILE}/uploads/produk/${result.gambar} "
                           alt="InfiniteMart ${
                             result.nama_produk
                           }" height="250px" class="user-select-none">
@@ -972,11 +973,11 @@ function showTokoProduk(idToko, myStore = false) {
               <div class="container mb-3">
                   <div class="row g-1">
                       <div class="col-9">
-                          <a href="edit/${result.id_produk}" class="btn btn-primary w-100">
+                          <a href="${BASE_URL}edit/${result.id_produk}" class="btn btn-primary w-100">
                           Edit Barang</a>
                       </div>
                       <div class="col-3">
-                          <a href="toko/delete" class="btn btn-danger w-100 btn-delete btn-delete-produk" data-idproduk="${result.id_produk}">
+                          <a href="${BASE_URL}toko/delete" class="btn btn-danger w-100 btn-delete btn-delete-produk" data-idproduk="${result.id_produk}">
                               <i class="fa fa-trash-alt btn-delete-produk" data-idproduk="${result.id_produk}"></i>
                           </a>
                       </div>
@@ -1006,7 +1007,7 @@ function showTokoProduk(idToko, myStore = false) {
         let handler = /* html */ `
         <div class="col-12 my-5">
             <div class="row justify-content-center">
-                <img src="/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
+                <img src="${BASE_URL_FILE}/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
                 <h2 class="text-center">${message}</h2>
             </div>
         </div>
@@ -1030,11 +1031,13 @@ function showAllProduk() {
           handler += /*html*/ `
           <div class="col-md-3">
             <div class="sellerCard-Barang mb-4 pb-3">
-              <a href="/detail/${
+              <a href="${BASE_URL}/detail/${
                 result.id_produk
               }" style="text-decoration: none;color:inherit;">
                   <div class="topImg-seller d-flex justify-content-center">
-                      <img src=" ${BASE_URL}/uploads/produk/${result.gambar} "
+                      <img src="${BASE_URL_FILE}/uploads/produk/${
+            result.gambar
+          } "
                           alt="InfiniteMart ${
                             result.nama_produk
                           }" height="250px" class="user-select-none">
@@ -1094,9 +1097,8 @@ function showTokoDash(idToko) {
         showTokoProduk(idToko, myToko);
         let handlerToko = /* html */ `
         <div class="ProfileImgToko d-flex justify-content-center align-items-center">
-            <img src="${
-              BASE_URL + `/uploads/toko/` + res.data[0].logo
-            }" alt="" class="rounded-circle"
+            <img src="${BASE_URL_FILE + `/uploads/toko/` + res.data[0].logo}"
+             alt="" class="rounded-circle"
             id="logo-img">
         </div>
         <div class="row px-3 no-edit-toko-content">
@@ -1169,7 +1171,7 @@ function showTokoDash(idToko) {
                 <button class="btn w-100 btn-warning" id="btn-history-toko">History Toko</button>
             </div>
             <div class="col-md-3">
-                <a href="/toko/add" class="btn w-100 btn-success">Tambah produk</a>
+                <a ${BASE_URL}/toko/add" class="btn w-100 btn-success">Tambah produk</a>
             </div>
           </div>
           `;
@@ -1331,7 +1333,7 @@ function searchingNow(keyword) {
           <div class="row">
             <div class="col-12 my-5">
                 <div class="row justify-content-center">
-                    <img src="/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
+                    <img src="${BASE_URL_FILE}/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
                     <h2 class="text-center">${res.message}</h2>
                 </div>
             </div>
@@ -1353,11 +1355,12 @@ function showSearchProduk(res) {
     handler += /*html*/ `
           <div class="col-md-3">
             <div class="sellerCard-Barang mb-4 pb-3">
-              <a href="/detail/${
+              <a href="${BASE_URL}/detail/${
                 result.id_produk
               }" style="text-decoration: none;color:inherit;">
                   <div class="topImg-seller d-flex justify-content-center">
-                      <img src=" ${BASE_URL}/uploads/produk/${result.gambar} "
+                      <img 
+                      src="${BASE_URL_FILE}/uploads/produk/${result.gambar}"
                           alt="InfiniteMart ${
                             result.nama_produk
                           }" height="250px" class="user-select-none">
@@ -1508,7 +1511,7 @@ function uploadProduk() {
           icon: "success",
           html:
             "Success Add Product, " +
-            '<a href="/toko/' +
+            '<a href="'+BASE_URL+'/toko/' +
             $("#id_toko").val() +
             ">See Product now</a> ",
           showCloseButton: false,
@@ -1516,7 +1519,7 @@ function uploadProduk() {
           allowOutsideClick: false,
           focusConfirm: true,
           confirmButtonText:
-            '<a href="/toko/' +
+            '<a href="'+BASE_URL+'/toko/' +
             $("#id_toko").val() +
             '" style="color:inherit;text-decoration:none">See Product Now</a>',
           confirmButtonAriaLabel: "Thumbs up, great!",
@@ -1574,14 +1577,14 @@ function updateTokoDash() {
     type: "GET",
     success: (res) => {
       if (!res.success) {
-        window.location.href = "/";
+        window.location.href = BASE_URL +  "/";
       } else {
         getProduk(res.data[0].id_toko);
       }
     },
     error: (err) => {
       console.log(err);
-      document.location.href = "/";
+      document.location.href = BASE_URL + "/";
     },
   });
 
@@ -1606,11 +1609,11 @@ function updateTokoDash() {
 
           $("#main_img_preview").attr(
             "src",
-            `${BASE_URL}/uploads/produk/${res.data[0].gambar}`
+            `${BASE_URL_FILE}/uploads/produk/${res.data[0].gambar}`
           );
           $("#other_img_preview").attr(
             "src",
-            `${BASE_URL}/uploads/produk/${res.data[0].gambar_lain}`
+            `${BASE_URL_FILE}/uploads/produk/${res.data[0].gambar_lain}`
           );
 
           $("#img_main_old").val(res.data[0].gambar);
@@ -1841,7 +1844,7 @@ function updateProduk() {
             icon: "success",
             html:
               "Success Update Product, " +
-              '<a href="/toko/' +
+              '<a href="'+BASE_URL+'/toko/' +
               $("#id_toko").val() +
               ">See Product now</a> ",
             showCloseButton: false,
@@ -1849,7 +1852,7 @@ function updateProduk() {
             allowOutsideClick: false,
             focusConfirm: true,
             confirmButtonText:
-              '<a href="/toko/' +
+              '<a href="'+BASE_URL+'/toko/' +
               $("#id_toko").val() +
               '" style="color:inherit;text-decoration:none">See Product Now</a>',
             confirmButtonAriaLabel: "Thumbs up, great!",
@@ -1867,7 +1870,7 @@ function updateProduk() {
           icon: "success",
           html:
             "Success Update Product, " +
-            '<a href="/toko/' +
+            '<a href="'+BASE_URL+'/toko/' +
             $("#id_toko").val() +
             ">See Product now</a> ",
           showCloseButton: false,
@@ -1875,7 +1878,7 @@ function updateProduk() {
           allowOutsideClick: false,
           focusConfirm: true,
           confirmButtonText:
-            '<a href="/toko/' +
+            '<a href="'+BASE_URL+'/toko/' +
             $("#id_toko").val() +
             '" style="color:inherit;text-decoration:none">See Product Now</a>',
           confirmButtonAriaLabel: "Thumbs up, great!",
@@ -2136,7 +2139,7 @@ function setHistoryProduk(data) {
   <div class="produk p-3 mb-3">
     <div class="row">
         <div class="col-md-3">
-            <img src="${BASE_URL}/uploads/produk/${data.gambar}" alt=""
+            <img src="${BASE_URL_FILE}/uploads/produk/${data.gambar}" alt=""
                 class="img-fluid">
         </div>
         <div class="col-md-9">
@@ -2173,7 +2176,7 @@ function setHistoryProduk(data) {
 function loadingHistory() {
   let handler = /* html */ `
   <div class="loadingHistory d-flex justify-content-center align-items-center" style="width: 100%;min-height:450px">
-    <img src="${BASE_URL}/img/gif/roll1.gif" alt="" style="width: 100px">
+    <img src="${BASE_URL_FILE}/img/gif/roll1.gif" alt="" style="width: 100px">
   </div>
   `;
 
@@ -2185,7 +2188,7 @@ function errorHistory(message) {
   <div class="loadingHistory d-flex justify-content-center align-items-center"
   style="width: 100%;min-height:450px">
     <div class="row justify-content-center">
-        <img src="${BASE_URL}/img/character/intip.png" alt="" style="width: 450px">
+        <img src="${BASE_URL_FILE}/img/character/intip.png" alt="" style="width: 450px">
         <h3 class="h2 text-center mt-3">${message}</h3>
     </div>
   </div>
@@ -2215,7 +2218,7 @@ function getHistoryToko(id_toko) {
       let handler = /* html */ `
         <div class="col-12 my-5">
             <div class="row justify-content-center">
-                <img src="/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
+                <img src="${BASE_URL_FILE}/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
                 <h2 class="text-center">No history yet</h2>
             </div>
         </div>
