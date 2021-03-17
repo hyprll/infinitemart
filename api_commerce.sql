@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Mar 2021 pada 05.58
+-- Waktu pembuatan: 17 Mar 2021 pada 05.01
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 8.0.0
 
@@ -112,7 +112,8 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga`, `gambar`, `id_toko`, 
 (33, 'Erennn', 1000000, 'produk-1614840202.jpg', 18, '18', 'produk_lain-1614840202.jpg', '2021-03-03 23:43:22', '2021-03-03 23:43:22'),
 (34, 'pancaran', 2000, 'produk-1614840641.jpg', 19, '11,5,18,22,10,14,21', 'produk_lain-1614840641.jpg', '2021-03-03 23:50:41', '2021-03-03 23:50:41'),
 (35, 'icon wa grup', 1400000000, 'produk-1615265390.png', 17, 'all', 'produk_lain-1615265390.png', '2021-03-08 21:49:50', '2021-03-09 01:43:50'),
-(37, 'skecth', 900000, 'produk-1615357473.jpg', 17, 'all', 'produk_lain-1615357473.jpg', '2021-03-09 23:24:33', '2021-03-09 23:24:33');
+(37, 'skecth', 900000, 'produk-1615357473.jpg', 17, 'all', 'produk_lain-1615357473.jpg', '2021-03-09 23:24:33', '2021-03-09 23:24:33'),
+(40, 'Topi Jerami', 950000, 'produk-1615874783.png', 20, '24,20,18,17,21', 'produk_lain-1615874783.png', '2021-03-15 23:06:23', '2021-03-15 23:15:41');
 
 -- --------------------------------------------------------
 
@@ -229,7 +230,7 @@ ALTER TABLE `checkout`
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT untuk tabel `toko`
