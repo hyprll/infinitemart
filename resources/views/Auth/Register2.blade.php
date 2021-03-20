@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <div class="row g-1">
                                         <div class="col-3">
-                                            <input type="text"
+                                            <input style="font-size: 15px;" type="text"
                                             class="text-center w-100 form-control bg-white"
                                             value="+62" disabled>
                                         </div>

@@ -114,3 +114,6 @@ Route::get("/login2", function () {
 Route::get("/register2", function () {
     return view('Auth/Register2');
 });
+Route::get("/seller2", function () {
+    return view('Auth/Seller2');
+});
