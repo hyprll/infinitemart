@@ -54,7 +54,7 @@ $(function () {
               allowOutsideClick: false,
               focusConfirm: true,
               confirmButtonText:
-                '<a href="/login" style="color:inherit;text-decoration:none"><i class="fa fa-thumbs-up"></i> Login Now!</a>',
+                `<a href="/login" style="color:inherit;text-decoration:none"><i class="fa fa-thumbs-up"></i> Login Now!</a>`,
               confirmButtonAriaLabel: "Thumbs up, great!",
               cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
               cancelButtonAriaLabel: "Thumbs down",
