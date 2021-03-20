@@ -13548,7 +13548,7 @@ input {
     }
 }
 .default-slider-nav-arrow .swiper-button-prev::after {
-    content: "";
+    content: "";
 }
 .default-slider-nav-arrow .swiper-button-next {
     right: 30;
@@ -13569,7 +13569,7 @@ input {
     }
 }
 .default-slider-nav-arrow .swiper-button-next::after {
-    content: "";
+    content: "";
 }
 .gallery-thumb-arrow.swiper-button-prev {
     left: 0;

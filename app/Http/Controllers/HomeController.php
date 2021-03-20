@@ -15,7 +15,7 @@ class HomeController extends Controller
             "middleware" => "user"
         ];
 
-        return view("user/home", $data);
+        return view("user/home2", $data);
     }
 
     public function toko($id)
