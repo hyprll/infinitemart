@@ -3,18 +3,6 @@
 @section('title', "Home | InfiniteMart")
 
 @section('content')
-
-
-<!-- Start Offcanvas Search Bar Section -->
-<div id="search" class="search-modal">
-    <button type="button" class="close">×</button>
-    <form>
-        <input type="search" placeholder="type keyword(s) here" />
-        <button type="submit" class="btn btn-lg btn-golden">Search</button>
-    </form>
-</div>
-<!-- End Offcanvas Search Bar Section -->
-
 <!-- Offcanvas Overlay -->
 <div class="offcanvas-overlay"></div>
 
@@ -100,22 +88,22 @@
                                 <div class="product-large-image modal-product-image-large swiper-container">
                                     <div class="swiper-wrapper">
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="assets/images/product/default/home-1/default-1.jpg" alt="">
+                                            <img src="{{asset('img')}}/product/default/home-1/default-1.jpg" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="assets/images/product/default/home-1/default-2.jpg" alt="">
+                                            <img src="{{asset('img')}}product/default/home-1/default-2.jpg" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="assets/images/product/default/home-1/default-3.jpg" alt="">
+                                            <img src="{{asset('img')}}product/default/home-1/default-3.jpg" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="assets/images/product/default/home-1/default-4.jpg" alt="">
+                                            <img src="{{asset('img')}}product/default/home-1/default-4.jpg" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="assets/images/product/default/home-1/default-5.jpg" alt="">
+                                            <img src="{{asset('img')}}product/default/home-1/default-5.jpg" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="assets/images/product/default/home-1/default-6.jpg" alt="">
+                                            <img src="{{asset('img')}}product/default/home-1/default-6.jpg" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -126,27 +114,27 @@
                                     <div class="swiper-wrapper">
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                src="assets/images/product/default/home-1/default-1.jpg" alt="">
+                                                src="{{asset('img')}}product/default/home-1/default-1.jpg" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                src="assets/images/product/default/home-1/default-2.jpg" alt="">
+                                                src="{{asset('img')}}product/default/home-1/default-2.jpg" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                src="assets/images/product/default/home-1/default-3.jpg" alt="">
+                                                src="{{asset('img')}}product/default/home-1/default-3.jpg" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                src="assets/images/product/default/home-1/default-4.jpg" alt="">
+                                                src="{{asset('img')}}product/default/home-1/default-4.jpg" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                src="assets/images/product/default/home-1/default-5.jpg" alt="">
+                                                src="{{asset('img')}}product/default/home-1/default-5.jpg" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                src="assets/images/product/default/home-1/default-6.jpg" alt="">
+                                                src="{{asset('img')}}product/default/home-1/default-6.jpg" alt="">
                                         </div>
                                     </div>
                                     <!-- Add Arrows -->

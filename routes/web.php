@@ -101,9 +101,16 @@ Route::get("/DataUser", [TotalUserController::class, "index"]);
 
 
 Route::get("/OurTeam", [OurTeamController::class, "index"]);
+
 Route::get("/user2", function () {
     return view('user/home2');
 });
 Route::get("/detail2", function () {
     return view('user/detail2');
+});
+Route::get("/login2", function () {
+    return view('Auth/Login2');
+});
+Route::get("/register2", function () {
+    return view('Auth/Register2');
 });

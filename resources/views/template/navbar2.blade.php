@@ -31,7 +31,13 @@
                                         <!-- Sub Menu -->
                                         <ul class="sub-menu">
                                             <li><a href="#">Profile</a></li>
-                                            <li><a href="">Open Store</a></li>
+                                            <li><a href="#">Open Store</a></li>
+                                            <li>
+                                                <a href="#">Sign In</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Sign Up</a>
+                                            </li>
                                             <li><a href="#">Logout</a></li>
                                         </ul>
                                     </li>
@@ -110,7 +116,7 @@
 <div id="mobile-menu-offcanvas" class="offcanvas offcanvas-rightside offcanvas-mobile-menu-section">
     <!-- Start Offcanvas Header -->
     <div class="offcanvas-header text-right">
-        <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+        <button class="offcanvas-close"><i class="fas fa-times"></i></button>
     </div> <!-- End Offcanvas Header -->
     <!-- Start Offcanvas Mobile Menu Wrapper -->
     <div class="offcanvas-mobile-menu-wrapper">
@@ -129,13 +135,25 @@
                         <a href="#"><span>Account</span></a>
                         <ul class="mobile-sub-menu">
                             <li>
-                                <a href="blog-full-width.html">Profile</a>
+                                <a href="#">Profile</a>
                             </li>
                             <li>
-                                <a href="blog-full-width.html">Open Store</a>
+                                <a href="#">Open Store</a>
                             </li>
                             <li>
-                                <a href="blog-full-width.html">Logout</a>
+                                <a href="#">More 
+                                    <ul class="mobile-sub-menu">
+                                        <li>
+                                            <a href="#">Sign In</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sign Up</a>
+                                        </li>
+                                    </ul> 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">Logout</a>
                             </li>
                         </ul>
                     </li>
