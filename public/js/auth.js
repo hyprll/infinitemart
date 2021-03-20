@@ -48,13 +48,17 @@ $(function () {
             Swal.fire({
               title: "<strong>Register Successful</strong>",
               icon: "success",
-              html: "Register Successful, " + '<a href="/login">Login Now</a> ',
+              html: "Register Successful, " + `<a href="${BASE_URL}/login">Login Now</a> `,
               showCloseButton: false,
               showCancelButton: false,
               allowOutsideClick: false,
               focusConfirm: true,
               confirmButtonText:
+<<<<<<< HEAD
                 `<a href="/login" style="color:inherit;text-decoration:none"><i class="fa fa-thumbs-up"></i> Login Now!</a>`,
+=======
+                `<a href="${BASE_URL}/login" style="color:inherit;text-decoration:none"><i class="fa fa-thumbs-up"></i> Login Now!</a>`,
+>>>>>>> 9e0c711c6f6d05b8b6baab4427a1a3ae3b0812dc
               confirmButtonAriaLabel: "Thumbs up, great!",
               cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
               cancelButtonAriaLabel: "Thumbs down",
@@ -152,9 +156,9 @@ $(function () {
               );
               localStorage.setItem("token", response.token.original.token);
               if (response.data.role == 1) {
-                document.location.href = "/dashboard";
+                document.location.href = BASE_URL + "/dashboard";
               } else {
-                document.location.href = "/";
+                document.location.href = BASE_URL +  "/";
               }
             }
           },
@@ -215,7 +219,7 @@ $(function () {
           processData: false,
           success: (res) => {
             $(".blankLoad").hide();
-            document.location.href = "/toko/" + res.data.id_toko;
+            document.location.href = BASE_URL + "/toko/" + res.data.id_toko;
           },
           error: (err) => {
             $(".blankLoad").hide();

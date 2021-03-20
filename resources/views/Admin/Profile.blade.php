@@ -33,10 +33,10 @@
     <div class="col-md-4">
         <div class="cardProfileAdmin">
             <div class="topImgProfile">
-                <img src="{{asset('img')}}/header/car1.jpg" alt="">
+                <img src="{{asset('img')}}/public/header/car1.jpg" alt="">
             </div>
             <div class="contentProfile-right d-flex justify-content-center align-items-center">
-                <img src="{{asset('img')}}/Produk/gelasPink.png" class="rounded-circle clickBtnProfile" alt="">
+                <img src="{{asset('img')}}/public/Produk/gelasPink.png" class="rounded-circle clickBtnProfile" alt="">
                 <div class="editImgAdmin">
                     <i class="material-icons btnEdit">edit</i>
                     <div class="infoEdit-Lanjutan">

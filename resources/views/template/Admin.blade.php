@@ -11,10 +11,10 @@
   @if ($middleware == "admin")
   <script type="text/javascript">
     if (auth == null) {
-    window.location.href = "/login";
+    window.location.href = "http://127.0.0.1:8000/login";
     } else {
       if (auth.role != 1) {
-        window.location.href = "/";
+        window.location.href = "http://127.0.0.1:8000";
       } 
     }
   </script>
@@ -34,14 +34,14 @@
 
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css">
 
-  <link rel="stylesheet" href="{{asset('css')}}/Admin.css">
-  <link rel="icon" href="{{asset('img')}}/logo_transparent.png">
+  <link rel="stylesheet" href="{{asset('public/css')}}/Admin.css">
+  <link rel="icon" href="{{asset('public/img')}}/logo_transparent.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
   <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 
   <!-- data table -->
-  <link rel="stylesheet" href="{{asset("css/DataTable/dataTables.bootstrap4.min.css")}}">
-  <link rel="stylesheet" href="{{asset("css/DataTable/responsive.bootstrap4.min.css")}}">
+  <link rel="stylesheet" href="{{asset("public/css/DataTable/dataTables.bootstrap4.min.css")}}">
+  <link rel="stylesheet" href="{{asset("public/css/DataTable/responsive.bootstrap4.min.css")}}">
 
   <title>@yield("title")</title>
 </head>
@@ -150,17 +150,17 @@
 
 
   <!-- DataTables -->
-  <script src="{{asset("js/DataTable/jquery.dataTables.min.js")}}"></script>
-  <script src="{{asset("js/DataTable/dataTables.bootstrap4.min.js")}}"></script>
-  <script src="{{asset("js/DataTable/dataTables.responsive.min.js")}}"></script>
-  <script src="{{asset("js/DataTable/responsive.bootstrap4.min.js")}}"></script>
+  <script src="{{asset("public/js/DataTable/jquery.dataTables.min.js")}}"></script>
+  <script src="{{asset("public/js/DataTable/dataTables.bootstrap4.min.js")}}"></script>
+  <script src="{{asset("public/js/DataTable/dataTables.responsive.min.js")}}"></script>
+  <script src="{{asset("public/js/DataTable/responsive.bootstrap4.min.js")}}"></script>
 
-  <script src="{{asset('js')}}/apexcharts.min.js"></script>
-  <script src="{{asset('js')}}/sweetalert2.all.min.js"></script>
-  <script src="{{asset('js')}}/NavbarAdmin.js"></script>
-  <script src="{{asset('js')}}/App.js"></script>
-  <script src="{{asset('js')}}/FormatMoney.js"></script>
-  <script src="{{asset('js')}}/{{$JS}}"></script>
+  <script src="{{asset('public/js')}}/apexcharts.min.js"></script>
+  <script src="{{asset('public/js')}}/sweetalert2.all.min.js"></script>
+  <script src="{{asset('public/js')}}/NavbarAdmin.js"></script>
+  <script src="{{asset('public/js')}}/App.js"></script>
+  <script src="{{asset('public/js')}}/FormatMoney.js"></script>
+  <script src="{{asset('public/js')}}/{{$JS}}"></script>
 </body>
 
 </html>
