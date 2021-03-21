@@ -1,5 +1,6 @@
 const formatter = new FormatMoney();
 setNavbar();
+handleLogout();
 
 function setNavbar() {
   let handler = "";
@@ -324,4 +325,15 @@ function showDetail(id_produk) {
       BASE_URL_FILE + "/uploads/produk/" + data.gambar_lain
     );
   }
+}
+
+function handleLogout() {
+  document.body.addEventListener("click", function (e) {
+    if (e.target.getAttribute("id") == "logout-btn") {
+      e.preventDefault();
+      localStorage.removeItem("token");
+      localStorage.removeItem("auth_session");
+      document.location.href = BASE_URL + "/login";
+    }
+  });
 }

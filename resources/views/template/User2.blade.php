@@ -3,6 +3,7 @@
 <script type="text/javascript">
     let auth = JSON.parse(localStorage.getItem("auth_session"));
     const token = localStorage.getItem("token");
+    const store = JSON.parse(localStorage.getItem("store"));
 </script>
 
 <!-- Mirrored from htmldemo.hasthemes.com/hono/hono/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Mar 2021 13:37:00 GMT -->
@@ -45,7 +46,7 @@
         integrity="sha512-QKC1UZ/ZHNgFzVKSAhV5v5j73eeL9EEN289eKAEFaAjgAiobVAnVv/AGuPbXsKl1dNoel3kNr6PYnSiTzVVBCw=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="{{asset('css')}}/vendor/vendor.min.css">
-      <!-- owl carausel -->
+    <!-- owl carausel -->
     <link rel="stylesheet" href="{{asset('css')}}/owl.carousel.min.css">
     <link rel="stylesheet" href="{{asset('css')}}/owl.theme.default.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
@@ -77,7 +78,7 @@
     <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
     <script src="{{asset('js')}}/vendor/vendor.min.js"></script>
     <script src="{{asset('js')}}/plugins.min.js"></script>
-    
+
     <!-- Main JS -->
     <script src="{{asset('js')}}/main.js"></script>
     <script src="{{asset('js')}}/owl.carousel.min.js"></script>
