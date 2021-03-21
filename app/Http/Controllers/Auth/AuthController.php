@@ -14,7 +14,7 @@ class AuthController extends Controller
             "style" => "/css/LoginStyle.css",
             "middleware" => "not_auth"
         ];
-        return view("Auth/Login", $data);
+        return view("Auth/Login2", $data);
     }
 
     public function register()
@@ -23,7 +23,7 @@ class AuthController extends Controller
             "style" => "/css/Register.css",
             "middleware" => "not_auth"
         ];
-        return view("Auth/Register", $data);
+        return view("Auth/Register2", $data);
     }
 
     public function seller()
@@ -32,6 +32,6 @@ class AuthController extends Controller
             "style" => "/css/Seller.css",
             "middleware" => "auth"
         ];
-        return view("Auth/Seller", $data);
+        return view("Auth/Seller2", $data);
     }
 }

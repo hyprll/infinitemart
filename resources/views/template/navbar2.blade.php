@@ -29,17 +29,7 @@
                                     <li class="has-dropdown">
                                         <a href="#">Account <i class="fa fa-angle-down"></i></a>
                                         <!-- Sub Menu -->
-                                        <ul class="sub-menu">
-                                            <li><a href="#">Profile</a></li>
-                                            <li><a href="#">Open Store</a></li>
-                                            <li>
-                                                <a href="#">Sign In</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Sign Up</a>
-                                            </li>
-                                            <li><a href="#">Logout</a></li>
-                                        </ul>
+                                        <ul class="sub-menu" id="nav-account"></ul>
                                     </li>
                                     <li class="has-dropdown">
                                         <a href="blog-single-sidebar-left.html">Our Team</a>
@@ -133,29 +123,7 @@
                     </li>
                     <li>
                         <a href="#"><span>Account</span></a>
-                        <ul class="mobile-sub-menu">
-                            <li>
-                                <a href="#">Profile</a>
-                            </li>
-                            <li>
-                                <a href="#">Open Store</a>
-                            </li>
-                            <li>
-                                <a href="#">More 
-                                    <ul class="mobile-sub-menu">
-                                        <li>
-                                            <a href="#">Sign In</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Sign Up</a>
-                                        </li>
-                                    </ul> 
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">Logout</a>
-                            </li>
-                        </ul>
+                        <ul class="mobile-sub-menu" id="nav-account2"></ul>
                     </li>
                     <li><a href="about-us.html">Our Team</a></li>
                 </ul>

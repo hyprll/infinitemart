@@ -12,7 +12,7 @@ class FormatMoney {
     if (ribuan) {
       separator = sisa ? "." : "";
       rupiah += separator + ribuan.join(".");
-      return `Rp. ${rupiah}`;
+      return `IDR. ${rupiah}`;
     }
   }
 }

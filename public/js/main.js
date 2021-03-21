@@ -129,76 +129,6 @@
         },
     });
 
-
-    /****************************************
-     *   Product Slider Active - 4 Grid 2 Rows
-     *****************************************/
-    var productSlider4grid2row = new Swiper('.product-default-slider-4grid-2row.swiper-container', {
-        slidesPerView: 4,
-        spaceBetween: 30,
-        speed: 1500,
-        slidesPerColumn: 2,
-        slidesPerColumnFill: 'row',
-
-        navigation: {
-            nextEl: '.product-slider-default-2rows .swiper-button-next',
-            prevEl: '.product-slider-default-2rows .swiper-button-prev',
-        },
-
-        breakpoints: {
-
-            0: {
-                slidesPerView: 1,
-            },
-            576: {
-                slidesPerView: 2,
-            },
-            768: {
-                slidesPerView: 2,
-            },
-            992: {
-                slidesPerView: 3,
-            },
-            1200: {
-                slidesPerView: 4,
-            }
-        }
-    });
-
-
-    /*********************************************
-     *   Product Slider Active - 4 Grid Single Rows
-     **********************************************/
-    var productSlider4grid1row = new Swiper('.product-default-slider-4grid-1row.swiper-container', {
-        slidesPerView: 4,
-        spaceBetween: 30,
-        speed: 1500,
-
-        navigation: {
-            nextEl: '.product-slider-default-1row .swiper-button-next',
-            prevEl: '.product-slider-default-1row .swiper-button-prev',
-        },
-
-        breakpoints: {
-
-            0: {
-                slidesPerView: 1,
-            },
-            576: {
-                slidesPerView: 2,
-            },
-            768: {
-                slidesPerView: 2,
-            },
-            992: {
-                slidesPerView: 3,
-            },
-            1200: {
-                slidesPerView: 4,
-            }
-        }
-    });
-
     /*********************************************
      *   Product Slider Active - 4 Grid Single 3Rows
      **********************************************/
@@ -381,27 +311,6 @@
         }
 
     });
-
-    /******************************************************
-     * Quickview Product Gallery - Horizontal
-     ******************************************************/
-    var modalGalleryThumbs = new Swiper('.modal-product-image-thumb', {
-        spaceBetween: 10,
-        slidesPerView: 4,
-        freeMode: true,
-        watchSlidesVisibility: true,
-        watchSlidesProgress: true,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-      });
-
-      var modalGalleryTop = new Swiper('.modal-product-image-large', { 
-        thumbs: {
-          swiper: modalGalleryThumbs
-        }
-      });
 
     /********************************
      * Blog List Slider - Single Slide
