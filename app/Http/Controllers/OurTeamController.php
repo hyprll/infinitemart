@@ -12,6 +12,6 @@ class OurTeamController extends Controller
             "css" => "OurTeam.css",
             "OurTeam" => "Halaman Team"
         ];
-        return view("user/OurTeam", $data);
+        return view("user/OurTeam2", $data);
     }
 }

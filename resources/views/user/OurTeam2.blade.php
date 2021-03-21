@@ -4,6 +4,8 @@
 
 @section('content')
 
+<div id="sectionOurTeamReadonly"></div>
+
 <!-- Start About Top -->
 <div class="about-top mt-5">
     <div class="container">

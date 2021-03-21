@@ -17,7 +17,7 @@ class ProdukController extends Controller
             "middleware" => "user"
         ];
 
-        return view("user.detail", $data);
+        return view("user.detail2", $data);
     }
 
     public function tambahProduk()

@@ -8,7 +8,7 @@
                         <!-- Start Header Logo -->
                         <div class="header-logo">
                             <div class="">
-                                <a href="index.html" class="h2"><img src="assets/images/logo/logo_black.png" alt=""
+                                <a href="{{url("/")}}" class="h2"><img src="assets/images/logo/logo_black.png" alt=""
                                         style="margin-top: -3rem">
                                     InfinityMart
                                 </a>
@@ -21,7 +21,7 @@
                             <nav>
                                 <ul>
                                     <li class="has-dropdown">
-                                        <a class="active main-menu-link" href="/navbar2">Home</a>
+                                        <a class="active main-menu-link" href="{{url("/")}}">Home</a>
                                     </li>
                                     <li class="has-dropdown has-megaitem">
                                         <a href="product-details-default.html">Checkout</a>
@@ -32,7 +32,7 @@
                                         <ul class="sub-menu" id="nav-account"></ul>
                                     </li>
                                     <li class="has-dropdown">
-                                        <a href="/ourTeam2">Our Team</a>
+                                        <a href="{{url("/OurTeam")}}">Our Team</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -125,7 +125,7 @@
                         <a href="#"><span>Account</span></a>
                         <ul class="mobile-sub-menu" id="nav-account2"></ul>
                     </li>
-                    <li><a href="about-us.html">Our Team</a></li>
+                    <li><a href="{{url("/OurTeam")}}">Our Team</a></li>
                 </ul>
             </div> <!-- End Mobile Menu Nav -->
         </div> <!-- End Mobile Menu -->
@@ -150,11 +150,7 @@
                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
             </ul>
 
-            <ul class="user-link">
-                <li><a href="wishlist.html">Wishlist</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
-            </ul>
+            <ul class="user-link" id="nav-slide-link"></ul>
         </div>
         <!-- End Mobile contact Info -->
 
@@ -199,10 +195,7 @@
             <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
         </ul>
 
-        <ul class="user-link">
-            <li><a href="wishlist.html">Profile</a></li>
-            <li><a href="checkout.html">Team</a></li>
-        </ul>
+        <ul class="user-link" id="nav-slide-link2"></ul>
     </div>
     <!-- End Mobile contact Info -->
 </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->

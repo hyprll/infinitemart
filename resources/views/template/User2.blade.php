@@ -77,7 +77,6 @@
     <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
     <script src="{{asset('js')}}/vendor/vendor.min.js"></script>
     <script src="{{asset('js')}}/plugins.min.js"></script>
-    <script src="{{asset('js')}}/Home.js"></script>
     
     <!-- Main JS -->
     <script src="{{asset('js')}}/main.js"></script>

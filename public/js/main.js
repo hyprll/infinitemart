@@ -230,7 +230,7 @@
      *  Product Gallery - Horizontal View
      **********************************/
     var galleryThumbsHorizontal = new Swiper('.product-image-thumb-horizontal.swiper-container', {
-        loop: true,
+        loop: false,
         speed: 1000,
         spaceBetween: 25,
         slidesPerView: 4,

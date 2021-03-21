@@ -3,6 +3,7 @@ setNavbar();
 
 function setNavbar() {
   let handler = "";
+  let handler2 = "";
   if (auth != null) {
     handler = /*html*/ `
         <li>
@@ -16,6 +17,11 @@ function setNavbar() {
             <a href="${BASE_URL}/logout" id="logout-btn">Logout</a>
         </li>
     `;
+
+    handler2 = /* html */ `
+    <li><a href="wishlist.html">Profile</a></li>
+    <li><a href="${BASE_URL}/OurTeam">Team</a></li>
+    `;
   } else {
     handler = /* html */ `
         <li>
@@ -25,15 +31,42 @@ function setNavbar() {
             <a href="${BASE_URL}/register">Sign Up</a>
         </li>
         `;
+    handler2 = /* html */ `
+        <li><a href="${BASE_URL}/login">Sign In</a></li>
+        <li><a href="${BASE_URL}/register">Sign Up</a></li>
+        <li><a href="${BASE_URL}/OurTeam">Team</a></li>
+        `;
   }
   $("#nav-account").html(handler);
   $("#nav-account2").html(handler);
+  $("#nav-slide-link").html(handler2);
+  $("#nav-slide-link2").html(handler2);
 }
 
 // * section home
 if ($("#homeSectionReadOnly").length > 0) {
   showAllProduk();
   handleDetailProduk();
+}
+
+// * section detail
+if ($("#detailSectionReadOnly").length > 0) {
+  const id_produk = document.querySelector("#idProduk").dataset.idproduk;
+  showAllProduk();
+  handleDetailProduk();
+  showDetail(id_produk);
+}
+
+// * section our team
+if ($("#sectionOurTeamReadonly").length > 0) {
+  $(".WrapperOwl").owlCarousel({
+    margin: 20,
+    loop: true,
+    autoWidth: true,
+    items: 4,
+    autoplay: true,
+    autoplayTimeout: 5000,
+  });
 }
 
 // * function for show all produk
@@ -89,10 +122,15 @@ function showAllProduk() {
             </div>
             `;
         });
-        $("#produk-all").html(handler);
-        $("#produk-slider").html(handler);
-        setSlider();
-        setSlider1row();
+        if ($("#produk-all").length > 0) {
+          $("#produk-all").html(handler);
+          setSlider();
+        }
+
+        if ($("#produk-slider").length > 0) {
+          $("#produk-slider").html(handler);
+          setSlider1row();
+        }
       }
     },
     error: function (e) {
@@ -245,6 +283,43 @@ function handleDetailProduk() {
       BASE_URL_FILE + "/uploads/produk/" + data.gambar
     );
     img_other2.setAttribute(
+      "src",
+      BASE_URL_FILE + "/uploads/produk/" + data.gambar_lain
+    );
+  }
+}
+
+function showDetail(id_produk) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/produk/" + id_produk,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        const data = res.data[0];
+        $(".titleDetail").html(data.nama_produk);
+        $(".priceDetail").html(formatter.toRupiah(data.harga));
+        setGambarDetail(data);
+      }
+    },
+    error: function () {
+      alert("error");
+    },
+  });
+
+  function setGambarDetail(data) {
+    $(".imgDetailMain1").attr(
+      "src",
+      BASE_URL_FILE + "/uploads/produk/" + data.gambar
+    );
+    $(".imgDetailMain2").attr(
+      "src",
+      BASE_URL_FILE + "/uploads/produk/" + data.gambar_lain
+    );
+    $(".imgOtherDetailMain1").attr(
+      "src",
+      BASE_URL_FILE + "/uploads/produk/" + data.gambar
+    );
+    $(".imgOtherDetailMain2").attr(
       "src",
       BASE_URL_FILE + "/uploads/produk/" + data.gambar_lain
     );
