@@ -37,11 +37,14 @@
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" integrity="sha512-QKC1UZ/ZHNgFzVKSAhV5v5j73eeL9EEN289eKAEFaAjgAiobVAnVv/AGuPbXsKl1dNoel3kNr6PYnSiTzVVBCw==" crossorigin="anonymous" />
     <link rel="stylesheet" href="{{asset('css')}}/vendor/vendor.min.css">
+      <!-- owl carausel -->
+    <link rel="stylesheet" href="{{asset('css')}}/owl.carousel.min.css">
+    <link rel="stylesheet" href="{{asset('css')}}/owl.theme.default.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" integrity="sha512-rRQtF4V2wtAvXsou4iUAs2kXHi3Lj9NE7xJR77DE7GHsxgY9RTWy93dzMXgDIG8ToiRTD45VsDNdTiUagOFeZA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="{{asset('css')}}/plugins.min.css">
+    <link rel="stylesheet" href="{{asset('css')}}/OurTeam.css">
     <link rel="stylesheet" href="{{asset('css')}}/style.min.css">
-
 </head>
 
 @include('template.navbar2')
@@ -79,11 +82,15 @@
     <script src="{{asset('js')}}/plugins/ajax-mail.js"></script> --}}
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
+    <script src="{{asset('js')}}/owl.carousel.min.js"></script>
+    <script src="{{asset('js')}}/FormatMoney.js"></script>
+    <script src="{{asset('js')}}/Home.js"></script>
+    <script src="{{asset('js')}}/App.js"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
     <script src="{{asset('js')}}/vendor/vendor.min.js"></script>
     <script src="{{asset('js')}}/plugins.min.js"></script>
-    <script src="{{asset('js')}}/Auth.js"></script>
+    <script src="{{asset('js')}}/Home.js"></script>
 
     <!-- Main JS -->
     <script src="{{asset('js')}}/main.js"></script> 

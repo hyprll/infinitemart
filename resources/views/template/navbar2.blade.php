@@ -42,7 +42,7 @@
                                         </ul>
                                     </li>
                                     <li class="has-dropdown">
-                                        <a href="blog-single-sidebar-left.html">Our Team</a>
+                                        <a href="/ourTeam2">Our Team</a>
                                     </li>
                                 </ul>
                             </nav>
