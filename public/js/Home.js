@@ -1,8 +1,20 @@
-const harga = Array.from(document.querySelectorAll(".stuff-fare"));
-const formatter = new FormatMoney();
+// const harga = Array.from(document.querySelectorAll(".stuff-fare"));
 let allUser = "";
 let userPilihan = "";
 let userPilihanArray = [];
+
+// * javascript for section our team
+// if ($("#ourTeam").length > 0) {
+  $(".WrapperOwl").owlCarousel({
+    margin: 20,
+    loop: true,
+    autoWidth: true,
+    items: 4,
+    autoplay: true,
+    autoplayTimeout: 5000,
+  });
+// }
+
 
 let btnAuth = "";
 if (auth == null) {
@@ -563,18 +575,6 @@ if ($("#img-produk").length > 0) {
 }
 
 const test22 = document.querySelector("#ourteam");
-
-// * javascript for section our team
-if ($("#ourTeam").length > 0) {
-  $(".WrapperOwl").owlCarousel({
-    margin: 20,
-    loop: true,
-    autoWidth: true,
-    items: 4,
-    autoplay: true,
-    autoplayTimeout: 5000,
-  });
-}
 
 if (harga.length > 0) {
   harga.map((h) => {
