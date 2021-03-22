@@ -69,7 +69,44 @@ if ($("#detailSectionReadOnly").length > 0) {
   const id_produk = document.querySelector("#idProduk").dataset.idproduk;
   showAllProduk();
   handleDetailProduk();
+
   showDetail(id_produk);
+
+  $("#btn-checkout-detail").click(function (e) {
+    e.preventDefault();
+    if (validateCheckout()) {
+      checkout(
+        $("#idtoko").val(),
+        $("#hargaBarang").val(),
+        $("#namaBarang").val(),
+        $("#userbeli").val()
+      );
+    }
+  });
+
+  function validateCheckout() {
+    let turn = true;
+    if ($("#note").val() == "") {
+      turn = false;
+      $(".note-validate").html("harus diisi");
+    } else {
+      $(".note-validate").html("");
+    }
+
+    if ($("#quantity").val() == "") {
+      turn = false;
+      $(".quantity-validate").html("harus diisi");
+    } else {
+      if ($("#quantity").val() == 0) {
+        turn = false;
+        $(".quantity-validate").html("harus lebih dari 0");
+      } else {
+        $(".quantity-validate").html("");
+      }
+    }
+
+    return turn;
+  }
 }
 
 // * section our team
@@ -317,6 +354,12 @@ function showDetail(id_produk) {
         const data = res.data[0];
         $(".titleDetail").html(data.nama_produk);
         $(".priceDetail").html(formatter.toRupiah(data.harga));
+
+        $("#idtoko").val(data.id_toko);
+        $("#hargaBarang").val(data.harga);
+        $("#namaBarang").val(data.nama_produk);
+        $("#userbeli").val(data.user_beli);
+
         setGambarDetail(data);
       }
     },
@@ -355,4 +398,192 @@ function handleLogout() {
       document.location.href = BASE_URL + "/login";
     }
   });
+}
+
+// * function for checkout
+function checkout(idToko, harga, nama_barang, user_beli) {
+  $(".blankLoad").show();
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
+  // * cek apakah user boleh beli atau tidak
+
+  const id_user = auth.id_user;
+  const user_beli_split = user_beli.split(",");
+  if (user_beli == "all") {
+    // * mulai transaksi
+
+    let today = new Date();
+
+    let date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1 < 10 ? "0" : "") +
+      (today.getMonth() + 1) +
+      "-" +
+      (today.getDate() + 1 < 10 ? "0" : "") +
+      today.getDate() +
+      " " +
+      today.getHours() +
+      ":" +
+      today.getMinutes() +
+      ":" +
+      today.getSeconds();
+
+    let form = new FormData();
+    form.append(
+      "id_produk",
+      document.querySelector("#idProduk").dataset.idproduk
+    );
+    form.append("id_user", auth.id_user);
+    form.append("id_toko", idToko);
+    form.append("tanggal", date);
+    form.append("deskripsi", $("#note").val());
+    form.append("total_barang", $("#quantity").val());
+    form.append("harga", harga);
+    form.append("status", 1);
+    form.append("first_name", auth.first_name);
+    form.append("last_name", auth.last_name);
+    form.append("address", auth.address);
+    form.append("city", auth.city);
+    form.append("postal_code", auth.postal_code);
+    form.append("phone", auth.phone);
+    form.append("country_code", auth.country_code);
+    form.append("barang", nama_barang);
+
+    $.ajax({
+      url: BASE_URL_SERVER + "/payment/midtrans",
+      headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        Authorization: "Bearer " + token,
+      },
+      data: form,
+      method: "POST",
+      dataType: "json",
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: (res) => {
+        $(".blankLoad").hide();
+        document.body.style.overflowY = "auto";
+        if (res.status != null) {
+          errorToken();
+        }
+
+        if (res.code == 1) {
+          Toast.fire({
+            icon: "success",
+            title: "Sukses Memesan Produk, selesaikan pembayaran",
+          });
+          let strWindowFeatures =
+            "location=yes,height=650,width=520,scrollbars=yes,status=yes";
+          let URL = res.redirect_url;
+          window.open(URL, "_blank", strWindowFeatures);
+        }
+      },
+      error: (err) => {
+        $(".blankLoad").hide();
+        document.body.style.overflowY = "auto";
+        Toast.fire({
+          icon: "error",
+          title: "Error Pesan Produk",
+        });
+        const error = err.responseJSON;
+        console.log(err.responseText);
+      },
+    });
+  } else {
+    if (user_beli_split.indexOf(id_user.toString()) == -1) {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Kamu tidak diizinkan membeli barang ini!",
+      });
+    } else {
+      // * mulai transaksi
+
+      let today = new Date();
+
+      let date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1 < 10 ? "0" : "") +
+        (today.getMonth() + 1) +
+        "-" +
+        (today.getDate() + 1 < 10 ? "0" : "") +
+        today.getDate() +
+        " " +
+        today.getHours() +
+        ":" +
+        today.getMinutes() +
+        ":" +
+        today.getSeconds();
+
+      let form = new FormData();
+      form.append(
+        "id_produk",
+        document.querySelector("#idProduk").dataset.idproduk
+      );
+      form.append("id_user", auth.id_user);
+      form.append("id_toko", idToko);
+      form.append("tanggal", date);
+      form.append("deskripsi", $("#note").val());
+      form.append("total_barang", $("#quantity").val());
+      form.append("harga", harga);
+      form.append("status", 1);
+      form.append("first_name", auth.first_name);
+      form.append("last_name", auth.last_name);
+      form.append("address", auth.address);
+      form.append("city", auth.city);
+      form.append("postal_code", auth.postal_code);
+      form.append("phone", auth.phone);
+      form.append("country_code", auth.country_code);
+      form.append("barang", nama_barang);
+
+      $.ajax({
+        url: BASE_URL_SERVER + "/payment/midtrans",
+        headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          Authorization: "Bearer " + token,
+        },
+        data: form,
+        method: "POST",
+        dataType: "json",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: (res) => {
+          $(".blankLoad").hide();
+          document.body.style.overflowY = "auto";
+          if (res.status != null) {
+            if (res.status == "Token is Expired") {
+              errorToken();
+            }
+          }
+
+          if (res.code == 1) {
+            Toast.fire({
+              icon: "success",
+              title: "Sukses Memesan Produk, selesaikan pembayaran",
+            });
+            let strWindowFeatures =
+              "location=yes,height=650,width=520,scrollbars=yes,status=yes";
+            let URL = res.redirect_url;
+            window.open(URL, "_blank", strWindowFeatures);
+          }
+        },
+        error: (err) => {
+          $(".blankLoad").hide();
+          document.body.style.overflowY = "auto";
+          Toast.fire({
+            icon: "error",
+            title: "Error Pesan Produk",
+          });
+          const error = err.responseJSON;
+          console.log(error);
+        },
+      });
+    }
+  }
 }

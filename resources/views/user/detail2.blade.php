@@ -48,12 +48,16 @@
                 <div class="product-details-content-area product-details--golden" data-aos="fade-up"
                     data-aos-delay="200">
                     <!-- Start  Product Details Text Area-->
+                    <input type="hidden" id="idtoko">
+                    <input type="hidden" id="userbeli">
+                    <input type="hidden" id="hargaBarang">
+                    <input type="hidden" id="namaBarang">
                     <div class="product-details-text">
                         <h4 class="title titleDetail"></h4>
                         <div class="d-flex align-items-center">
                             Stock Available
                         </div>
-                        <div class="price priceDetail">Rp. 1.500.000</div>
+                        <div class="price priceDetail"></div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est
                             tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis
                             justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id
@@ -64,19 +68,24 @@
                         <h4 class="title">Add a Note</h4>
                         <!-- Product Variable Single Item -->
                         <div class="product-variable-quantity">
-                            <input type="text" placeholder="Note" class="w-100" id="detailQuickViewNote">
+                            <input type="text" placeholder="Note" class="w-100" id="note">
+                            <small class="text-danger note-validate"></small>
                         </div>
                         <!-- Product Variable Single Item -->
                         <div class="d-flex align-items-center ">
                             <div class="variable-single-item ">
                                 <span>Quantity</span>
                                 <div class="product-variable-quantity">
-                                    <input min="1" max="100" value="1" type="number">
+                                    <input class=""
+                                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
+                                        value="1" type="text" id="quantity">
                                 </div>
+                                <small class="text-danger quantity-validate"></small>
                             </div>
 
                             <div class="product-add-to-cart-btn">
-                                <a href="#" class="btn btn-block btn-lg btn-black-default-hover">Buy Now</a>
+                                <button id="btn-checkout-detail"
+                                    class="btn btn-block btn-lg btn-black-default-hover">Buy Now</button>
                             </div>
                         </div>
                     </div> <!-- End Product Variable Area -->

@@ -93,8 +93,16 @@
     <script src="{{asset('js')}}/main.js"></script>
     <script src="{{asset('js')}}/owl.carousel.min.js"></script>
     <script src="{{asset('js')}}/FormatMoney.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{asset("js")}}/App.js"></script>
-    {{-- <script src="{{asset('js')}}/Home.js"></script> --}}
+    <script>
+        const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 5000,
+    });
+    </script>
     <script src="{{asset("js")}}/myScript.js"></script>
 </body>
 
