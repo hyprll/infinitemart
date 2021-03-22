@@ -126,3 +126,6 @@ Route::get("/profile2", function () {
 Route::get("/search2", function () {
     return view('user/search2');
 });
+Route::get("/history2", function () {
+    return view('user/history2');
+});

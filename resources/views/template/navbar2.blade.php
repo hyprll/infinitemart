@@ -24,7 +24,7 @@
                                         <a class="active main-menu-link" href="{{url("/")}}">Home</a>
                                     </li>
                                     <li class="has-dropdown has-megaitem">
-                                        <a href="product-details-default.html">Checkout</a>
+                                        <a href="product-details-default.html">History</a>
                                     </li>
                                     <li class="has-dropdown">
                                         <a href="#">Account <i class="fa fa-angle-down"></i></a>
@@ -119,7 +119,7 @@
                         <a href="#"><span>Home</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>Checkout</span></a>
+                        <a href="#"><span>History</span></a>
                     </li>
                     <li>
                         <a href="#"><span>Account</span></a>
