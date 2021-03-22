@@ -10,14 +10,28 @@ function setNavbar() {
         <li>
             <a href="${BASE_URL}/profile">Profile</a>
         </li>
+    `;
+    if (store.has_store) {
+      handler += /* html */ ` 
         <li>
-            <a href="${BASE_URL}/seller">Open Store</a>
+          <a href="${BASE_URL}/toko/${store.store_data.id_toko}">My Store</a>
         </li>
         <li>
         <li>
             <a href="${BASE_URL}/logout" id="logout-btn">Logout</a>
         </li>
-    `;
+      `;
+    } else {
+      handler += /* html */ `
+        <li>
+          <a href="${BASE_URL}/seller">Open Store</a>
+        </li>
+        <li>
+        <li>
+            <a href="${BASE_URL}/logout" id="logout-btn">Logout</a>
+        </li>
+      `;
+    }
 
     handler2 = /* html */ `
     <li><a href="wishlist.html">Profile</a></li>
@@ -337,6 +351,7 @@ function handleLogout() {
       e.preventDefault();
       localStorage.removeItem("token");
       localStorage.removeItem("auth_session");
+      localStorage.removeItem("store");
       document.location.href = BASE_URL + "/login";
     }
   });

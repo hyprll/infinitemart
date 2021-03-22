@@ -223,11 +223,12 @@ function old_auth() {
     // * Javascript for section seller
     else if ($("#form-seller").length > 0) {
       // cek toko
-      cekToko(auth.id_user);
+      // cekToko(auth.id_user);
 
       $("#form-seller").on("submit", function (e) {
         e.preventDefault();
         if (validateSeller()) {
+          $("#btn-seller").attr("disabled", true);
           let logo = document.getElementById("logoToko").files[0];
           let bg = document.getElementById("bgToko").files[0];
 
@@ -257,10 +258,23 @@ function old_auth() {
             processData: false,
             success: (res) => {
               $(".blankLoad").hide();
-              document.location.href = BASE_URL + "/toko/" + res.data.id_toko;
+              if (res.status == "Token is Expired") {
+                errorToken();
+              }
+              if (res.success) {
+                const hasToko = {
+                  has_store: true,
+                  store_data: res.data,
+                };
+
+                localStorage.removeItem("store");
+                localStorage.setItem("store", JSON.stringify(hasToko));
+                document.location.href = BASE_URL + "/toko/" + res.data.id_toko;
+              }
             },
             error: (err) => {
               $(".blankLoad").hide();
+              $("#btn-seller").attr("disabled", false);
               const error = err.responseJSON;
               logout(err);
               if (error != null) {
@@ -425,7 +439,12 @@ function old_auth() {
     let turn = true;
     validates.map((validate, i) => {
       const parent = validate.parentNode;
-      const input = parent.childNodes[3];
+      let input = "";
+      if (i == 1 || i == 2) {
+        input = parent.childNodes[3];
+      } else {
+        input = parent.childNodes[1];
+      }
       if (i == 0) {
         const cek = justRequiredAndMin(input, 6);
         if (cek[0]) {
@@ -437,6 +456,18 @@ function old_auth() {
           input.classList.remove("is-valid");
           input.classList.add("is-invalid");
           validate.innerHTML = cek[1];
+        }
+      } else if (i == 1 || i == 2) {
+        const cek3 = input.files.length > 0 ? true : false;
+        if (cek3) {
+          input.classList.add("is-valid");
+          input.classList.remove("is-invalid");
+          validate.innerHTML = "";
+        } else {
+          turn = false;
+          input.classList.remove("is-valid");
+          input.classList.add("is-invalid");
+          validate.innerHTML = "Pilih Gambar";
         }
       } else {
         const cek2 = justRequired(input);
