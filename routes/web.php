@@ -53,6 +53,7 @@ Route::group(["middleware" => ["not_auth.q"]], function () {
 
 
 // API
+Route::get("/api/bestproduk", [ApiProdukController::class, "bestProduk"])->name("apibestProduk");
 Route::post("/api/login", [ApiAuthController::class, "login"])->name("apilogin");
 Route::post("/api/register", [ApiAuthController::class, "register"])->name("apiregister");
 Route::get("/api/cektoko/{id_user}", [ApiAuthController::class, "cektoko"])->name("apicektoko");

@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers; 
+namespace App\Http\Controllers;
+
 use App\Models\Produk;
 use Validator;
 use Illuminate\Support\Facades\Hash;
@@ -8,17 +9,17 @@ use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ApiProdukController extends Controller
 {
-     /**
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        
     }
 
     public function produkbyid($id_produk)
@@ -76,7 +77,8 @@ class ApiProdukController extends Controller
         ], 200);
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $input  = $request->only("nama_produk", "harga", "gambar", "id_toko", "user_beli", "gambar_lain"); //Specify Request
 
         /*
@@ -111,7 +113,7 @@ class ApiProdukController extends Controller
             $file_ext = $request->file('gambar')->extension();                         // Get an extension of image.
 
             $destination_path = './uploads/produk/';                               // Define path.
-            $image = 'produk-'.time().'.'.$file_ext;                                     // Make random new name of image.
+            $image = 'produk-' . time() . '.' . $file_ext;                                     // Make random new name of image.
 
 
             /*
@@ -134,7 +136,7 @@ class ApiProdukController extends Controller
             $file_ext = $request->file('gambar_lain')->extension();                         // Get an extension of image.
 
             $destination_path = './uploads/produk/';                               // Define path.
-            $image = 'produk_lain-'.time().'.'.$file_ext;                                     // Make random new name of image.
+            $image = 'produk_lain-' . time() . '.' . $file_ext;                                     // Make random new name of image.
 
 
             /*
@@ -168,7 +170,8 @@ class ApiProdukController extends Controller
         ], 200);
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $input  = $request->only("nama_produk", "harga", "gambar", "user_beli", "gambar_lain", 'id_produk'); //Specify Request
 
         /*
@@ -202,7 +205,7 @@ class ApiProdukController extends Controller
             $file_ext = $request->file('gambar')->extension();                         // Get an extension of image.
 
             $destination_path = './uploads/produk/';                               // Define path.
-            $image = 'produk-'.time().'.'.$file_ext;                                     // Make random new name of image.
+            $image = 'produk-' . time() . '.' . $file_ext;                                     // Make random new name of image.
 
 
             /*
@@ -225,7 +228,7 @@ class ApiProdukController extends Controller
             $file_ext = $request->file('gambar_lain')->extension();                         // Get an extension of image.
 
             $destination_path = './uploads/produk/';                               // Define path.
-            $image = 'produk_lain-'.time().'.'.$file_ext;                                     // Make random new name of image.
+            $image = 'produk_lain-' . time() . '.' . $file_ext;                                     // Make random new name of image.
 
 
             /*
@@ -273,7 +276,7 @@ class ApiProdukController extends Controller
     public function find(Request $request)
     {
         $carian = $request->keyword;
-        $find = Produk::where('nama_produk', 'like',"%".$carian."%")->orderby('id_produk', 'DESC')->get();
+        $find = Produk::where('nama_produk', 'like', "%" . $carian . "%")->orderby('id_produk', 'DESC')->get();
         if ($find->isEmpty()) {
             return response()->json([
                 'success' => false,
@@ -285,6 +288,28 @@ class ApiProdukController extends Controller
             'success' => true,
             'message' => "Data found.",
             'data' => $find
+        ], 200);
+    }
+
+    public function bestProduk()
+    {
+        $best = DB::table('checkout')
+            ->select('produk.id_produk', 'produk.nama_produk', 'produk.harga', 'produk.user_beli', 'produk.id_toko', 'produk.gambar', 'produk.gambar_lain', DB::raw('COUNT(checkout.id_prod uk) as total'))
+            ->join('produk', 'produk.id_produk', '=', 'checkout.id_produk')
+            ->groupBy('produk.id_produk', 'produk.nama_produk', 'produk.harga', 'produk.user_beli', 'produk.id_toko', 'produk.gambar', 'produk.gambar_lain')
+            ->orderBy('total', 'DESC')
+            ->get();
+        if ($best->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => "Data not found."
+            ], 400);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Data found.",
+            'data' => $best
         ], 200);
     }
 }
