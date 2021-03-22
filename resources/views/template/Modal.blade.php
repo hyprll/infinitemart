@@ -56,12 +56,17 @@
                                 </div> <!-- End  Product Details Text Area-->
                                 <!-- Start Product Variable Area -->
                                 <div class="product-details-variable">
+                                    <input type="hidden" id="idprodukQuickView">
+                                    <input type="hidden" id="idtokoQuickView">
+                                    <input type="hidden" id="userbeliQuickView">
+                                    <input type="hidden" id="hargaBarangQuickView">
+                                    <input type="hidden" id="namaBarangQuickView">
                                     <!-- Product Variable Single Item -->
                                     <div class="variable-single-item">
                                         <span>Note</span>
                                         <div class="product-variable-quantity">
-                                            <input type="text" placeholder="Note" class="w-100"
-                                                id="detailQuickViewNote">
+                                            <input type="text" placeholder="Note" class="w-100" id="noteQuickView">
+                                            <small class="text-danger noteQuickView-validate"></small>
                                         </div>
                                     </div>
                                     <!-- Product Variable Single Item -->
@@ -69,13 +74,15 @@
                                         <div class="variable-single-item ">
                                             <span>Quantity</span>
                                             <div class="product-variable-quantity">
-                                                <input min="1" max="100" value="1" type="number"
-                                                    id="detailQuickViewQuantity">
+                                                <input
+                                                    onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
+                                                    value="1" type="text" id="quantityQuickView">
                                             </div>
+                                            <small class="text-danger quantityQuickView-validate"></small>
                                         </div>
 
                                         <div class="product-add-to-cart-btn">
-                                            <a href="#" data-bs-toggle="modal" id="detailQuickViewBuy">Buy Now</a>
+                                            <a href="#" data-bs-toggle="modal" id="btnBuyQuickView">Buy Now</a>
                                         </div>
                                     </div>
                                 </div> <!-- End Product Variable Area -->

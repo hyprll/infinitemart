@@ -15,12 +15,29 @@ function logout(err) {
 }
 
 function errorToken() {
+  $("#modalQuickview").modal("hide");
   localStorage.removeItem("token");
   localStorage.removeItem("auth_session");
   localStorage.removeItem("store");
   Swal.fire(
     "Expired Token",
     "Your token is expired please login again",
+    "error"
+  ).then((res) => {
+    if (res.isConfirmed) {
+      window.location.href = BASE_URL + "/login";
+    }
+  });
+  setTimeout(() => {
+    window.location.href = BASE_URL + "/login";
+  }, 5000);
+}
+
+function notLoginYet() {
+  $("#modalQuickview").modal("hide");
+  Swal.fire(
+    "Not Login",
+    "You Not Login Now, please login before checkout",
     "error"
   ).then((res) => {
     if (res.isConfirmed) {

@@ -1,6 +1,7 @@
 const formatter = new FormatMoney();
 setNavbar();
 handleLogout();
+handleBuyByModal();
 
 function setNavbar() {
   let handler = "";
@@ -79,7 +80,10 @@ if ($("#detailSectionReadOnly").length > 0) {
         $("#idtoko").val(),
         $("#hargaBarang").val(),
         $("#namaBarang").val(),
-        $("#userbeli").val()
+        $("#userbeli").val(),
+        $("#note").val(),
+        $("#quantity").val(),
+        document.querySelector("#idProduk").dataset.idproduk
       );
     }
   });
@@ -306,12 +310,21 @@ function handleDetailProduk() {
       img_main2.setAttribute("src", "");
       img_other1.setAttribute("src", "");
       img_other2.setAttribute("src", "");
+      $("#idtokoQuickView").val("");
+      $("#hargaBarangQuickView").val("");
+      $("#namaBarangQuickView").val("");
+      $("#userbeliQuickView").val("");
       $.ajax({
         url: BASE_URL_SERVER + "/produk/" + id_produk,
         type: "GET",
         success: function (res) {
           if (res.success) {
             const data = res.data[0];
+            $("#idprodukQuickView").val(id_produk);
+            $("#idtokoQuickView").val(data.id_toko);
+            $("#hargaBarangQuickView").val(data.harga);
+            $("#namaBarangQuickView").val(data.nama_produk);
+            $("#userbeliQuickView").val(data.user_beli);
             setGambar(data, img_main1, img_main2, img_other1, img_other2);
             $("#detailQuickViewTitle").html(data.nama_produk);
             $("#detailQuickViewFare").html(formatter.toRupiah(data.harga));
@@ -401,7 +414,15 @@ function handleLogout() {
 }
 
 // * function for checkout
-function checkout(idToko, harga, nama_barang, user_beli) {
+function checkout(
+  idToko,
+  harga,
+  nama_barang,
+  user_beli,
+  note,
+  quantity,
+  id_produk
+) {
   $(".blankLoad").show();
   $(".blankLoad").css("display", "flex");
   document.body.style.overflowY = "hidden";
@@ -430,15 +451,12 @@ function checkout(idToko, harga, nama_barang, user_beli) {
       today.getSeconds();
 
     let form = new FormData();
-    form.append(
-      "id_produk",
-      document.querySelector("#idProduk").dataset.idproduk
-    );
+    form.append("id_produk", id_produk);
     form.append("id_user", auth.id_user);
     form.append("id_toko", idToko);
     form.append("tanggal", date);
-    form.append("deskripsi", $("#note").val());
-    form.append("total_barang", $("#quantity").val());
+    form.append("deskripsi", note);
+    form.append("total_barang", quantity);
     form.append("harga", harga);
     form.append("status", 1);
     form.append("first_name", auth.first_name);
@@ -463,6 +481,7 @@ function checkout(idToko, harga, nama_barang, user_beli) {
       contentType: false,
       processData: false,
       success: (res) => {
+        $("#modalQuickview").modal("hide");
         $(".blankLoad").hide();
         document.body.style.overflowY = "auto";
         if (res.status != null) {
@@ -493,6 +512,7 @@ function checkout(idToko, harga, nama_barang, user_beli) {
     });
   } else {
     if (user_beli_split.indexOf(id_user.toString()) == -1) {
+      $("#modalQuickview").modal("hide");
       $(".blankLoad").hide();
       document.body.style.overflowY = "auto";
       Swal.fire({
@@ -528,8 +548,8 @@ function checkout(idToko, harga, nama_barang, user_beli) {
       form.append("id_user", auth.id_user);
       form.append("id_toko", idToko);
       form.append("tanggal", date);
-      form.append("deskripsi", $("#note").val());
-      form.append("total_barang", $("#quantity").val());
+      form.append("deskripsi", note);
+      form.append("total_barang", quantity);
       form.append("harga", harga);
       form.append("status", 1);
       form.append("first_name", auth.first_name);
@@ -585,5 +605,49 @@ function checkout(idToko, harga, nama_barang, user_beli) {
         },
       });
     }
+  }
+}
+
+function handleBuyByModal() {
+  $("#btnBuyQuickView").click(function () {
+    if (validateCheckoutModal()) {
+      if (auth == null) {
+        notLoginYet();
+      } else {
+        checkout(
+          $("#idtokoQuickView").val(),
+          $("#hargaBarangQuickView").val(),
+          $("#namaBarangQuickView").val(),
+          $("#userbeliQuickView").val(),
+          $("#noteQuickView").val(),
+          $("#quantityQuickView").val(),
+          $("#idprodukQuickView").val()
+        );
+      }
+    }
+  });
+
+  function validateCheckoutModal() {
+    let turn = true;
+    if ($("#noteQuickView").val() == "") {
+      turn = false;
+      $(".noteQuickView-validate").html("harus diisi");
+    } else {
+      $(".noteQuickView-validate").html("");
+    }
+
+    if ($("#quantityQuickView").val() == "") {
+      turn = false;
+      $(".quantityQuickView-validate").html("harus diisi");
+    } else {
+      if ($("#quantityQuickView").val() == 0) {
+        turn = false;
+        $(".quantityQuickView-validate").html("harus lebih dari 0");
+      } else {
+        $(".quantityQuickView-validate").html("");
+      }
+    }
+
+    return turn;
   }
 }
