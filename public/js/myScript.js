@@ -251,6 +251,10 @@ function handleDetailProduk() {
       const img_other1 = modal2.childNodes[1].childNodes[1];
       const img_other2 = modal2.childNodes[3].childNodes[1];
 
+      img_main1.setAttribute("src", "");
+      img_main2.setAttribute("src", "");
+      img_other1.setAttribute("src", "");
+      img_other2.setAttribute("src", "");
       $.ajax({
         url: BASE_URL_SERVER + "/produk/" + id_produk,
         type: "GET",

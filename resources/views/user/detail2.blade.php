@@ -22,7 +22,7 @@
                                 <img src="" alt="" class="imgDetailMain1">
                             </div>
                             <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                <img src="" alt="" class="imgDetailMain1">
+                                <img src="" alt="" class="imgDetailMain2">
                             </div>
                         </div>
                     </div>

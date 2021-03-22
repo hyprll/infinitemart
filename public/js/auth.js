@@ -11,11 +11,11 @@
   });
 })(jQuery);
 
+let country = [];
 old_auth();
 
 function old_auth() {
   // alert("ok");
-  let country = [];
 
   $(function () {
     // * Javasript for section register
@@ -26,6 +26,7 @@ function old_auth() {
           const height = document.querySelector(".card-login").offsetHeight;
           document.querySelector(".rightCard").style.height = `${height}px`;
         } else {
+          $("#btn-register").attr("disabled", true);
           let split1 = $("#country_code").val().split("(");
           let split2 = split1[1].split(")");
           let finalSplit = split2[0];
@@ -34,10 +35,10 @@ function old_auth() {
           form.append("email", $("#email").val());
           form.append("username", $("#username").val());
           form.append("city", $("#kota").val());
-          form.append("password", $("#password").val());
+          form.append("password", $("#password-field").val());
           form.append("first_name", $("#firstName").val());
           form.append("last_name", $("#lastName").val());
-          form.append("phone", $("#phone").val());
+          form.append("phone", $("#PhoneNumber").val());
           form.append("postal_code", $("#postal_code").val());
           form.append("country_code", finalSplit);
           form.append("address", $("#address").val());
@@ -60,29 +61,11 @@ function old_auth() {
             processData: false,
             success: function (response, status, xhr) {
               $(".blankLoad").hide();
-              console.log(response);
-              Swal.fire({
-                title: "<strong>Register Successful</strong>",
-                icon: "success",
-                html:
-                  "Register Successful, " +
-                  `<a href="${BASE_URL}/login">Login Now</a> `,
-                showCloseButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false,
-                focusConfirm: true,
-                confirmButtonText: `<a href="${BASE_URL}/login" style="color:inherit;text-decoration:none"><i class="fa fa-thumbs-up"></i> Login Now!</a>`,
-                confirmButtonAriaLabel: "Thumbs up, great!",
-                cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
-                cancelButtonAriaLabel: "Thumbs down",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  window.location.href = BASE_URL + "/login";
-                }
-              });
+              login(response.data.email, $("#password-field").val());
             },
             error: function (xhr, status) {
               $(".blankLoad").hide();
+              $("#btn-register").attr("disabled", false);
               document.body.style.overflowY = "auto";
               const data = xhr.responseJSON.errors;
               if (data != undefined) {
@@ -137,9 +120,54 @@ function old_auth() {
             country = [...country, countryVal.toLowerCase()];
           });
 
-          document.getElementById("dataCountry").innerHTML = handler;
+          document.getElementById("datalistCountry").innerHTML = handler;
         },
       });
+
+      function login(email, password) {
+        let form = new FormData();
+        form.append("email", email);
+        form.append("password", password);
+        $.ajax({
+          url: BASE_URL_SERVER + "/login",
+          headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          },
+          data: form,
+          method: "POST",
+          dataType: "json",
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response, status, xhr) {
+            $("#error_something").html("");
+            if (response.success) {
+              cekTokoLogin(
+                response.data.id_user,
+                response.data,
+                response.token.original.token
+              );
+            }
+          },
+          error: function (xhr, status) {
+            const data = xhr.responseJSON;
+            $("#btn-submit-login").attr("disabled", false);
+            if (data.error == "invalid_credentials") {
+              Toast.fire({
+                icon: "error",
+                title: "Username atau password salah",
+              });
+              $("#error_something").html("Username atau password salah");
+            } else {
+              $("#error_something").html(data.error);
+              Toast.fire({
+                icon: "error",
+                title: data.error,
+              });
+            }
+          },
+        });
+      }
     }
     // * Javascript for section login
     else if ($("#form-login").length > 0) {
@@ -337,9 +365,7 @@ function old_auth() {
     validates.map((validate, i) => {
       const parent = validate.parentNode;
       const input =
-        i != 4
-          ? parent.childNodes[1].childNodes[3]
-          : parent.childNodes[1].childNodes[3].childNodes[3].childNodes[1];
+        i != 4 ? parent.childNodes[1] : parent.childNodes[1].childNodes[1];
 
       if (i == 0) {
         const cek1 = validateEmail(input);
