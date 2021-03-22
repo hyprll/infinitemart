@@ -7,6 +7,18 @@
         const token = localStorage.getItem("token");
         const store = JSON.parse(localStorage.getItem("store"));
     </script>
+
+    @if ($middleware == "not_auth")
+    <script type="text/javascript">
+        if (auth != null) window.location.href = "http://127.0.0.1:8000";
+    </script>
+    @elseif($middleware == "no_store")
+    <script type="text/javascript">
+        if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
+        if (store.has_store) window.location.href = `http://127.0.0.1:8000/toko/${store.store_data.id_toko}`;
+    </script>
+    @endif
+
     <title>@yield('title')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

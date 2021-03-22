@@ -5,6 +5,16 @@
     const token = localStorage.getItem("token");
     const store = JSON.parse(localStorage.getItem("store"));
 </script>
+@if ($middleware == "auth")
+<script type="text/javascript">
+    if (auth != null) window.location.href = "http://127.0.0.1:8000/login";
+</script>
+@elseif($middleware == "store")
+<script type="text/javascript">
+    if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
+    if (store.has_store) window.location.href = `http://127.0.0.1:8000/seller`;
+</script>
+@endif
 
 <!-- Mirrored from htmldemo.hasthemes.com/hono/hono/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Mar 2021 13:37:00 GMT -->
 <!-- Added by HTTrack -->

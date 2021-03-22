@@ -30,7 +30,7 @@ class AuthController extends Controller
     {
         $data = [
             "style" => "/css/Seller.css",
-            "middleware" => "auth"
+            "middleware" => "no_store"
         ];
         return view("Auth/Seller2", $data);
     }
