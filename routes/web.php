@@ -120,3 +120,9 @@ Route::get("/seller2", function () {
 Route::get("/ourTeam2", function () {
     return view('user/OurTeam2');
 });
+Route::get("/profile2", function () {
+    return view('user/profile2');
+});
+Route::get("/search2", function () {
+    return view('user/search2');
+});
