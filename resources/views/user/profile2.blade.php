@@ -3,169 +3,6 @@
 @section('title', "Profile | InfiniteMart")
 
 @section('content')
-        <!-- Start Offcanvas Addcart Section -->
-        <div id="offcanvas-add-cart" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
-            <!-- Start Offcanvas Header -->
-            <div class="offcanvas-header text-right">
-                <button class="offcanvas-close"><i class="ion-android-close"></i></button>
-            </div> <!-- End Offcanvas Header -->
-    
-            <!-- Start  Offcanvas Addcart Wrapper -->
-            <div class="offcanvas-add-cart-wrapper">
-                <h4 class="offcanvas-title">Shopping Cart</h4>
-                <ul class="offcanvas-cart">
-                    <li class="offcanvas-cart-item-single">
-                        <div class="offcanvas-cart-item-block">
-                            <a href="#" class="offcanvas-cart-item-image-link">
-                                <img src="assets/images/product/default/home-1/default-1.jpg" alt=""
-                                    class="offcanvas-cart-image">
-                            </a>
-                            <div class="offcanvas-cart-item-content">
-                                <a href="#" class="offcanvas-cart-item-link">Car Wheel</a>
-                                <div class="offcanvas-cart-item-details">
-                                    <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                                    <span class="offcanvas-cart-item-details-price">$49.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="offcanvas-cart-item-delete text-right">
-                            <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                    </li>
-                    <li class="offcanvas-cart-item-single">
-                        <div class="offcanvas-cart-item-block">
-                            <a href="#" class="offcanvas-cart-item-image-link">
-                                <img src="assets/images/product/default/home-2/default-1.jpg" alt=""
-                                    class="offcanvas-cart-image">
-                            </a>
-                            <div class="offcanvas-cart-item-content">
-                                <a href="#" class="offcanvas-cart-item-link">Car Vails</a>
-                                <div class="offcanvas-cart-item-details">
-                                    <span class="offcanvas-cart-item-details-quantity">3 x </span>
-                                    <span class="offcanvas-cart-item-details-price">$500.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="offcanvas-cart-item-delete text-right">
-                            <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                    </li>
-                    <li class="offcanvas-cart-item-single">
-                        <div class="offcanvas-cart-item-block">
-                            <a href="#" class="offcanvas-cart-item-image-link">
-                                <img src="assets/images/product/default/home-3/default-1.jpg" alt=""
-                                    class="offcanvas-cart-image">
-                            </a>
-                            <div class="offcanvas-cart-item-content">
-                                <a href="#" class="offcanvas-cart-item-link">Shock Absorber</a>
-                                <div class="offcanvas-cart-item-details">
-                                    <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                                    <span class="offcanvas-cart-item-details-price">$350.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="offcanvas-cart-item-delete text-right">
-                            <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                    </li>
-                </ul>
-                <div class="offcanvas-cart-total-price">
-                    <span class="offcanvas-cart-total-price-text">Subtotal:</span>
-                    <span class="offcanvas-cart-total-price-value">$170.00</span>
-                </div>
-                <ul class="offcanvas-cart-action-button">
-                    <li><a href="cart.html" class="btn btn-block btn-golden">View Cart</a></li>
-                    <li><a href="compare.html" class=" btn btn-block btn-golden mt-5">Checkout</a></li>
-                </ul>
-            </div> <!-- End  Offcanvas Addcart Wrapper -->
-    
-        </div> <!-- End  Offcanvas Addcart Section -->
-    
-        <!-- Start Offcanvas Mobile Menu Section -->
-        <div id="offcanvas-wishlish" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
-            <!-- Start Offcanvas Header -->
-            <div class="offcanvas-header text-right">
-                <button class="offcanvas-close"><i class="ion-android-close"></i></button>
-            </div> <!-- ENd Offcanvas Header -->
-    
-            <!-- Start Offcanvas Mobile Menu Wrapper -->
-            <div class="offcanvas-wishlist-wrapper">
-                <h4 class="offcanvas-title">Wishlist</h4>
-                <ul class="offcanvas-wishlist">
-                    <li class="offcanvas-wishlist-item-single">
-                        <div class="offcanvas-wishlist-item-block">
-                            <a href="#" class="offcanvas-wishlist-item-image-link">
-                                <img src="assets/images/product/default/home-1/default-1.jpg" alt=""
-                                    class="offcanvas-wishlist-image">
-                            </a>
-                            <div class="offcanvas-wishlist-item-content">
-                                <a href="#" class="offcanvas-wishlist-item-link">Car Wheel</a>
-                                <div class="offcanvas-wishlist-item-details">
-                                    <span class="offcanvas-wishlist-item-details-quantity">1 x </span>
-                                    <span class="offcanvas-wishlist-item-details-price">$49.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="offcanvas-wishlist-item-delete text-right">
-                            <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                    </li>
-                    <li class="offcanvas-wishlist-item-single">
-                        <div class="offcanvas-wishlist-item-block">
-                            <a href="#" class="offcanvas-wishlist-item-image-link">
-                                <img src="assets/images/product/default/home-2/default-1.jpg" alt=""
-                                    class="offcanvas-wishlist-image">
-                            </a>
-                            <div class="offcanvas-wishlist-item-content">
-                                <a href="#" class="offcanvas-wishlist-item-link">Car Vails</a>
-                                <div class="offcanvas-wishlist-item-details">
-                                    <span class="offcanvas-wishlist-item-details-quantity">3 x </span>
-                                    <span class="offcanvas-wishlist-item-details-price">$500.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="offcanvas-wishlist-item-delete text-right">
-                            <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                    </li>
-                    <li class="offcanvas-wishlist-item-single">
-                        <div class="offcanvas-wishlist-item-block">
-                            <a href="#" class="offcanvas-wishlist-item-image-link">
-                                <img src="assets/images/product/default/home-3/default-1.jpg" alt=""
-                                    class="offcanvas-wishlist-image">
-                            </a>
-                            <div class="offcanvas-wishlist-item-content">
-                                <a href="#" class="offcanvas-wishlist-item-link">Shock Absorber</a>
-                                <div class="offcanvas-wishlist-item-details">
-                                    <span class="offcanvas-wishlist-item-details-quantity">1 x </span>
-                                    <span class="offcanvas-wishlist-item-details-price">$350.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="offcanvas-wishlist-item-delete text-right">
-                            <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="offcanvas-wishlist-action-button">
-                    <li><a href="#" class="btn btn-block btn-golden">View wishlist</a></li>
-                </ul>
-            </div> <!-- End Offcanvas Mobile Menu Wrapper -->
-    
-        </div> <!-- End Offcanvas Mobile Menu Section -->
-    
-        <!-- Start Offcanvas Search Bar Section -->
-        <div id="search" class="search-modal">
-            <button type="button" class="close">×</button>
-            <form>
-                <input type="search" placeholder="type keyword(s) here" />
-                <button type="submit" class="btn btn-lg btn-golden">Search</button>
-            </form>
-        </div>
-        <!-- End Offcanvas Search Bar Section -->
-    
-        <!-- Offcanvas Overlay -->
-        <div class="offcanvas-overlay"></div>
     
         <!-- ...:::: Start Breadcrumb Section:::... -->
         <div class="breadcrumb-section breadcrumb-bg-color--golden">
@@ -192,11 +29,11 @@
                                         class="nav-link btn btn-block btn-md btn-black-default-hover active">Dashboard</a>
                                 </li>
                                 <li> <a href="#orders" data-bs-toggle="tab"
-                                        class="nav-link btn btn-block btn-md btn-black-default-hover">Orders</a></li>
+                                        class="nav-link btn btn-block btn-md btn-black-default-hover">Shop History</a></li>
                                 <li><a href="#downloads" data-bs-toggle="tab"
-                                        class="nav-link btn btn-block btn-md btn-black-default-hover">Downloads</a></li>
+                                        class="nav-link btn btn-block btn-md btn-black-default-hover">Open shop</a></li>
                                 <li><a href="#address" data-bs-toggle="tab"
-                                        class="nav-link btn btn-block btn-md btn-black-default-hover">Addresses</a></li>
+                                        class="nav-link btn btn-block btn-md btn-black-default-hover">Add Product</a></li>
                                 <li><a href="#account-details" data-bs-toggle="tab"
                                         class="nav-link btn btn-block btn-md btn-black-default-hover">Account details</a>
                                 </li>
@@ -215,7 +52,7 @@
                                         href="#">Edit your password and account details.</a></p>
                             </div>
                             <div class="tab-pane fade" id="orders">
-                                <h4>Orders</h4>
+                                <h4>Shop History</h4>
                                 <div class="table_page table-responsive">
                                     <table>
                                         <thead>
@@ -247,33 +84,8 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="downloads">
-                                <h4>Downloads</h4>
-                                <div class="table_page table-responsive">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Product</th>
-                                                <th>Downloads</th>
-                                                <th>Expires</th>
-                                                <th>Download</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Shopnovilla - Free Real Estate PSD Template</td>
-                                                <td>May 10, 2018</td>
-                                                <td><span class="danger">Expired</span></td>
-                                                <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Organic - ecommerce html template</td>
-                                                <td>Sep 11, 2018</td>
-                                                <td>Never</td>
-                                                <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <h4>Make Your Own Store Here</h4>
+                                <p>Do you really want to open your own shop? If so, please click the link <a href="/seller2">here</a></p>
                             </div>
                             <div class="tab-pane" id="address">
                                 <p>The following addresses will be used on the checkout page by default.</p>
