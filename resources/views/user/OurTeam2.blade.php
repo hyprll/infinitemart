@@ -4,6 +4,11 @@
 
 @section('content')
 
+<!-- material-scrolltop button -->
+<button class="material-scrolltop" type="button">
+    <i class="fas fa-angle-up text-white" style="font-size: 25px;"></i>
+</button>
+
 <div id="sectionOurTeamReadonly"></div>
 
 <!-- Start About Top -->

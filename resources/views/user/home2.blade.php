@@ -3,6 +3,12 @@
 @section('title', "Home | InfiniteMart")
 
 @section('content')
+
+<!-- material-scrolltop button -->
+<button class="material-scrolltop" type="button">
+    <i class="fas fa-angle-up text-white" style="font-size: 25px;"></i>
+</button>
+
 <!-- Start Hero Slider Section-->
 <div class="hero-slider-section">
     <!-- Slider main container -->

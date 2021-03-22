@@ -24,7 +24,7 @@
                                         <a class="active main-menu-link" href="{{url("/")}}">Home</a>
                                     </li>
                                     <li class="has-dropdown has-megaitem">
-                                        <a href="product-details-default.html">History</a>
+                                        <a href="/history2">History</a>
                                     </li>
                                     <li class="has-dropdown">
                                         <a href="#">Account <i class="fa fa-angle-down"></i></a>
@@ -116,13 +116,13 @@
             <div class="offcanvas-menu">
                 <ul>
                     <li>
-                        <a href="#"><span>Home</span></a>
+                        <a href="/"><span>Home</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>History</span></a>
+                        <a href="/history2"><span>History</span></a>
                     </li>
                     <li>
-                        <a href="#"><span>Account</span></a>
+                        <a href="/profile2"><span>Account</span></a>
                         <ul class="mobile-sub-menu" id="nav-account2"></ul>
                     </li>
                     <li><a href="{{url("/OurTeam")}}">Our Team</a></li>
