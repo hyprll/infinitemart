@@ -40,7 +40,7 @@ Route::get("/history", [ProfileController::class, "history"])->name("history");
 Route::get("/seller", [AuthController::class, "seller"])->name("seller");
 Route::get('/', [HomeController::class, "index"])->name("home");
 Route::get('/detail/{id}', [ProdukController::class, "detail"]);
-Route::get('/search', [ProdukController::class, "search"]);
+Route::get('/search', [ProdukController::class, "search"])->name("search");
 Route::get('/toko/add', [ProdukController::class, "tambahProduk"])->name("tambahProduk");
 Route::get('/toko/{id}', [HomeController::class, "toko"]);
 Route::get('toko/edit/{id_produk}', [ProdukController::class, "edit"]);

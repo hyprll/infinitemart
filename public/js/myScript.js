@@ -126,6 +126,14 @@ if ($("#sectionOurTeamReadonly").length > 0) {
   });
 }
 
+// * section searching
+if ($("#searchSectionReadOnly").length > 0) {
+  const keyword = document.querySelector("#searchSectionReadOnly").dataset
+    .keyword;
+  searchingNow(keyword);
+  handleDetailProduk();
+}
+
 // * function for show all produk
 function showAllProduk() {
   $.ajax({
@@ -712,4 +720,130 @@ function showBestSeller() {
       console.log(e);
     },
   });
+}
+
+// * function for searching
+function searchingNow(keyword) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/findproduk?keyword=" + keyword,
+    type: "GET",
+    success: function (res) {
+      let handler = "";
+      let handler2 = "";
+      if (res.success) {
+        res.data.map((result) => {
+          handler += /* html */ `
+            <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
+              <div class="product-default-single-item product-color--golden swiper-slide">
+                <div class="image-box">
+                    <a href="${BASE_URL}/detail/${
+            result.id_produk
+          }" class="image-link">
+                        <img src="${BASE_URL_FILE}/uploads/produk/${
+            result.gambar
+          }" alt="" style="height:250px;">
+                        <img src="${BASE_URL_FILE}/uploads/produk/${
+            result.gambar_lain
+          }" alt="" style="height:250px;">
+                    </a>
+                    <div class="tag">
+                        <span>sale</span>
+                    </div>
+                    <div class="action-link">
+                        <div class="action-link-left">
+                            <a href="" id="showQuickViewProduct" data-bs-toggle="modal" data-bs-target="#modalQuickview" data-idproduk="${
+                              result.id_produk
+                            }">Buy
+                                Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content-left">
+                        <h6 class="title"><a href="${BASE_URL}/detail/${
+            result.id_produk
+          }">${result.nama_produk}</a></h6>
+                        <ul class="review-star">
+                            Stock Available
+                        </ul>
+                    </div>
+                    <div class="content-right">
+                        <span class="price">${formatter.toRupiah(
+                          result.harga
+                        )}</span>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+            `;
+
+          handler2 += /* html */ `
+          <div class="col-12 mb-3">
+            <div class="product-list-single product-color--golden mb-3">
+                <a href="${BASE_URL}/detail/${result.id_produk}"
+                    class="product-list-img-link">
+                    <img class="img-fluid"
+                        src="${BASE_URL_FILE}/uploads/produk/${result.gambar}"
+                        alt=""
+                        style="width:40vw;">
+                    <img class="img-fluid"
+                        src=
+                        "${BASE_URL_FILE}/uploads/produk/${result.gambar_lain}"
+                        alt=""
+                        style="width:40vw;">
+                </a>
+                <div class="product-list-content">
+                    <h5 class="product-list-link"><a
+                            href="${BASE_URL}/detail/${result.id_produk}">
+                            ${result.nama_produk}
+                            </a></h5>
+                    <span class="product-list-price">
+                    ${formatter.toRupiah(result.harga)}
+                    </span>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Nobis ad, iure incidunt. Ab consequatur temporibus non
+                        eveniet inventore doloremque necessitatibus sed, ducimus
+                        quisquam, ad asperiores</p>
+                    <div class="product-action-icon-link-list">
+                        <a href="#" id="showQuickViewProduct" data-bs-toggle="modal"
+                            data-bs-target="#modalQuickview"
+                            data-idproduk="${result.id_produk}"
+                            class="btn btn-lg btn-black-default-hover">
+                          Buy Now    
+                        </a>
+                    </div>
+                </div>
+          </div>
+          `;
+        });
+
+        if ($("#searchResult").length > 0) {
+          $("#searchResult").html(handler);
+          $("#searchResultFullWidth").html(handler2);
+        }
+      }
+    },
+    error: function (err) {
+      let res = err.responseJSON;
+      if ($("#searchResult").length > 0) {
+        $("#searchResult").html(notFound());
+        $("#searchResultFullWidth").html(notFound());
+      }
+    },
+  });
+}
+
+function notFound() {
+  let handler = /* html */ `
+  <div class="col-12" style="margin-top: 5rem">
+    <div class="row justify-content-center">
+        <img src="${BASE_URL_FILE}/img/character/INTIP.png" alt=""
+            class="user-select-none" style="width: 500px">
+        <h2 class="text-center">Product Not Found</h2>
+    </div>
+  </div>
+  `;
+
+  return handler;
 }

@@ -48,6 +48,9 @@ class ProdukController extends Controller
     public function search(Request $request)
     {
         $key = $request->key;
+        if ($key == null) {
+            return abort(404);
+        }
         $data = [
             "middleware" => "user",
             "keyword" => $key

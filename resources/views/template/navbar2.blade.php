@@ -157,16 +157,6 @@
     </div> <!-- End Offcanvas Mobile Menu Wrapper -->
 </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
 
-<!-- Start Offcanvas Search Bar Section -->
-<div id="search" class="search-modal">
-    <button type="button" class="close">×</button>
-    <form>
-        <input type="search" placeholder="type keyword(s) here" />
-        <button type="submit" class="btn btn-lg btn-golden">Search</button>
-    </form>
-</div>
-<!-- End Offcanvas Search Bar Section -->
-
 <!-- Start Offcanvas Mobile Menu Section -->
 <div id="offcanvas-about" class="offcanvas offcanvas-rightside offcanvas-mobile-about-section">
     <!-- Start Offcanvas Header -->

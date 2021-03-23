@@ -1,3 +1,14 @@
+<!-- Start Offcanvas Search Bar Section -->
+<div id="search" class="search-modal">
+    <button type="button" class="close">×</button>
+    <form method="GET" action="{{route("search")}}">
+        <input type="search" value="{{isset($keyword) ? $keyword : ""}}" placeholder="type keyword(s) here" name="key"
+            autocomplete="off" />
+        <button type="submit" class="btn btn-lg btn-golden">Search</button>
+    </form>
+</div>
+<!-- End Offcanvas Search Bar Section -->
+
 <!-- Offcanvas Overlay -->
 <div class="offcanvas-overlay"></div>
 

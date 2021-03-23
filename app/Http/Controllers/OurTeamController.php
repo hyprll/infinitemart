@@ -10,7 +10,8 @@ class OurTeamController extends Controller
     {
         $data = [
             "css" => "OurTeam.css",
-            "OurTeam" => "Halaman Team"
+            "OurTeam" => "Halaman Team",
+            "middleware" => "user"
         ];
         return view("user/OurTeam2", $data);
     }
