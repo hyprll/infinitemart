@@ -44,4 +44,15 @@ class ProdukController extends Controller
 
         return view("user/updateProduk", $data);
     }
+
+    public function search(Request $request)
+    {
+        $key = $request->key;
+        $data = [
+            "middleware" => "user",
+            "keyword" => $key
+        ];
+
+        return view("user.search2", $data);
+    }
 }

@@ -294,7 +294,7 @@ class ApiProdukController extends Controller
     public function bestProduk()
     {
         $best = DB::table('checkout')
-            ->select('produk.id_produk', 'produk.nama_produk', 'produk.harga', 'produk.user_beli', 'produk.id_toko', 'produk.gambar', 'produk.gambar_lain', DB::raw('COUNT(checkout.id_prod uk) as total'))
+            ->select('produk.id_produk', 'produk.nama_produk', 'produk.harga', 'produk.user_beli', 'produk.id_toko', 'produk.gambar', 'produk.gambar_lain', DB::raw('COUNT(checkout.id_produk) as total'))
             ->join('produk', 'produk.id_produk', '=', 'checkout.id_produk')
             ->groupBy('produk.id_produk', 'produk.nama_produk', 'produk.harga', 'produk.user_beli', 'produk.id_toko', 'produk.gambar', 'produk.gambar_lain')
             ->orderBy('total', 'DESC')

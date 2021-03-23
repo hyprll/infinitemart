@@ -63,6 +63,7 @@ function setNavbar() {
 if ($("#homeSectionReadOnly").length > 0) {
   showAllProduk();
   handleDetailProduk();
+  showBestSeller();
 }
 
 // * section detail
@@ -181,11 +182,6 @@ function showAllProduk() {
         if ($("#produk-all").length > 0) {
           $("#produk-all").html(handler);
           setSlider();
-        }
-
-        if ($("#produk-slider").length > 0) {
-          $("#produk-slider").html(handler);
-          setSlider1row();
         }
       }
     },
@@ -650,4 +646,70 @@ function handleBuyByModal() {
 
     return turn;
   }
+}
+
+function showBestSeller() {
+  $.ajax({
+    url: BASE_URL_SERVER + "/bestproduk",
+    type: "GET",
+    success: function (res) {
+      let handler = "";
+      if (res.success) {
+        res.data.map((result) => {
+          handler += /* html */ `
+            <div class="product-default-single-item product-color--golden swiper-slide">
+                <div class="image-box">
+                    <a href="${BASE_URL}/detail/${
+            result.id_produk
+          }" class="image-link">
+                        <img src="${BASE_URL_FILE}/uploads/produk/${
+            result.gambar
+          }" alt="" style="height:250px;">
+                        <img src="${BASE_URL_FILE}/uploads/produk/${
+            result.gambar_lain
+          }" alt="" style="height:250px;">
+                    </a>
+                    <div class="tag">
+                        <span>sale</span>
+                    </div>
+                    <div class="action-link">
+                        <div class="action-link-left">
+                            <a href="" id="showQuickViewProduct" data-bs-toggle="modal" data-bs-target="#modalQuickview" data-idproduk="${
+                              result.id_produk
+                            }">Buy
+                                Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content-left">
+                        <h6 class="title"><a href="${BASE_URL}/detail/${
+            result.id_produk
+          }">${result.nama_produk}</a></h6>
+                        <ul class="review-star">
+                            Stock Available
+                        </ul>
+                    </div>
+                    <div class="content-right">
+                        <span class="price">${formatter.toRupiah(
+                          result.harga
+                        )}</span>
+                    </div>
+
+                </div>
+            </div>
+            `;
+        });
+
+        if ($("#produk-slider").length > 0) {
+          $("#produk-slider").html(handler);
+          setSlider1row();
+        }
+      }
+    },
+    error: function (e) {
+      alert("error");
+      console.log(e);
+    },
+  });
 }
