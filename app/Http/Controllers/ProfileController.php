@@ -15,7 +15,7 @@ class ProfileController extends Controller
             "middleware" => "auth"
         ];
 
-        return view("user/profile", $data);
+        return view("user/profile2", $data);
     }
 
     public function history()

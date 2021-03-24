@@ -126,6 +126,16 @@ if ($("#sectionOurTeamReadonly").length > 0) {
   });
 }
 
+// * section profile
+if ($("#profileSectionReadOnly").length > 0) {
+  showProfile();
+
+  $("#form-update-profile").submit(function (e) {
+    e.preventDefault();
+    updateProfile();
+  });
+}
+
 // * section searching
 if ($("#searchSectionReadOnly").length > 0) {
   const keyword = document.querySelector("#searchSectionReadOnly").dataset
@@ -846,4 +856,108 @@ function notFound() {
   `;
 
   return handler;
+}
+
+function updateProfile() {
+  $("#btn-save-profile").attr("disabled", true);
+  let form = new FormData();
+  form.append("username", $("#username-me").val());
+  form.append("email", auth.email);
+  form.append("first_name", $("#first-name-me").val());
+  form.append("last_name", $("#last-name-me").val());
+  form.append("phone", $("#phone-me").val());
+  form.append("id_user", auth.id_user);
+  form.append("country_code", auth.country_code);
+  form.append("postal_code", $("#postal-code-me").val());
+  form.append("address", $("#address-me").val());
+  form.append("city", auth.city);
+
+  $.ajax({
+    url: BASE_URL_SERVER + "/user/update",
+    type: "POST",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+      Authorization: "Bearer " + token,
+    },
+    method: "POST",
+    data: form,
+    dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function (res) {
+      $("#btn-save-profile").attr("disabled", false);
+      if (res.success) {
+        Toast.fire({
+          icon: "success",
+          title: "Update Profile Sukses",
+        });
+        // * reset session
+        localStorage.removeItem("auth_session");
+        localStorage.setItem("auth_session", JSON.stringify(res.data));
+        auth = JSON.parse(localStorage.getItem("auth_session"));
+
+        showProfile();
+      }
+    },
+    error: (err) => {
+      Toast.fire({
+        icon: "error",
+        title: "Update Profile Error",
+      });
+      $("#btn-save-profile").attr("disabled", false);
+      const error = err.responseJSON;
+      if (error != null) {
+        const keys = Object.keys(error);
+        const validation = Array.from(
+          document.querySelectorAll(".validation-server-profile")
+        );
+        keys.map((key) => {
+          const value = eval("error." + key);
+          if (key == "first_name") {
+            $("#first-name-me").addClass("is-invalid");
+            validation[0].innerHTML = value[0];
+          } else if (key == "last_name") {
+            $("#last-name-me").addClass("is-invalid");
+            validation[1].innerHTML = value[0];
+          } else if (key == "postal_code") {
+            $("#postal-code-me").addClass("is-invalid");
+            validation[4].innerHTML = value[0];
+          } else if (key == "username") {
+            $("#username-me").addClass("is-invalid");
+            validation[2].innerHTML = value[0];
+          } else if (key == "phone") {
+            $("#phone-me").addClass("is-invalid");
+            validation[3].innerHTML = value[0];
+          } else if (key == "address") {
+            $("#address-me").addClass("is-invalid");
+            validation[5].innerHTML = value[0];
+          } else {
+            $("#address-me").removeClass("is-invalid");
+            $("#phone-me").removeClass("is-invalid");
+            $("#postal-code-me").removeClass("is-invalid");
+            $("#username-me").removeClass("is-invalid");
+            $("#last-name-me").removeClass("is-invalid");
+            $("#first-name-me").removeClass("is-invalid");
+            validation[0].innerHTML = "";
+            validation[1].innerHTML = "";
+            validation[2].innerHTML = "";
+            validation[3].innerHTML = "";
+            validation[4].innerHTML = "";
+            validation[5].innerHTML = "";
+          }
+        });
+      }
+    },
+  });
+}
+
+function showProfile() {
+  $("#email-me").html(auth.email);
+  $("#first-name-me").val(auth.first_name);
+  $("#last-name-me").val(auth.last_name);
+  $("#username-me").val(auth.username);
+  $("#phone-me").val(auth.phone);
+  $("#postal-code-me").val(auth.postal_code);
+  $("#address-me").val(auth.address);
 }

@@ -7,7 +7,7 @@
 </script>
 @if ($middleware == "auth")
 <script type="text/javascript">
-    if (auth != null) window.location.href = "http://127.0.0.1:8000/login";
+    if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
 </script>
 @elseif($middleware == "store")
 <script type="text/javascript">
