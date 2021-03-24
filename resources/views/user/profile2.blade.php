@@ -37,9 +37,9 @@
                                 class="nav-link btn btn-block btn-md btn-black-default-hover active">Account details</a>
                         </li>
                         <li> <a href="#orders" data-bs-toggle="tab"
-                                class="nav-link btn btn-block btn-md btn-black-default-hover">My History</a></li>
-                        <li><a href="#downloads" data-bs-toggle="tab"
-                                class="nav-link btn btn-block btn-md btn-black-default-hover">Open shop</a></li>
+                                class="nav-link btn btn-block btn-md btn-black-default-hover" id="btn-history">My
+                                History</a></li>
+                        <li><a class="nav-link btn btn-block btn-md btn-black-default-hover" id="logout-profile">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -52,36 +52,16 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Order</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Total</th>
-                                        <th>Actions</th>
+                                        <th class="product_remove">No</th>
+                                        <th class="product_thumb">Image</th>
+                                        <th class="product_name">Product</th>
+                                        <th class="product-price">Price</th>
+                                        <th class="product_stock">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>May 10, 2018</td>
-                                        <td><span class="success">Completed</span></td>
-                                        <td>$25.00 for 1 item </td>
-                                        <td><a href="cart.html" class="view">view</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>May 10, 2018</td>
-                                        <td>Processing</td>
-                                        <td>$17.00 for 1 item </td>
-                                        <td><a href="cart.html" class="view">view</a></td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="history-users"></tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="downloads">
-                        <h4>Make Your Own Store Here</h4>
-                        <p>Do you really want to open your own shop? If so, please click the link <a
-                                href="/seller2">here</a></p>
                     </div>
                     <div class="tab-pane fade active" id="account-details">
                         <h3>Account details </h3>
@@ -128,8 +108,8 @@
                                             <small class="validation-server-profile text-danger"></small>
                                         </div>
                                         <div class="save_button mt-3">
-                                            <button class="btn btn-md btn-black-default-hover"
-                                                type="submit" id="btn-save-profile">Save</button>
+                                            <button class="btn btn-md btn-black-default-hover" type="submit"
+                                                id="btn-save-profile">Save</button>
                                         </div>
                                     </form>
                                 </div>

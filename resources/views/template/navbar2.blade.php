@@ -24,7 +24,7 @@
                                         <a class="active main-menu-link" href="{{url("/")}}">Home</a>
                                     </li>
                                     <li class="has-dropdown has-megaitem">
-                                        <a href="/history2">History</a>
+                                        <a href="/profile?tab=history">History</a>
                                     </li>
                                     <li class="has-dropdown">
                                         <a href="#">Account <i class="fa fa-angle-down"></i></a>

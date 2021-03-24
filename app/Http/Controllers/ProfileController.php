@@ -24,6 +24,6 @@ class ProfileController extends Controller
             "css" => "profile.css",
             "middleware" => "auth"
         ];
-        return view("user/history", $data);
+        return view("user/history2", $data);
     }
 }

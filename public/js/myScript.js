@@ -129,10 +129,23 @@ if ($("#sectionOurTeamReadonly").length > 0) {
 // * section profile
 if ($("#profileSectionReadOnly").length > 0) {
   showProfile();
+  if (getLocation()) {
+    document.getElementById("btn-history").click();
+  }
+
+  getHistory();
 
   $("#form-update-profile").submit(function (e) {
     e.preventDefault();
     updateProfile();
+  });
+
+  $("#logout-profile").click(function (e) {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("auth_session");
+    localStorage.removeItem("store");
+    document.location.href = BASE_URL + "/login";
   });
 }
 
@@ -960,4 +973,52 @@ function showProfile() {
   $("#phone-me").val(auth.phone);
   $("#postal-code-me").val(auth.postal_code);
   $("#address-me").val(auth.address);
+}
+
+function getLocation() {
+  const has_tab = window.location.href.split("?tab=");
+  if (has_tab.length > 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function getHistory() {
+  $.ajax({
+    url: BASE_URL_SERVER + "/checkout/user/" + auth.id_user,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        let handler = setHistory(res.data);
+        $("#history-users").html(handler);
+      }
+    },
+    error: (err) => {
+      console.log(err);
+    },
+  });
+}
+
+function setHistory(data) {
+  let handler = "";
+  data.map((d, i) => {
+    handler += /* html */ `
+    <tr>
+      <td class="product_remove">
+          ${i + 1}
+      </td>
+      <td class="product_thumb"><a href="${BASE_URL}/detail/${d.id_produk}"><img
+                  src="${BASE_URL_FILE}/uploads/produk/${d.gambar}"
+                  alt=""></a></td>
+      <td class="product_name"><a href="${BASE_URL}/detail/${d.id_produk}">
+        ${d.nama_produk}
+      </a></td>
+      <td class="product-price">${formatter.toRupiah(d.harga)}</td>
+      <td class="product_stock">${d.status == 1 ? "Paid Off" : "Not Paid"}</td>
+    </tr>
+    `;
+  });
+
+  return handler;
 }
