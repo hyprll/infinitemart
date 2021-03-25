@@ -131,3 +131,12 @@ Route::get("/search2", function () {
 Route::get("/history2", function () {
     return view('user/history2');
 });
+Route::get("/tambahProduk2", function () {
+    return view('user/tambahProduk2');
+});
+Route::get("/toko2", function () {
+    return view('user/toko2');
+});
+Route::get("/updateProduk2", function () {
+    return view('user/updateProduk2');
+});

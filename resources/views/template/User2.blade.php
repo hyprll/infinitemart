@@ -5,7 +5,7 @@
     const token = localStorage.getItem("token");
     const store = JSON.parse(localStorage.getItem("store"));
 </script>
-@if ($middleware == "auth")
+{{-- @if ($middleware == "auth")
 <script type="text/javascript">
     if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
 </script>
@@ -14,7 +14,7 @@
     if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
     if (store.has_store) window.location.href = `http://127.0.0.1:8000/seller`;
 </script>
-@endif
+@endif --}}
 
 <!-- Mirrored from htmldemo.hasthemes.com/hono/hono/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Mar 2021 13:37:00 GMT -->
 <!-- Added by HTTrack -->
@@ -43,12 +43,13 @@
     <link rel="stylesheet" href="{{asset('css')}}/plugins/venobox.min.css">
     <link rel="stylesheet" href="{{asset('css')}}/plugins/jquery.lineProgressbar.css">
     <link rel="stylesheet" href="{{asset('css')}}/plugins/aos.min.css"> --}}
-    <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous" async defer></script>
+    <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 
     <!-- Main CSS -->
     <!-- <link rel="stylesheet" href="assets/sass/style.css"> -->
     {{-- <link rel='stylesheet' href='{{asset("css/bootstrap.min.css")}}'> --}}
     <link rel="icon" href="{{asset("img/logo_transparent.png")}}">
+    <link rel="stylesheet" href="{{url("/")}}/css/tambahProduk.css">
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <link rel="stylesheet"
@@ -66,6 +67,7 @@
         crossorigin="anonymous" />
     <link rel="stylesheet" href="{{asset('css')}}/plugins.min.css">
     <link rel="stylesheet" href="{{asset('css')}}/OurTeam.css">
+    <link rel="stylesheet" href="{{asset('css')}}/style.css">
     <link rel="stylesheet" href="{{asset('css')}}/style.min.css">
 </head>
 
