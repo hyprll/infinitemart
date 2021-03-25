@@ -43,12 +43,13 @@
     <link rel="stylesheet" href="{{asset('css')}}/plugins/venobox.min.css">
     <link rel="stylesheet" href="{{asset('css')}}/plugins/jquery.lineProgressbar.css">
     <link rel="stylesheet" href="{{asset('css')}}/plugins/aos.min.css"> --}}
-    <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous" async defer></script>
+    <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 
     <!-- Main CSS -->
     <!-- <link rel="stylesheet" href="assets/sass/style.css"> -->
     {{-- <link rel='stylesheet' href='{{asset("css/bootstrap.min.css")}}'> --}}
     <link rel="icon" href="{{asset("img/logo_transparent.png")}}">
+    <link rel="stylesheet" href="{{url("/")}}/css/tambahProduk.css">
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <link rel="stylesheet"
@@ -66,6 +67,7 @@
         crossorigin="anonymous" />
     <link rel="stylesheet" href="{{asset('css')}}/plugins.min.css">
     <link rel="stylesheet" href="{{asset('css')}}/OurTeam.css">
+    <link rel="stylesheet" href="{{asset('css')}}/style.css">
     <link rel="stylesheet" href="{{asset('css')}}/style.min.css">
 </head>
 

@@ -39,7 +39,7 @@
   <title>@yield('title')</title>
   <link rel='stylesheet' href='{{url("/")}}/css/bootstrap.min.css'>
   <link rel="icon" href="{{url("/")}}/img/logo_transparent.png">
-  <link rel="stylesheet" href="{{url("/")}}/css/{{$css}}">
+  <link rel="stylesheet" href="{{url("/")}}/css/tambahProduk.css">
   <script src="https://kit.fontawesome.com/d1a508a7c1.js" crossorigin="anonymous"></script>
 
   <!-- owl carausel -->

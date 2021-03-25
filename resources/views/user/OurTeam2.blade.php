@@ -206,8 +206,8 @@
                             <div class="contentOurTeam mt-2">
                                 <h5 class="text-center">Muhammad Andika</h5>
                                 <p class="text-center">As a front end Dev</p>
-                                <p class="text-center" style="margin-bottom: 60px;">Membuat dan halaman
-                                    profile user</p>
+                                <p class="text-center" style="margin-bottom: 60px;">Membuat Halaman
+                                    Profile User</p>
                                 <div class="d-flex align-items-end justify-content-center position-absolute"
                                     style="bottom: 20px; left: 50%; transform: translateX(-50%);">
                                     <p class="text-center">@andikasp03_</p>
