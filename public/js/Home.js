@@ -2,6 +2,7 @@
 let allUser = "";
 let userPilihan = "";
 let userPilihanArray = [];
+let harga = 0;
 
 // * javascript for section our team
 // if ($("#ourTeam").length > 0) {
