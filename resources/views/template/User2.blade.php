@@ -130,7 +130,7 @@
         timer: 5000,
     });
     </script>
-    <script src="{{asset("js")}}/myScript.js"></script>
+    <script src="{{asset("js")}}/myScript.min.js"></script>
 </body>
 
 </html>

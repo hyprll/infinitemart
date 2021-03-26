@@ -43,7 +43,7 @@
         timer: 5000,
     });
     </script>
-    <script src="{{asset('js')}}/auth.js"></script>
+    <script src="{{asset('js')}}/auth.min.js"></script>
 </body>
 
 </html>
