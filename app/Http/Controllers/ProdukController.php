@@ -26,10 +26,10 @@ class ProdukController extends Controller
             "token" => null,
             "session" => null,
             "css" => "tambahProduk.css",
-            "middleware" => "auth"
+            "middleware" => "has_store"
         ];
 
-        return view("user/tambahProduk", $data);
+        return view("user/tambahProduk2", $data);
     }
 
     public function edit($id_produk)

@@ -1,4 +1,7 @@
 const formatter = new FormatMoney();
+let allUser = "";
+let userPilihan = "";
+let userPilihanArray = [];
 setNavbar();
 handleLogout();
 handleBuyByModal();
@@ -187,13 +190,16 @@ if ($("#tokoSectionReadOnly").length > 0) {
         $("#update-toko-section").hide();
         e.target.innerHTML = "Edit Store";
       }
-    }else if (e.target.getAttribute("id") == "btn-to-history" || e.target.parentNode.getAttribute("id") == "btn-to-history") {
+    } else if (
+      e.target.getAttribute("id") == "btn-to-history" ||
+      e.target.parentNode.getAttribute("id") == "btn-to-history"
+    ) {
       e.preventDefault();
       showHistory = !showHistory;
       if (showHistory) {
         if (e.target.getAttribute("id") == "btn-to-history") {
           e.target.innerHTML = "Back";
-        }else {
+        } else {
           e.target.parentNode.innerHTML = "Back";
         }
         $("#produkToko").hide();
@@ -201,7 +207,7 @@ if ($("#tokoSectionReadOnly").length > 0) {
       } else {
         if (e.target.getAttribute("id") == "btn-to-history") {
           e.target.innerHTML = `<i class="fa fa-history"></i>`;
-        }else {
+        } else {
           e.target.parentNode.innerHTML = `<i class="fa fa-history"></i>`;
         }
         $("#produkToko").show();
@@ -211,6 +217,280 @@ if ($("#tokoSectionReadOnly").length > 0) {
   });
   handleUpdateToko();
   handleDeleteProduk();
+}
+
+// * section searching
+if ($("#addProdukSectionReadOnly").length > 0) {
+  $("#user_permit").val("all");
+  allUser = "all";
+
+  $("input[type=radio][name=user_permitted]").change(function () {
+    if (this.value == 1) {
+      $("#user_permit").val(allUser);
+      $(".section-search-user").hide();
+    } else if (this.value == 2) {
+      $("#user_permit").val(userPilihan);
+      $(".section-search-user").css("display", "flex");
+    }
+  });
+
+  $("#btn-search-user").click(function () {
+    findUser($("#searchUser").val());
+    $("#searchUser").val("");
+  });
+
+  document.body.addEventListener("click", function (e) {
+    if (e.target.classList.contains("btn-delete-user")) {
+      const list = e.target.parentNode.parentNode.parentNode;
+      const id_user = e.target.dataset.iduser;
+      const index = userPilihanArray.indexOf(parseInt(id_user));
+      userPilihanArray.splice(index, 1);
+      let handler = "";
+      if (userPilihanArray.length > 0) {
+        userPilihanArray.map((user, i) => {
+          if (i == 0) {
+            handler += user;
+          } else {
+            handler += "," + user;
+          }
+        });
+      }
+      userPilihan = handler;
+      $("#user_permit").val(handler);
+      list.remove();
+    }
+  });
+
+  document.body.addEventListener("change", function (e) {
+    if (e.target.getAttribute("id") == "other_img") {
+      const input = document.getElementById("other_img");
+      const imgPreview = document.querySelector("#other_img_preview");
+
+      const file = new FileReader();
+      file.readAsDataURL(input.files[0]);
+
+      file.onload = function (e) {
+        imgPreview.src = e.target.result;
+      };
+    } else if (e.target.getAttribute("id") == "main_img") {
+      const input = document.getElementById("main_img");
+      const imgPreview = document.querySelector("#main_img_preview");
+
+      const file = new FileReader();
+      file.readAsDataURL(input.files[0]);
+
+      file.onload = function (e) {
+        imgPreview.src = e.target.result;
+      };
+    }
+  });
+
+  $("#btn-upload-produk").on("click", function (e) {
+    const validation = Array.from(document.querySelectorAll(".validation"));
+    let sukses = false;
+    validation.map((v, i) => {
+      let input = "";
+
+      if (i == 0 || i == 1) {
+        input = v.parentNode.childNodes[3];
+      } else if (i == 2) {
+        input = v.parentNode.childNodes[3];
+      } else {
+        input = v.parentNode.childNodes[3].childNodes[3];
+      }
+
+      e.preventDefault();
+      if (input.value == "") {
+        input.classList.add("is-invalid");
+        v.innerHTML = "Harus diisi";
+      } else {
+        input.classList.add("is-valid");
+        v.innerHTML = "";
+        sukses = true;
+      }
+    });
+
+    if (sukses) {
+      uploadProduk();
+    }
+  });
+}
+
+function uploadProduk() {
+  let main_img = document.getElementById("main_img").files[0];
+  let other_img = document.getElementById("other_img").files[0];
+
+  let form = new FormData();
+  form.append("gambar", main_img);
+  form.append("gambar_lain", other_img);
+  form.append("nama_produk", $("#NamaProduk").val());
+  form.append("harga", $("#hargaProduk").val());
+  form.append("user_beli", $("#user_permit").val());
+  form.append("id_toko", store.store_data.id_toko);
+
+  $(".blankLoad").show();
+  $(".blankLoad").css("display", "flex");
+  document.body.style.overflowY = "hidden";
+  // * send request
+  $.ajax({
+    url: BASE_URL_SERVER + "/produk/add",
+    data: form,
+    method: "POST",
+    dataType: "json",
+    headers: {
+      Accept: "application/json",
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+      Authorization: "Bearer " + token,
+    },
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: (res) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      if (res.status != null) {
+        if (res.status == "Token is Expired") {
+          errorToken();
+        }
+      }
+
+      if (res.success) {
+        Swal.fire({
+          title: "<strong>Add Product Successful</strong>",
+          icon: "success",
+          html:
+            "Success Add Product, " +
+            '<a href="' +
+            BASE_URL +
+            "/toko/" +
+            $("#id_toko").val() +
+            ">See Product now</a> ",
+          showCloseButton: false,
+          showCancelButton: false,
+          allowOutsideClick: false,
+          focusConfirm: true,
+          confirmButtonText:
+            '<a href="' +
+            BASE_URL +
+            "/toko/" +
+            store.store_data.id_toko +
+            '" style="color:inherit;text-decoration:none">See Product Now</a>',
+          confirmButtonAriaLabel: "Thumbs up, great!",
+          cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+          cancelButtonAriaLabel: "Thumbs down",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = BASE_URL + "/toko/" + store.store_data.id_toko;
+          }
+        });
+      }
+    },
+    error: (err) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Toast.fire({
+        icon: "error",
+        title: "Error Upload Produk",
+      });
+
+      if (err.responseJSON.status != null) {
+        if (res.status == "Token is Expired") {
+          errorToken();
+        }
+      }
+
+      const error = err.responseJSON;
+      if (error != null) {
+        const keys = Object.keys(error);
+        const validation = Array.from(document.querySelectorAll(".validation"));
+        const validation_other = document.querySelector(".validation-other");
+        keys.map((key) => {
+          const value = eval("error." + key);
+          if (key == "gambar") {
+            validation[0].innerHTML = value[0];
+          } else if (key == "gambar_lain") {
+            validation[1].innerHTML = value[0];
+          } else if (key == "nama_produk") {
+            validation[2].innerHTML = value[0];
+          } else if (key == "harga") {
+            validation[3].innerHTML = value[0];
+          } else if (key == "user_beli") {
+            validation_other.innerHTML = value[0];
+          } else {
+            validation[0].innerHTML = "";
+            validation[1].innerHTML = "";
+            validation_other.innerHTML = "";
+          }
+        });
+      }
+    },
+  });
+}
+
+function findUser(phone) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/finduser?phone=" + phone,
+    dataType: "json",
+    method: "GET",
+    success: function (res) {
+      if (res.success) {
+        const id_user = res.data[0].id_user;
+        const userPilihanLength = userPilihan.split("").length;
+        const cek = userPilihanArray.indexOf(id_user);
+        if (cek == -1) {
+          userPilihan += userPilihanLength > 0 ? "," + id_user : id_user;
+          userPilihanArray = [...userPilihanArray, id_user];
+          let handler = handlerList(
+            res.data[0].email,
+            id_user,
+            res.data[0].username,
+            res.data[0].phone
+          );
+          $("#listUsers").append(handler);
+          $("#user_permit").val(userPilihan);
+          Toast.fire({
+            icon: "success",
+            title: "Tambah Sukses",
+          });
+        } else {
+          Toast.fire({
+            icon: "error",
+            title: "Nomor Telepon Sudah di list",
+          });
+        }
+      }
+    },
+    error: (err) => {
+      const error = err.responseJSON;
+      if (error != null) {
+        if (!error.success) {
+          Toast.fire({
+            icon: "error",
+            title: "Nomor Telepon tidak ditemukan",
+          });
+        }
+      }
+    },
+  });
+}
+
+function handlerList(email, id_user, nama, phone) {
+  let handler = /* html */ `
+  <li class="list-group-item">
+    <div class="row justify-content-between">
+        <div class="col d-flex align-items-center">
+            <span>${nama} (${phone}) - ${email}</span>
+        </div>
+        <div class="col d-flex align-items-center justify-content-end">
+            <button class="btn btn-danger btn-delete-user text-white" type="button" data-iduser="${id_user}">
+                hapus
+            </button>
+        </div>
+    </div>
+  </li>
+  `;
+
+  return handler;
 }
 
 // * function for show all produk
@@ -1155,7 +1435,7 @@ function dashboardToko(id_toko, myStore) {
             <a href="#" class="btn btn-lg btn-black-default-hover mx-3 mt-3 mt-lg-0" style="width: auto" id="btn-to-history">
                 <i class="fa fa-history"></i>
             </a>
-            <a href="#" class="btn btn-lg btn-black-default-hover mt-3 mt-lg-0" style="width: auto">
+            <a href="${BASE_URL}/toko/add" class="btn btn-lg btn-black-default-hover mt-3 mt-lg-0" style="width: auto">
                 <i class="fa fa-plus"></i>
             </a>
         </div>
@@ -1563,7 +1843,9 @@ function handlerTokoCheckout(data, number) {
         <td class="product_remove">
             ${number}
         </td>
-        <td class="product_thumb"><a href="${BASE_URL}/detail/${data.id_produk}"><img
+        <td class="product_thumb"><a href="${BASE_URL}/detail/${
+    data.id_produk
+  }"><img
                     src="${BASE_URL_FILE}/uploads/produk/${data.gambar}"
                     alt=""></a></td>
         <td class="product_name"><a href="${BASE_URL}/detail/${data.id_produk}">

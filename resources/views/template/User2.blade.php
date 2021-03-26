@@ -17,6 +17,11 @@
     if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
     if (store.has_store) window.location.href = `http://127.0.0.1:8000/seller`;
 </script>
+@elseif($middleware == "has_store")
+<script type="text/javascript">
+    if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
+    if (!store.has_store) window.location.href = `http://127.0.0.1:8000`;
+</script>
 @endif
 
 @endif
