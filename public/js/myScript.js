@@ -188,6 +188,7 @@ if ($("#tokoSectionReadOnly").length > 0) {
     }
   });
   handleUpdateToko();
+  handleDeleteProduk();
 }
 
 // * function for show all produk
@@ -1190,8 +1191,8 @@ function handleTokoProduk(data, myStore) {
     if (store) {
       return /* html */ `
       <div class="action-link-right">
-        <a href="${BASE_URL}/sdlete/${data.id_produk}"><i
-                class="fa fa-trash-alt"></i></a>
+        <a href="${BASE_URL}/delete/${data.id_produk}"><i
+                class="fa fa-trash-alt" data-idproduk="${data.id_produk}" id="btn-delete-produk"></i></a>
         <a href="${BASE_URL}/edit/${data.id_produk}"><i
                 class="fa fa-edit"></i></a>
     </div>
@@ -1254,7 +1255,7 @@ function handleTokoProduk2(data, myStore) {
   function thisIsMyStore(store) {
     if (store) {
       return /* html */ `
-      <a href="${BASE_URL}/delete/${data.id_produk}" class="btn btn-lg btn-black-default-hover">
+      <a href="${BASE_URL}/delete/${data.id_produk}" class="btn btn-lg btn-black-default-hover" id="btn-delete-produk-row" data-idproduk="${data.id_produk}">
         <i class="fa fa-trash-alt"></i>
       </a>
       <a href="${BASE_URL}/edit/${data.id_produk}" class="btn btn-lg btn-black-default-hover">
@@ -1449,6 +1450,58 @@ function updateToko(id_toko) {
           }
         });
       }
+    },
+  });
+}
+
+function handleDeleteProduk() {
+  document.body.addEventListener("click", function(e) {
+    if (e.target.getAttribute("id") == "btn-delete-produk") {
+      e.preventDefault();
+      delete_produk(e.target.dataset.idproduk)
+    }else if(e.target.getAttribute("id") == "btn-delete-produk-row") {
+      e.preventDefault();
+      delete_produk(e.target.dataset.idproduk)
+    }
+  })
+}
+
+function delete_produk(id_produk) {
+  $.ajax({
+    url: BASE_URL_SERVER + "/produk/delete?id_produk=" + id_produk,
+    type: "DELETE",
+    dataType: "json",
+    headers: {
+      Accept: "application/json",
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+      Authorization: "Bearer " + token,
+    },
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: (res) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      if (res.status != null) {
+        errorToken();
+      }
+
+      if (res.success) {
+        Toast.fire({
+          icon: "success",
+          title: "Sukses Hapus Produk",
+        });
+        showTokoProduk(store.store_data.id_toko, true);
+      }
+    },
+    error: (res) => {
+      $(".blankLoad").hide();
+      document.body.style.overflowY = "auto";
+      Toast.fire({
+        icon: "error",
+        title: "Error Hapus Produk",
+      });
+      errorToken();
     },
   });
 }
