@@ -21,13 +21,12 @@ class HomeController extends Controller
     public function toko($id)
     {
         $data = [
-            "token" => null,
-            "session" => null,
+            "toko_section" => true,
             "css" => "dashboard.css",
             "idToko" => $id,
             "middleware" => "user"
         ];
 
-        return view("user/toko", $data);
+        return view("user/toko2", $data);
     }
 }

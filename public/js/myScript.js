@@ -157,6 +157,39 @@ if ($("#searchSectionReadOnly").length > 0) {
   handleDetailProduk();
 }
 
+// * section toko
+let showEditToko = false;
+if ($("#tokoSectionReadOnly").length > 0) {
+  const toko = document.querySelector("#tokoSectionReadOnly").dataset.toko;
+  let myStore = false;
+  if (store.has_store) {
+    if (store.store_data.id_toko == toko) {
+      myStore = true;
+    }
+  }
+
+  dashboardToko(toko, myStore);
+  showTokoProduk(toko, myStore);
+  handleDetailProduk();
+
+  document.body.addEventListener("click", function (e) {
+    if (e.target.getAttribute("id") == "btn-to-edit") {
+      e.preventDefault();
+      showEditToko = !showEditToko;
+      if (showEditToko) {
+        $(".non-update").hide();
+        $("#update-toko-section").show();
+        e.target.innerHTML = "Back";
+      } else {
+        $(".non-update").show();
+        $("#update-toko-section").hide();
+        e.target.innerHTML = "Edit Store";
+      }
+    }
+  });
+  handleUpdateToko();
+}
+
 // * function for show all produk
 function showAllProduk() {
   $.ajax({
@@ -1021,4 +1054,401 @@ function setHistory(data) {
   });
 
   return handler;
+}
+
+function dashboardToko(id_toko, myStore) {
+  $.ajax({
+    url: BASE_URL_SERVER + `/toko/${id_toko}`,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        const data = res.data[0];
+        $("#bgToko").css(
+          "background",
+          `url(${BASE_URL_FILE}/uploads/toko/${data.background})`
+        );
+        $("#logoToko").attr(
+          "src",
+          `${BASE_URL_FILE}/uploads/toko/${data.logo}`
+        );
+        $("#namaToko").html(data.nama_toko);
+        $("#deskripsiToko").html(nl2br(data.deskripsi));
+
+        if (myStore) {
+          let handler = /* html */ `
+          <div class="ps-block__user-content" id="update-toko-section">
+            <form action="" id="form-update-toko">
+              <div class="row" style="width: 70vw">
+                  <div class="col-md-6">
+                      <div class="row">
+                          <div class="col-12">
+                              <label for="store-name" class="form-label">Store Name</label>
+                              <input type="text" id="store-name" value="${data.nama_toko}"
+                                  class="form-control w-100 bg-white mb-3 p-3">
+                              <small class="validation text-danger edit-toko-content"></small>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-12">
+                              <label for="store-deskripsion" class="form-label">Store Deskripsion</label>
+                              <textarea name="" id="store-deskripsion" class="form-control bg-white p-3"
+                                  style="min-height: 150px">${data.deskripsi}</textarea>
+                              <small class="validation text-danger edit-toko-content"></small>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="row">
+                          <div class="col-12 mb-3">
+                              <label for="store-logo" class="form-label">Change Logo</label>
+                              <div class="custom-file">
+                                  <input type="file" class="custom-file-input bg-white" id="store-logo" Accept="image/jpg,image/png,image/jpeg">
+                              </div>
+                              <small class="text-danger validation-server"></small>
+                          </div>
+                          <div class="col-12">
+                              <label for="store-bg" class="form-label">Change Background</label>
+                              <div class="custom-file">
+                                  <input type="file" class="custom-file-input bg-white" id="store-bg" Accept="image/jpg,image/png,image/jpeg">
+                              </div>
+                              <small class="text-danger validation-server"></small>
+                          </div>
+                          <div class="col-12 mt-3">
+                              <button class="btn btn-lg btn-black-default-hover" style="width: 200px" type="submit" id="btn-submit-toko">
+                                  Submit
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </form>
+        </div>
+          `;
+          let handler2 = /* html */ `
+          <div class="row justify-content-end d-flex w-100">
+            <a href="#" class="btn btn-lg btn-black-default-hover" style="width: 200px" id="btn-to-edit">
+                Edit Store
+            </a>
+            <a href="#" class="btn btn-lg btn-black-default-hover mx-3" style="width: auto">
+                <i class="fa fa-history"></i>
+            </a>
+            <a href="#" class="btn btn-lg btn-black-default-hover" style="width: auto">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+          `;
+          $("#toko-content").append(handler);
+          $("#mystore-content").html(handler2);
+        }
+
+        showEditToko = false;
+        $(".non-update").show();
+        $("#update-toko-section").hide();
+      }
+    },
+    error: function (err) {
+      alert("error");
+    },
+  });
+}
+
+function showTokoProduk(idToko, myStore) {
+  $.ajax({
+    url: BASE_URL_SERVER + `/produk/toko/${idToko}`,
+    type: "GET",
+    success: function (res) {
+      if (res.success) {
+        let handler = "";
+        let handler2 = "";
+        res.data.map((result) => {
+          handler += handleTokoProduk(result, myStore);
+          handler2 += handleTokoProduk2(result, myStore);
+        });
+        $("#productStore").html(handler);
+        $("#productStore2").html(handler2);
+      } else {
+        if (document.querySelector("#productStore") !== null) {
+          document.querySelector("#productStore").innerHTML = notFound();
+          document.querySelector("#productStore2").innerHTML = notFound();
+        }
+      }
+    },
+    error: function (err) {
+      if (err != null) {
+        const message = err.responseJSON.message;
+        if (document.querySelector("#productStore") !== null) {
+          document.querySelector("#productStore").innerHTML = notFound();
+          document.querySelector("#productStore2").innerHTML = notFound();
+        }
+      }
+    },
+  });
+}
+
+function handleTokoProduk(data, myStore) {
+  function thisIsMyStore(store) {
+    if (store) {
+      return /* html */ `
+      <div class="action-link-right">
+        <a href="${BASE_URL}/sdlete/${data.id_produk}"><i
+                class="fa fa-trash-alt"></i></a>
+        <a href="${BASE_URL}/edit/${data.id_produk}"><i
+                class="fa fa-edit"></i></a>
+    </div>
+      `;
+    } else {
+      return "";
+    }
+  }
+
+  let handler = /* html */ `
+  <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
+    <div class="product-default-single-item product-color--golden swiper-slide">
+        <div class="image-box">
+            <a href="${BASE_URL}/detail/${data.id_produk}" class="image-link">
+                <img src="${BASE_URL_FILE}/uploads/produk/${data.gambar}"
+                    alt="" style="height:250px;">
+                <img src="${BASE_URL_FILE}/uploads/produk/${data.gambar_lain}"
+                    alt="" style="height:250px;">
+            </a>
+            <div class="tag">
+                <span>sale</span>
+            </div>
+            <div class="action-link">
+                <div class="action-link-left">
+                    <a href="" id="showQuickViewProduct"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalQuickview" data-idproduk="${
+                          data.id_produk
+                        }">
+                        Buy
+                        Now</a>
+                </div>
+                ${thisIsMyStore(myStore)}
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-left">
+                <h6 class="title">
+                  <a href="${BASE_URL}/detail/${data.id_produk}">
+                    ${data.nama_produk}
+                  </a>
+                </h6>
+                <ul class="review-star">
+                    Stock Available
+                </ul>
+            </div>
+            <div class="content-right">
+                <span class="price">${formatter.toRupiah(data.harga)}</span>
+            </div>
+
+        </div>
+    </div>
+  </div>
+  `;
+
+  return handler;
+}
+
+function handleTokoProduk2(data, myStore) {
+  function thisIsMyStore(store) {
+    if (store) {
+      return /* html */ `
+      <a href="${BASE_URL}/delete/${data.id_produk}" class="btn btn-lg btn-black-default-hover">
+        <i class="fa fa-trash-alt"></i>
+      </a>
+      <a href="${BASE_URL}/edit/${data.id_produk}" class="btn btn-lg btn-black-default-hover">
+        <i class="fa fa-edit"></i>
+      </a>
+      `;
+    } else {
+      return "";
+    }
+  }
+
+  let handler = /* html */ `
+  <div class="col-12">
+    <div class="product-list-single product-color--golden mb-3">
+      <a href="${BASE_URL}/detail/${
+    data.id_produk
+  }" class="product-list-img-link">
+        <img class="img-fluid" src="${BASE_URL_FILE}/uploads/produk/${
+    data.gambar
+  }" alt="" style="width:40vw;">
+        <img class="img-fluid" src="${BASE_URL_FILE}/uploads/produk/${
+    data.gambar_lain
+  }" alt="" style="width:40vw;">
+      </a>
+      <div class="product-list-content">
+        <h5 class="product-list-link">
+          <a href="${BASE_URL}/detail/${data.id_produk}">
+            ${data.nama_produk}
+          </a>
+        </h5>
+        <span class="product-list-price">${formatter.toRupiah(
+          data.harga
+        )}</span>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores</p>
+        <div class="product-action-icon-link-list">
+            <a href="#" id="showQuickViewProduct" data-bs-toggle="modal"
+              data-bs-target="#modalQuickview" data-idproduk="${data.id_produk}"
+              class="btn btn-lg btn-black-default-hover">Buy Now</a>
+            ${thisIsMyStore(myStore)}
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+
+  return handler;
+}
+
+function nl2br(str, is_xhtml) {
+  if (typeof str === "undefined" || str === null) {
+    return "";
+  }
+  var breakTag =
+    is_xhtml || typeof is_xhtml === "undefined" ? "<br />" : "<br>";
+  return (str + "").replace(
+    /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g,
+    "$1" + breakTag + "$2"
+  );
+}
+
+function handleUpdateToko() {
+  document.body.addEventListener("change", function (e) {
+    if (e.target.getAttribute("id") == "store-logo") {
+      const input = document.getElementById("store-logo");
+      const imgPreview = document.querySelector("#logoToko");
+
+      const file = new FileReader();
+      file.readAsDataURL(input.files[0]);
+
+      file.onload = function (e) {
+        imgPreview.src = e.target.result;
+      };
+    } else if (e.target.getAttribute("id") == "store-bg") {
+      const input = document.getElementById("store-bg");
+      const imgPreview = document.querySelector("#bgToko");
+
+      const file = new FileReader();
+      file.readAsDataURL(input.files[0]);
+
+      file.onload = function (e) {
+        $(imgPreview).css("background", `url(${e.target.result})`);
+      };
+    }
+  });
+
+  document.body.addEventListener("submit", function (e) {
+    if (e.target.getAttribute("id") == "form-update-toko") {
+      e.preventDefault();
+      const validation = Array.from(document.querySelectorAll(".validation"));
+      let success = true;
+      validation.map((v, i) => {
+        let input = v.parentNode.childNodes[3];
+
+        if (input.value == "") {
+          success = false;
+          input.classList.add("is-invalid");
+          v.innerHTML = "Harus diisi";
+        } else if (input.value.length < 6) {
+          success = false;
+          input.classList.add("is-invalid");
+          v.innerHTML = "Minimal 6 karakter";
+        } else {
+          input.classList.remove("is-invalid");
+          input.classList.add("is-valid");
+          v.innerHTML = "";
+        }
+      });
+      if (success) {
+        updateToko(store.store_data.id_toko);
+      }
+    }
+  });
+}
+
+function updateToko(id_toko) {
+  let logo = document.getElementById("store-logo").files;
+  let bg = document.getElementById("store-bg").files;
+  let namaToko = $("#store-name").val();
+
+  let form = new FormData();
+  if (logo.length > 0) {
+    form.append("logo", logo[0]);
+  }
+  if (bg.length > 0) {
+    form.append("background", bg[0]);
+  }
+  form.append("nama_toko", namaToko);
+  form.append("deskripsi", $("#store-deskripsion").val());
+  form.append("id_toko", id_toko);
+  form.append("id_user", auth.id_user);
+  form.append("logo_old", store.store_data.logo);
+  form.append("bg_old", store.store_data.background);
+  $("#btn-submit-toko").attr("disabled", true);
+
+  $.ajax({
+    url: BASE_URL_SERVER + "/toko/update",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+      Authorization: "Bearer " + token,
+    },
+    data: form,
+    method: "POST",
+    dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: (res) => {
+      $("#btn-submit-toko").attr("disabled", false);
+      if (res.status != null) {
+        if (res.status == "Token is Expired") {
+          errorToken();
+        }
+      }
+
+      if (res.success) {
+        const validation = Array.from(
+          document.querySelectorAll(".validation-server")
+        );
+        validation[0].innerHTML = "";
+        validation[1].innerHTML = "";
+        Toast.fire({
+          icon: "success",
+          title: "Update Toko Sukses",
+        });
+        dashboardToko(id_toko, true);
+      }
+    },
+    error: (err) => {
+      $("#btn-submit-toko").attr("disabled", false);
+      const error = err.responseJSON;
+
+      Toast.fire({
+        icon: "error",
+        title: "Update Toko Error",
+      });
+      if (error.message == "Provided token is expired.") {
+        errorToken();
+      } else {
+        const keys = Object.keys(error);
+        const validation = Array.from(
+          document.querySelectorAll(".validation-server")
+        );
+        keys.map((key) => {
+          const value = eval("error." + key);
+          if (key == "background") {
+            validation[0].innerHTML = value[0];
+          } else if (key == "logo") {
+            validation[1].innerHTML = value[0];
+          } else {
+            validation[0].innerHTML = "";
+            validation[1].innerHTML = "";
+          }
+        });
+      }
+    },
+  });
 }

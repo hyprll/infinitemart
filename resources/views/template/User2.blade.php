@@ -5,6 +5,9 @@
     const token = localStorage.getItem("token");
     const store = JSON.parse(localStorage.getItem("store"));
 </script>
+
+@if (isset($middleware))
+
 @if ($middleware == "auth")
 <script type="text/javascript">
     if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
@@ -14,6 +17,8 @@
     if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
     if (store.has_store) window.location.href = `http://127.0.0.1:8000/seller`;
 </script>
+@endif
+
 @endif
 
 <!-- Mirrored from htmldemo.hasthemes.com/hono/hono/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 05 Mar 2021 13:37:00 GMT -->
@@ -49,7 +54,6 @@
     <!-- <link rel="stylesheet" href="assets/sass/style.css"> -->
     {{-- <link rel='stylesheet' href='{{asset("css/bootstrap.min.css")}}'> --}}
     <link rel="icon" href="{{asset("img/logo_transparent.png")}}">
-    <link rel="stylesheet" href="{{url("/")}}/css/tambahProduk.css">
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <link rel="stylesheet"
@@ -67,8 +71,16 @@
         crossorigin="anonymous" />
     <link rel="stylesheet" href="{{asset('css')}}/plugins.min.css">
     <link rel="stylesheet" href="{{asset('css')}}/OurTeam.css">
-    <link rel="stylesheet" href="{{asset('css')}}/style.css">
     <link rel="stylesheet" href="{{asset('css')}}/style.min.css">
+
+    @if (isset($toko_section))
+
+    @if ($toko_section)
+    <link rel="stylesheet" href="{{url("/")}}/css/tambahProduk.css">
+    <link rel="stylesheet" href="{{asset('css')}}/style.css">
+    @endif
+
+    @endif
 </head>
 
 @include('template.navbar2')
