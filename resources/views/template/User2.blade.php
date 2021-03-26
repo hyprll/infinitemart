@@ -22,6 +22,14 @@
     if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
     if (!store.has_store) window.location.href = `http://127.0.0.1:8000`;
 </script>
+@elseif($middleware == "my_product")
+<script type="text/javascript">
+    const id_produk = "<?= $id_produk ?>";
+    
+    if (auth == null) window.location.href = "http://127.0.0.1:8000/login";
+    if (!store.has_store) window.location.href = `http://127.0.0.1:8000`;
+    if (store.store_product.indexOf(parseInt(id_produk)) == -1) window.location.href = `http://127.0.0.1:8000/toko/`+store.store_data.id_toko;
+</script>
 @endif
 
 @endif

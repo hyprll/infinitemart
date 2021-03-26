@@ -555,9 +555,30 @@ function old_auth() {
       url: BASE_URL_SERVER + "/cektoko/" + id_user + "?id_user=" + id_user,
       type: "GET",
       success: (res) => {
+        if (!res.success) {
+          const hasToko = {
+            has_store: res.success,
+            store_data: res.data[0],
+            store_product: [],
+          };
+          localStorage.setItem("auth_session", JSON.stringify(user_data));
+          localStorage.setItem("store", JSON.stringify(hasToko));
+          localStorage.setItem("token", token);
+
+          if (user_data.role == 1) {
+            document.location.href = BASE_URL + "/dashboard";
+          } else {
+            document.location.href = BASE_URL + "/";
+          }
+        } else {
+          getTokoProduct(res.data[0].id_toko, user_data, token);
+        }
+      },
+      error: (err) => {
+        const data = err.responseJSON;
         const hasToko = {
-          has_store: res.success,
-          store_data: res.data[0],
+          has_store: data.success,
+          store_data: [],
         };
 
         localStorage.setItem("auth_session", JSON.stringify(user_data));
@@ -570,13 +591,56 @@ function old_auth() {
           document.location.href = BASE_URL + "/";
         }
       },
-      error: (err) => {
-        const data = err.responseJSON;
-        const hasToko = {
-          has_store: data.success,
-          store_data: [],
-        };
+    });
+  }
 
+  function getTokoProduct(id_toko, user_data, token) {
+    $.ajax({
+      url: BASE_URL_SERVER + `/produk/toko/${id_toko}`,
+      type: "GET",
+      success: function (res) {
+        if (res.success) {
+          let productToko = [];
+          res.data.map((result) => {
+            productToko = [...productToko, result.id_produk];
+          });
+          const hasToko = {
+            has_store: res.success,
+            store_data: res.data[0],
+            store_product: productToko,
+          };
+          localStorage.setItem("auth_session", JSON.stringify(user_data));
+          localStorage.setItem("store", JSON.stringify(hasToko));
+          localStorage.setItem("token", token);
+
+          if (user_data.role == 1) {
+            document.location.href = BASE_URL + "/dashboard";
+          } else {
+            document.location.href = BASE_URL + "/";
+          }
+        } else {
+          const hasToko = {
+            has_store: res.success,
+            store_data: res.data[0],
+            store_product: [],
+          };
+          localStorage.setItem("auth_session", JSON.stringify(user_data));
+          localStorage.setItem("store", JSON.stringify(hasToko));
+          localStorage.setItem("token", token);
+
+          if (user_data.role == 1) {
+            document.location.href = BASE_URL + "/dashboard";
+          } else {
+            document.location.href = BASE_URL + "/";
+          }
+        }
+      },
+      error: function (err) {
+        const hasToko = {
+          has_store: res.success,
+          store_data: res.data[0],
+          store_product: [],
+        };
         localStorage.setItem("auth_session", JSON.stringify(user_data));
         localStorage.setItem("store", JSON.stringify(hasToko));
         localStorage.setItem("token", token);

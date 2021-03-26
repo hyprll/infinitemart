@@ -7,10 +7,7 @@ function logout(err) {
   const error = err.responseJSON;
 
   if (error.message == "Provided token is expired.") {
-    localStorage.removeItem("token");
-    localStorage.removeItem("auth_session");
-    localStorage.removeItem("store");
-    document.location.href = BASE_URL + "/login";
+    errorToken();
   }
 }
 

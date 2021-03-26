@@ -39,10 +39,10 @@ class ProdukController extends Controller
             "session" => null,
             "css" => "tambahProduk.css",
             "id_produk" => $id_produk,
-            "middleware" => "auth"
+            "middleware" => "my_product"
         ];
 
-        return view("user/updateProduk", $data);
+        return view("user/updateProduk2", $data);
     }
 
     public function search(Request $request)
