@@ -159,6 +159,7 @@ if ($("#searchSectionReadOnly").length > 0) {
 
 // * section toko
 let showEditToko = false;
+let showHistory = false;
 if ($("#tokoSectionReadOnly").length > 0) {
   const toko = document.querySelector("#tokoSectionReadOnly").dataset.toko;
   let myStore = false;
@@ -171,6 +172,7 @@ if ($("#tokoSectionReadOnly").length > 0) {
   dashboardToko(toko, myStore);
   showTokoProduk(toko, myStore);
   handleDetailProduk();
+  getHistoryToko(toko);
 
   document.body.addEventListener("click", function (e) {
     if (e.target.getAttribute("id") == "btn-to-edit") {
@@ -184,6 +186,26 @@ if ($("#tokoSectionReadOnly").length > 0) {
         $(".non-update").show();
         $("#update-toko-section").hide();
         e.target.innerHTML = "Edit Store";
+      }
+    }else if (e.target.getAttribute("id") == "btn-to-history" || e.target.parentNode.getAttribute("id") == "btn-to-history") {
+      e.preventDefault();
+      showHistory = !showHistory;
+      if (showHistory) {
+        if (e.target.getAttribute("id") == "btn-to-history") {
+          e.target.innerHTML = "Back";
+        }else {
+          e.target.parentNode.innerHTML = "Back";
+        }
+        $("#produkToko").hide();
+        $("#historyToko").show();
+      } else {
+        if (e.target.getAttribute("id") == "btn-to-history") {
+          e.target.innerHTML = `<i class="fa fa-history"></i>`;
+        }else {
+          e.target.parentNode.innerHTML = `<i class="fa fa-history"></i>`;
+        }
+        $("#produkToko").show();
+        $("#historyToko").hide();
       }
     }
   });
@@ -1130,10 +1152,10 @@ function dashboardToko(id_toko, myStore) {
             <a href="#" class="btn btn-lg btn-black-default-hover" style="width: 200px" id="btn-to-edit">
                 Edit Store
             </a>
-            <a href="#" class="btn btn-lg btn-black-default-hover mx-3" style="width: auto">
+            <a href="#" class="btn btn-lg btn-black-default-hover mx-3 mt-3 mt-lg-0" style="width: auto" id="btn-to-history">
                 <i class="fa fa-history"></i>
             </a>
-            <a href="#" class="btn btn-lg btn-black-default-hover" style="width: auto">
+            <a href="#" class="btn btn-lg btn-black-default-hover mt-3 mt-lg-0" style="width: auto">
                 <i class="fa fa-plus"></i>
             </a>
         </div>
@@ -1455,15 +1477,15 @@ function updateToko(id_toko) {
 }
 
 function handleDeleteProduk() {
-  document.body.addEventListener("click", function(e) {
+  document.body.addEventListener("click", function (e) {
     if (e.target.getAttribute("id") == "btn-delete-produk") {
       e.preventDefault();
-      delete_produk(e.target.dataset.idproduk)
-    }else if(e.target.getAttribute("id") == "btn-delete-produk-row") {
+      delete_produk(e.target.dataset.idproduk);
+    } else if (e.target.getAttribute("id") == "btn-delete-produk-row") {
       e.preventDefault();
-      delete_produk(e.target.dataset.idproduk)
+      delete_produk(e.target.dataset.idproduk);
     }
-  })
+  });
 }
 
 function delete_produk(id_produk) {
@@ -1504,4 +1526,55 @@ function delete_produk(id_produk) {
       errorToken();
     },
   });
+}
+
+function getHistoryToko(id_toko) {
+  $.ajax({
+    url: `${BASE_URL_SERVER}/checkout/toko/${id_toko}`,
+    type: "GET",
+    dataType: "JSON",
+    error: function (err) {
+      let handler = /* html */ `
+        <div class="col-12 my-5">
+            <div class="row justify-content-center">
+                <img src="${BASE_URL_FILE}/img/character/INTIP.png" alt="" class="user-select-none" style="width: 500px">
+                <h2 class="text-center">No history yet</h2>
+            </div>
+        </div>
+        `;
+
+      $("#historyToko").html(handler);
+    },
+    success: function (result) {
+      if (result.success) {
+        let handler = ``;
+        result.data.map((res, i) => {
+          handler += handlerTokoCheckout(res, i + 1);
+        });
+        $("#history-store").html(handler);
+      }
+    },
+  });
+}
+
+function handlerTokoCheckout(data, number) {
+  let handler = /* html */ `
+      <tr>
+        <td class="product_remove">
+            ${number}
+        </td>
+        <td class="product_thumb"><a href="${BASE_URL}/detail/${data.id_produk}"><img
+                    src="${BASE_URL_FILE}/uploads/produk/${data.gambar}"
+                    alt=""></a></td>
+        <td class="product_name"><a href="${BASE_URL}/detail/${data.id_produk}">
+          ${data.nama_produk}
+        </a></td>
+        <td class="product-price">${formatter.toRupiah(data.harga)}</td>
+        <td class="product_stock">${
+          data.status == 1 ? "Paid Off" : "Not Paid"
+        }</td>
+      </tr>
+  `;
+
+  return handler;
 }

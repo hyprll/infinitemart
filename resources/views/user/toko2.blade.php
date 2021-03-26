@@ -72,7 +72,7 @@
                 <!-- Start Tab Wrapper -->
                 <div class="sort-product-tab-wrapper">
                     <div class="container">
-                        <div class="row pr-4" data-aos="fade-up" data-aos-delay="0" style="max-width: 98vw">
+                        <div class="row pr-4" data-aos="fade-up" data-aos-delay="0" style="max-width: 98vw" id="produkToko">
                             <div class="col-12">
                                 <div class="tab-content">
                                     <!-- Start Grid View Product -->
@@ -83,6 +83,25 @@
                                     <div class="tab-pane sort-layout-single" id="layout-list">
                                         <div class="row" id="productStore2"></div>
                                     </div> <!-- End List View Product -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pr-4 mt-3" data-aos="fade-up" data-aos-delay="0" style="max-width: 98vw" id="historyToko">
+                            <div class="col-12">
+                                <h4>Store History</h4>
+                                <div class="table_page table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="product_remove">No</th>
+                                                <th class="product_thumb">Image</th>
+                                                <th class="product_name">Product</th>
+                                                <th class="product-price">Price</th>
+                                                <th class="product_stock">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="history-store"></tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

@@ -41,7 +41,10 @@ class ApiCheckoutController extends Controller
 
     public function checkoutbyidtoko($id_toko)
     {
-        $checkout = Checkout::where("id_toko", $id_toko)->get();
+        $checkout = Checkout::where("checkout.id_toko", $id_toko)
+            ->join("produk", "produk.id_produk", "=", "checkout.id_produk")
+            ->select("checkout.*", "produk.nama_produk", "produk.gambar")
+            ->get();
 
         if ($checkout->isEmpty()) {
             return response()->json([
